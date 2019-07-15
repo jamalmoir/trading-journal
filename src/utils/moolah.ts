@@ -192,7 +192,7 @@ export class Money {
     }
 
     toString = () => {
-        return this.amount.toPrecision(Number(this.currency.decimals))
+        return this.amount.toFixed(Number(this.currency.decimals))
     }
 
     _arithmetic = (op: (a: Big, b?: Big) => Big, other?: Money | Big) => {
