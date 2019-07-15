@@ -1,0 +1,17 @@
+.trade-quick-create {
+  max-width: none !important;
+
+  &.container{
+    padding: 0;
+  }
+}
+
+.trade-quick-create-headings {
+  &.row {
+    margin: 0;
+  }
+}
+
+.trade-quick-create-button {
+  width: 100%;
+}

@@ -1,0 +1,17 @@
+.journal-list-item {
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.journal-list-item-kind {
+  margin-left: 1rem;
+}
+
+.journal-list-item-edit {
+  margin-left: auto;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
