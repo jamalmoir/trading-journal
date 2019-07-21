@@ -2,6 +2,7 @@ import React, { Component, ChangeEvent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import  Big from 'big.js';
+import DatePicker from 'react-datepicker';
 
 import Types from 'Types';
 
@@ -51,15 +52,14 @@ class TradeQuickCreateComponent extends Component<TradeQuickCreateProps, TradeQu
     }
   }
 
-  updateInputState = (key: string, val: string) => {
+  updateInputState = (key: string, val: string | Date) => {
     let processedVal: string | Money | Date | Big;
 
-    if (key in ['entryPrice', 'stopLoss', 'takeProfit', 'exitPrice', 'pl']) {
+    if (key in ['entryPrice', 'stopLoss', 'takeProfit', 'exitPrice', 'pl'] && typeof val === 'string') {
       processedVal = new Money(val, this.props.journal.currency);
     } else if (key in ['entryDate', 'exitDate']) {
-      processedVal = new Date(val);
-      console.log(processedVal)
-    } else if (key in ['positionSize']) {
+      processedVal = val;
+    } else if (key in ['positionSize'] && typeof val === 'string') {
       processedVal = new Big(val);
     } else {
       processedVal = val;
@@ -126,86 +126,74 @@ class TradeQuickCreateComponent extends Component<TradeQuickCreateProps, TradeQu
     return (
       <div className='trade-quick-create container'>
         <div className='row trade-quick-create-headings'>
-          <div className='col'>Instrument</div>
-          <div className='col'>Strategy</div>
-          <div className='col'>Kind</div>
-          <div className='col'>Entry Date</div>
-          <div className='col'>Entry Price</div>
-          <div className='col'>Position Size</div>
-          <div className='col'>Stop Loss</div>
-          <div className='col'>Take Profit</div>
-          <div className='col'>Exit Date</div>
-          <div className='col'>Exit Price</div>
-          <div className='col'>P/L</div>
-          <div className='col'></div>
+          <div className='col-sm-2'>Instrument</div>
+          <div className='col-sm-2'>Strategy</div>
+          <div className='col-sm-1'>Kind</div>
+          <div className='col-sm-2'>Entry Date</div>
+          <div className='col-sm-1'>Entry Price</div>
+          <div className='col-sm-1'>Position Size</div>
+          <div className='col-sm-1'>Stop Loss</div>
+          <div className='col-sm-1'>Take Profit</div>
+          <div className='col-sm-1'></div>
         </div>
         <div className={'input-group mb-3'}>
           <input type="text"
-                className="form-control col"
+                className="form-control col-sm-2"
                 placeholder="Instrument"
                 value={ this.state.instrument }
                 onChange={ (e) => this.updateInputState('instrument', e.target.value) }
           />
           <input type="text"
-                className="form-control col"
+                className="form-control col-sm-2"
                 placeholder="Strategy"
                 value={ this.state.strategy }
                 onChange={ (e) => this.updateInputState('strategy', e.target.value) }
           />
-          <select className="custom-select col"
+          <select className="custom-select col-sm-1"
                   value={ this.state.kind }
                   onChange={ (e) => this.updateInputState('kind', e.target.value as 'live' | 'demo' | 'backtest') }
           >
             <option value="long">Long</option>
             <option value="short">Short</option>
           </select>
-          <input type="datetime-local"
-                className="form-control col"
-                placeholder="Entry Date"
-                onChange={ (e) => this.updateInputState('entryDate', e.target.value) }
-          />
+          <div
+              className="trade-quick-create-date form-control col-sm-2"
+          >
+            <DatePicker
+              selected={ this.state.entryDate }
+              onChange={ (d) => this.updateInputState('entryDate', d)}
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={15}
+              timeCaption="time"
+              dateFormat="MMMM d, yyyy h:mm aa"
+            />
+          </div>
           <input type="text"
-                className="form-control col"
+                className="form-control col-sm-1"
                 placeholder="Entry Price"
                 value={ this.state.entryPrice.toString() }
                 onChange={ (e) => this.updateInputState('entryPrice', e.target.value) }
           />
           <input type="number"
-                className="form-control col"
+                className="form-control col-sm-1"
                 placeholder="Position Size"
                 value={ this.state.positionSize.toString() }
                 onChange={ (e) => this.updateInputState('positionSize', e.target.value) }
           />
           <input type="text"
-                className="form-control col"
+                className="form-control col-sm-1"
                 placeholder="Stop Loss"
                 value={ this.state.stopLoss.toString() }
                 onChange={ (e) => this.updateInputState('stopLoss', e.target.value) }
           />
           <input type="text"
-                className="form-control col"
+                className="form-control col-sm-1"
                 placeholder="Take Profit"
                 value={ this.state.takeProfit.toString() }
                 onChange={ (e) => this.updateInputState('takeProfit', e.target.value) }
           />
-          <input type="datetime-local"
-                className="form-control col"
-                placeholder="Exit Date"
-                onChange={ (e) => console.log(e) }
-          />
-          <input type="text"
-                className="form-control col"
-                placeholder="Exit Price"
-                value={ this.state.exitPrice.toString() }
-                onChange={ (e) => this.updateInputState('exitPrice', e.target.value) }
-          />
-          <input type="text"
-                className="form-control col"
-                placeholder="P/L"
-                value={ this.state.pl.toString() }
-                onChange={ (e) => this.updateInputState('pl', e.target.value) }
-          />
-            <button className="btn btn-outline-primary trade-quick-create-button form-control col" type="button" onClick={ this.createTrade }>Create</button>
+          <button className="btn btn-outline-primary trade-quick-create-button form-control col-sm-1" type="button" onClick={ this.createTrade }>Create</button>
         </div>
       </div>
     )

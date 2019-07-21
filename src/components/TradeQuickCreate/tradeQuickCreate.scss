@@ -6,10 +6,19 @@
   }
 }
 
-.trade-quick-create-headings {
-  &.row {
-    margin: 0;
+.trade-quick-create-date {
+  input {
+    border: none;
+    width: 100%;
   }
+
+  .react-datepicker-popper {
+    width: max-content;
+  }
+}
+
+.trade-quick-create-date {
+  overflow: visible;
 }
 
 .trade-quick-create-button {
