@@ -104,7 +104,7 @@ let extractTrades = (snapshot: firestore.QuerySnapshot): Types.Trade[] => {
       positionSize: data.positionSize,
       stopLoss: data.stopLoss,
       takeProfit: data.takeProfit,
-      exitDate: new Date(data.exitDate.seconds * 1000),
+      exitDate: data.exitDate ? new Date(data.exitDate.seconds * 1000) : null,
       exitPrice: data.exitPrice,
       fees: data.fees,
       pl: data.pl,
@@ -124,16 +124,16 @@ let extractTrades = (snapshot: firestore.QuerySnapshot): Types.Trade[] => {
 }
 
 export const fetchTrades = (journal: Types.Journal) => {
-  console.log(journal)
   return (dispatch: Dispatch, getState: () => Types.RootState, { getFirebase, getFirestore }: Extras) => {
     // @ts-ignore
     const firestore = getFirestore(); 
     const auth = getState().firebase.auth;
+    let journalId = typeof journal === 'string' ? journal : journal.id;
 
-    firestore.collection('trades').where("journalId", "==", journal.id).get().then((snapshot: firestore.QuerySnapshot) => {
-        let trades = extractTrades(snapshot);
+    firestore.collection('trades').where("journalId", "==", journalId).get().then((snapshot: firestore.QuerySnapshot) => {
+      let trades = extractTrades(snapshot);
 
-        dispatch({type: FETCH_TRADES, trades});
+      dispatch({type: FETCH_TRADES, trades});
     }).catch((err: Error) => console.error("Failed to retrieve trade list." + err.message))
   }
 } 
@@ -152,9 +152,9 @@ export const createTrade = (trade: Types.Trade) => {
       positionSize: trade.positionSize.toString(),
       stopLoss: trade.stopLoss.toString(),
       takeProfit: trade.takeProfit.toString(),
-      exitPrice: trade.exitPrice.toString(),
-      fees: trade.fees.toString(),
-      pl: trade.fees.toString(),
+      exitPrice: trade.exitDate ? trade.exitPrice.toString() : null,
+      fees:  trade.exitDate ? trade.fees.toString() : null,
+      pl:  trade.exitDate ? trade.fees.toString() : null,
     }
 
     firestore.collection('trades').add(flatTrade).then((doc: any) => {

@@ -12,12 +12,14 @@ import { JournalAction } from '../../redux/reducers/journal';
 import styles from './journal.scss';
 import { fetchTrades } from '../../redux/actions/journal';
 import { match } from 'react-router';
+import { routeChange } from '../../redux/actions/app';
 
 interface JournalPageProps {
   journals: Types.Journal[];
   trades: Types.Trade[];
   match: match<{ journalId: string }>;
   onFetchTrades: (journal: Types.Journal) => null;
+  onRouteChange: (route: any) => null;
 }
 
 interface JournalPageState {
@@ -33,6 +35,10 @@ class JournalPage extends Component<JournalPageProps, JournalPageState> {
       journal: null,
       selectedTrade: null,
     }
+  }
+
+  componentWillMount() {
+    this.props.onRouteChange(this.props.match)
   }
 
   componentDidMount() {
@@ -51,7 +57,6 @@ class JournalPage extends Component<JournalPageProps, JournalPageState> {
   }
 
   componentDidUpdate(prevProps: JournalPageProps) {
-
     if (this.props.journals.length !== prevProps.journals.length) {
       let journal = this.props.journals.find(j => j.id === this.props.match.params.journalId);
 
@@ -89,6 +94,8 @@ const mapStateToProps = (state: Types.RootState) => {
 const mapDispatchToProps = (dispatch: Dispatch<JournalAction>) => ({
   // @ts-ignore
   onFetchTrades: (journal: Types.Journal) => dispatch(fetchTrades(journal)),
+  // @ts-ignore
+  onRouteChange: (route: any) => dispatch(routeChange(route)),
 });
 
 export const Journal = connect(mapStateToProps, mapDispatchToProps)(JournalPage);

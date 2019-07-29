@@ -26,10 +26,10 @@ interface TradeQuickCreateState {
   positionSize: Big;
   stopLoss: Big;
   takeProfit: Big;
-  exitDate: Date
+  exitDate: Date;
   exitPrice: Big;
   pl: Money;
-  auth: any,
+  auth: any;
 }
 
 class TradeQuickCreateComponent extends Component<TradeQuickCreateProps, TradeQuickCreateState> {
@@ -40,14 +40,14 @@ class TradeQuickCreateComponent extends Component<TradeQuickCreateProps, TradeQu
       instrument: '',
       strategy: '',
       kind: 'long',
-      entryDate: new Date(),
-      entryPrice: new Big('0'),
-      positionSize: new Big('0'),
-      stopLoss: new Big('0'),
-      takeProfit: new Big('0'),
-      exitDate: new Date(),
-      exitPrice: new Big('0'),
-      pl: new Money('0', props.journal.currency),
+      entryDate: null,
+      entryPrice: null,
+      positionSize: null,
+      stopLoss: null,
+      takeProfit: null,
+      exitDate: null,
+      exitPrice: null,
+      pl: null,
       auth: {},
     }
   }
@@ -113,9 +113,9 @@ class TradeQuickCreateComponent extends Component<TradeQuickCreateProps, TradeQu
         positionSize: new Big('0'),
         stopLoss: new Big('0'),
         takeProfit: new Big('0'),
-        exitDate: new Date(),
-        exitPrice: new Big('0'),
-        pl: new Money('0', this.props.journal.currency),
+        exitDate: null,
+        exitPrice: null,
+        pl: null,
       }
     })
 
@@ -125,18 +125,7 @@ class TradeQuickCreateComponent extends Component<TradeQuickCreateProps, TradeQu
   render() {
     return (
       <div className='trade-quick-create container'>
-        <div className='row trade-quick-create-headings'>
-          <div className='col-sm-2'>Instrument</div>
-          <div className='col-sm-2'>Strategy</div>
-          <div className='col-sm-1'>Kind</div>
-          <div className='col-sm-2'>Entry Date</div>
-          <div className='col-sm-1'>Entry Price</div>
-          <div className='col-sm-1'>Position Size</div>
-          <div className='col-sm-1'>Stop Loss</div>
-          <div className='col-sm-1'>Take Profit</div>
-          <div className='col-sm-1'></div>
-        </div>
-        <div className={'input-group mb-3'}>
+        <div className='input-group mb-3'>
           <input type="text"
                 className="form-control col-sm-2"
                 placeholder="Instrument"
@@ -162,6 +151,7 @@ class TradeQuickCreateComponent extends Component<TradeQuickCreateProps, TradeQu
             <DatePicker
               selected={ this.state.entryDate }
               onChange={ (d) => this.updateInputState('entryDate', d)}
+              placeholderText="Entry Date"
               showTimeSelect
               timeFormat="HH:mm"
               timeIntervals={15}
@@ -172,25 +162,25 @@ class TradeQuickCreateComponent extends Component<TradeQuickCreateProps, TradeQu
           <input type="text"
                 className="form-control col-sm-1"
                 placeholder="Entry Price"
-                value={ this.state.entryPrice.toString() }
+                value={ this.state.entryPrice ? this.state.entryPrice.toString() : undefined }
                 onChange={ (e) => this.updateInputState('entryPrice', e.target.value) }
           />
           <input type="number"
                 className="form-control col-sm-1"
-                placeholder="Position Size"
-                value={ this.state.positionSize.toString() }
+                placeholder="Size"
+                value={ this.state.positionSize ? this.state.positionSize.toString() : undefined }
                 onChange={ (e) => this.updateInputState('positionSize', e.target.value) }
           />
           <input type="text"
                 className="form-control col-sm-1"
                 placeholder="Stop Loss"
-                value={ this.state.stopLoss.toString() }
+                value={ this.state.stopLoss ? this.state.stopLoss.toString() : undefined }
                 onChange={ (e) => this.updateInputState('stopLoss', e.target.value) }
           />
           <input type="text"
                 className="form-control col-sm-1"
                 placeholder="Take Profit"
-                value={ this.state.takeProfit.toString() }
+                value={ this.state.takeProfit ? this.state.takeProfit.toString() : undefined }
                 onChange={ (e) => this.updateInputState('takeProfit', e.target.value) }
           />
           <button className="btn btn-outline-primary trade-quick-create-button form-control col-sm-1" type="button" onClick={ this.createTrade }>Create</button>

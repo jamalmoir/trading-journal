@@ -1,5 +1,6 @@
 // App-wide
 export const APP_LOAD = 'APP_LOAD';
+export const ROUTE_CHANGE = 'ROUTE_CHANGE';
 
 // Authentication
 export const USER_AUTH = 'USER_AUTH'

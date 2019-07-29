@@ -7,7 +7,6 @@ const dev = process.env.NODE_ENV !== 'production';
 
 
 module.exports = {
-  //entry: [ 'bootstrap-loader', path.join(__dirname, 'src', 'index.tsx')],
   entry: path.join(__dirname, 'src', 'index.tsx'),
   devtool: 'eval-source-map',
   module: {

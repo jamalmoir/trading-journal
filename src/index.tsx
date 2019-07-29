@@ -13,7 +13,11 @@ import '@fortawesome/fontawesome-free/js/regular'
 import '@fortawesome/fontawesome-free/js/brands'
 import 'bootstrap';
 import './style.scss';
-import "react-datepicker/dist/react-datepicker.css";
+//import './greyson.scss';
+//import './greyson.css';
+import './fresca.scss';
+import './react-tags.scss';
+import 'react-datepicker/dist/react-datepicker.css';
 
 // @ts-ignore
 store.firebaseAuthIsReady.then(() => {

@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { Dispatch } from 'redux';
-import Modal from 'react-modal';
 
 import Types from 'Types'
 
@@ -12,6 +11,7 @@ import { AppAction } from '../../redux/reducers/app'
 import { APP_LOAD } from '../../redux/actions/actionTypes';
 import { Journals } from '../journals';
 import { Journal } from '../journal';
+import { Trade } from '../trade';
 import { Login } from '../login';
 import { ProtectedRoute } from '../../components/ProtectedRoute';
 import { NavBar } from '../../components/NavBar';
@@ -33,12 +33,11 @@ const content = (
         <Route exact path="/login" component={ Login }/>
         <ProtectedRoute exact path="/" component={ Journals }/>
         <ProtectedRoute exact path="/journal/:journalId" component={ Journal }/>
+        <ProtectedRoute exact path="/journal/:journalId/trade/:tradeId" component={ Trade }/>
       </Switch>
     </div>
   </div>
 )
-
-Modal.setAppElement('#root')
 
 class AppPage extends React.Component<AppProps> {
   componentDidMount() {

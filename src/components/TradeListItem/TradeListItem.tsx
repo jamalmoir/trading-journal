@@ -3,6 +3,7 @@ import React from 'react';
 import Types from 'Types';
 
 import './tradeListItem.scss';
+import { Link } from 'react-router-dom';
 //import { TradeEditModal } from '../TradeEditModal';
 
 
@@ -22,13 +23,14 @@ export const TradeListItem = (props: TradeListProps) => {
       <td className={'trade-list-item-cell'}>{ props.trade.positionSize.toString() }</td>
       <td className={'trade-list-item-cell'}>{ props.trade.stopLoss.toString() }</td>
       <td className={'trade-list-item-cell'}>{ props.trade.takeProfit.toString() }</td>
-      <td className={'trade-list-item-cell'}>{ props.trade.exitDate.toLocaleDateString() }</td>
-      <td className={'trade-list-item-cell'}>{ props.trade.exitPrice.toString() }</td>
-      <td className={'trade-list-item-cell'}>{ props.trade.pl.toString() }</td>
+      <td className={'trade-list-item-cell'}>{ props.trade.pl ? props.trade.exitDate.toLocaleDateString() : '' }</td>
+      <td className={'trade-list-item-cell'}>{ props.trade.exitPrice ? props.trade.exitPrice.toString() : '' }</td>
+      <td className={'trade-list-item-cell'}>{ props.trade.pl ? props.trade.pl.toString() : '' }</td>
       <td className={'trade-list-item-cell'}>
-        <i className="trade-list-item-edit far fa-edit" data-toggle="modal" data-target="#journalEditModal"></i>
+        <Link to={ props.trade.journalId  + '/trade/' + props.trade.id}>
+          <i className="trade-list-item-edit far fa-edit" data-toggle="modal" data-target="#journalEditModal"></i>
+        </Link>
       </td>
-      {/*<TadeEditModal id='tradeEditModal' trade={ props.trade } />*/}
     </tr>
   )
 }

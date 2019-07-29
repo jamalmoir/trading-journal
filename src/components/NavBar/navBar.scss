@@ -1,4 +1,14 @@
-@import "~bootstrap/scss/bootstrap";
+.header {
+		margin-bottom: 3em;
+}
 
-.navBar {
+.header-image {
+	height: 3em;
+	width: 100%;
+	background: url(/src/images/candlestick-chart01.jpg) no-repeat center center;
+	background-size: cover;
+}
+
+.header-breadcrumbs {
+	background-color: #e9ecef;
 }

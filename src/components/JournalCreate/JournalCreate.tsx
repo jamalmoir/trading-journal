@@ -80,7 +80,7 @@ class JournalCreateComponent extends Component<JournalCreateProps, JournalCreate
                value={ this.state.journalName }
                onChange={ (e) => this.updateJournalName(e.target.value) }
         />
-        <select className="custom-select col-4"
+        <select className="form-control custom-select col-4"
                 value={ this.state.journalKind }
                 onChange={ (e) => this.updateJournalKind(e.target.value as 'live' | 'demo' | 'backtest') }
         >
