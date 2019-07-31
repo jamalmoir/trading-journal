@@ -30,12 +30,12 @@ const BreadcrumbsComponent = (props: BreadcrumbsProps) => {
     '/journal/:journalId': [routes['/'], routes['/journal/:journalId']],
     '/journal/:journalId/trade/:tradeId': [routes['/'], routes['/journal/:journalId'], routes['/journal/:journalId/trade/:tradeId']],
   }
-  console.log(props.route)
+
   if (props.route && props.route.path && props.route.params) {
     return (
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
-          {crumbs[props.route.path].map((r: any) => <li className='breadcrumb-item'><Link to={r.url()}>{r.name}</Link></li>)}
+          {crumbs[props.route.path].map((r: any) => <li className='breadcrumb-item' key={r.name}><Link to={r.url()}>{r.name}</Link></li>)}
         </ol>
       </nav>
     )

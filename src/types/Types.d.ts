@@ -1,14 +1,11 @@
-import { ReactNode } from 'react';
-import { Action, AnyAction, Dispatch } from 'redux';
-import { StateType } from 'typesafe-actions';
-
-import rootReducer from '../redux/reducer';
-import {AppState, AppAction} from '../redux/reducers/app'
-import { AuthState, AuthAction } from '../redux/reducers/auth';
-import { JournalState, JournalAction } from '../redux/reducers/journal';
-import { CallHistoryMethodAction } from 'connected-react-router';
-import { Money, CurrencySymbol } from '../utils/moolah';
 import Big from 'big.js';
+import { CallHistoryMethodAction } from 'connected-react-router';
+import { Action, AnyAction, Dispatch } from 'redux';
+import { AppAction, AppState } from '../redux/reducers/app';
+import { AuthAction, AuthState } from '../redux/reducers/auth';
+import { JournalAction, JournalState } from '../redux/reducers/journal';
+import { CurrencySymbol, Money } from '../utils/moolah';
+
 
 
 declare module 'Types' {
@@ -37,6 +34,7 @@ declare module 'Types' {
   }
 
   export interface Trade {
+    [index: string]: any;
     id: string;
     journalId: string;
     created: Date;
@@ -54,13 +52,16 @@ declare module 'Types' {
     fees: Money;
     pl: Money;
     hitTakeProfit: boolean;
+    mfe: Big;
+    mae: Big;
     tags: string[];
     entryComment: string;
     duringComment: string;
     exitComment: string;
     flag: boolean;
-    emotion: string[];
-    rating: -2 | -1 | 0 | 1 | 2;
+    entryEmotion: string[];
+    exitEmotion: string[];
+    rating: -1 | 0 | 1;
     charts: string[];
   }
 }

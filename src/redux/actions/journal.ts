@@ -1,21 +1,11 @@
-import {
-  FETCH_JOURNALS,
-  CREATE_JOURNAL,
-  MODIFY_JOURNAL,
-  FETCH_TRADES,
-  CREATE_TRADE,
-  MODIFY_TRADE,
-} from './actionTypes';
-import { action } from 'typesafe-actions';
+import { firestore } from 'firebase';
+import { getFirebase } from 'react-redux-firebase';
 import { Dispatch } from 'redux';
 import { getFirestore } from 'redux-firestore';
-import { getFirebase } from 'react-redux-firebase';
-
 import Types from 'Types';
-import { JournalAction, JournalState } from '../reducers/journal';
-import { firestore } from 'firebase';
-import { useSelector } from 'react-redux';
-import { AuthState } from '../reducers/auth';
+import { JournalState } from '../reducers/journal';
+import { CREATE_JOURNAL, CREATE_TRADE, FETCH_JOURNALS, FETCH_TRADES, MODIFY_JOURNAL, MODIFY_TRADE } from './actionTypes';
+
 
 type Extras = {
   getFirebase: typeof getFirebase,
@@ -91,11 +81,11 @@ let extractTrades = (snapshot: firestore.QuerySnapshot): Types.Trade[] => {
   snapshot.forEach((doc: firestore.QueryDocumentSnapshot) => {
     let data = doc.data();
 
-    trades.push({
+    let trade: Types.Trade = {
       id: doc.id,
       journalId: data.journalId,
-      created: new Date(data.created * 1000),
-      modified: new Date(data.modified * 1000),
+      created: new Date(data.created.seconds * 1000),
+      modified: new Date(data.modified.seconds * 1000),
       instrument: data.instrument,
       strategy: data.strategy,
       kind: data.kind,
@@ -109,15 +99,20 @@ let extractTrades = (snapshot: firestore.QuerySnapshot): Types.Trade[] => {
       fees: data.fees,
       pl: data.pl,
       hitTakeProfit: data.hitTakeProfit,
+      mfe: data.mfe || null,
+      mae: data.message || null,
       tags: data.tags,
       entryComment: data.entryComment,
       duringComment: data.duringComment,
       exitComment: data.exitComment,
       flag: data.flag,
-      emotion: data.emotion,
+      entryEmotion: data.emotion || null,
+      exitEmotion: data.emotion || null,
       rating: data.rating,
       charts: data.charts,
-    })
+    }
+
+    trades.push(trade);
   })
 
   return trades;
@@ -127,7 +122,6 @@ export const fetchTrades = (journal: Types.Journal) => {
   return (dispatch: Dispatch, getState: () => Types.RootState, { getFirebase, getFirestore }: Extras) => {
     // @ts-ignore
     const firestore = getFirestore(); 
-    const auth = getState().firebase.auth;
     let journalId = typeof journal === 'string' ? journal : journal.id;
 
     firestore.collection('trades').where("journalId", "==", journalId).get().then((snapshot: firestore.QuerySnapshot) => {
@@ -142,13 +136,14 @@ export const createTrade = (trade: Types.Trade) => {
   return (dispatch: Dispatch, getState: () => Types.RootState, { getFirebase, getFirestore }: Extras) => {
     // @ts-ignore
     const firestore = getFirestore(); 
-    const auth = getState().firebase.auth;
 
     delete trade.id;
 
     let flatTrade = {
       ...trade,
-      entryPrice: trade.entryPrice.toString(),
+      created: new Date(),
+      modified: new Date(),
+      entryPrice: trade.entryPrice.toString(), //TODO: OR THESE
       positionSize: trade.positionSize.toString(),
       stopLoss: trade.stopLoss.toString(),
       takeProfit: trade.takeProfit.toString(),
@@ -169,6 +164,7 @@ export const modifyTrade = (trade: Types.Trade) => {
   return (dispatch: Dispatch, getState: () => Types.RootState, { getFirebase, getFirestore }: Extras) => {
     // @ts-ignore
     const firestore = getFirestore(); 
+    trade.modified = new Date();
 
     firestore.collection('trades').doc(trade.id).update(trade).then(() => {
       dispatch({type: MODIFY_TRADE, trade});

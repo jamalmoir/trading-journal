@@ -1,15 +1,11 @@
 import React from 'react';
-
-import { Link, match } from 'react-router-dom';
-import './navBar.scss';
-import {withRouter} from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Breadcrumbs } from '../Breadcrumbs';
+import './navBar.scss';
 
+interface NavBarProps {}
 
-interface NavBarProps {
-}
-
-export const NavBar = withRouter(props => {
+export const NavBar = withRouter((props: NavBarProps) => {
 	return (
 		<div className='header'>
 			{ /*<div className='header-image'></div> */ }

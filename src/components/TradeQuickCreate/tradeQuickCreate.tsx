@@ -1,15 +1,13 @@
-import React, { Component, ChangeEvent } from 'react';
+import Big from 'big.js';
+import React, { Component } from 'react';
+import DatePicker from 'react-datepicker';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import  Big from 'big.js';
-import DatePicker from 'react-datepicker';
-
 import Types from 'Types';
-
 import { createTrade } from '../../redux/actions/journal';
 import { Money } from '../../utils/moolah';
-
 import './tradeQuickCreate.scss';
+
 
 interface TradeQuickCreateProps {
   className?: string;
@@ -26,9 +24,6 @@ interface TradeQuickCreateState {
   positionSize: Big;
   stopLoss: Big;
   takeProfit: Big;
-  exitDate: Date;
-  exitPrice: Big;
-  pl: Money;
   auth: any;
 }
 
@@ -45,9 +40,6 @@ class TradeQuickCreateComponent extends Component<TradeQuickCreateProps, TradeQu
       positionSize: null,
       stopLoss: null,
       takeProfit: null,
-      exitDate: null,
-      exitPrice: null,
-      pl: null,
       auth: {},
     }
   }
@@ -77,8 +69,8 @@ class TradeQuickCreateComponent extends Component<TradeQuickCreateProps, TradeQu
     let trade: Types.Trade = {
       id: null,
       journalId: this.props.journal.id,
-      created: new Date(),
-      modified: new Date(),
+      created: null,
+      modified: null,
       instrument: this.state.instrument,
       strategy: this.state.strategy,
       kind: this.state.kind,
@@ -87,17 +79,20 @@ class TradeQuickCreateComponent extends Component<TradeQuickCreateProps, TradeQu
       positionSize: this.state.positionSize,
       stopLoss: this.state.stopLoss,
       takeProfit: this.state.takeProfit,
-      exitDate: this.state.exitDate,
-      exitPrice: this.state.exitPrice,
-      fees: new Money('0', this.props.journal.currency),
-      pl: this.state.pl,
+      exitDate: null,
+      exitPrice: null,
+      fees: null,
+      pl: null,
+      mfe: null,
+      mae: null,
       hitTakeProfit: null,
       tags: [],
       entryComment: '',
       duringComment: '',
       exitComment: '',
       flag: false,
-      emotion: [],
+      entryEmotion: [],
+      exitEmotion: [],
       rating: null,
       charts: [],
     }

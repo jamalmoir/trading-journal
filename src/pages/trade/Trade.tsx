@@ -1,20 +1,18 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import ReactTags from 'react-tag-autocomplete';
-
-import Types from 'Types';
-
-import { JournalAction } from '../../redux/reducers/journal';
-
-import './trade.scss';
-import { fetchTrades } from '../../redux/actions/journal';
-import { match } from 'react-router';
-import { Money } from '../../utils/moolah';
 import Big from 'big.js';
+import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
+import { connect } from 'react-redux';
+import { match } from 'react-router';
+import ReactTags, { Tag } from 'react-tag-autocomplete';
+import { Dispatch } from 'redux';
+import Types from 'Types';
 import { Heading } from '../../components/Heading';
 import { routeChange } from '../../redux/actions/app';
+import { fetchTrades, modifyTrade } from '../../redux/actions/journal';
+import { JournalAction } from '../../redux/reducers/journal';
+import { Money } from '../../utils/moolah';
+import './trade.scss';
+
 
 interface TradePageProps {
   trades: Types.Trade[];
@@ -22,29 +20,24 @@ interface TradePageProps {
   match: match<{ journalId: string, tradeId: string }>;
   onFetchTrades: (journal: Types.Journal | string) => null;
   onRouteChange: (route: any) => null;
+  onModifyTrade: (trade: Types.Trade) => null;
 }
 
 interface TradePageState {
+  [index: string]: any;
   trade: Types.Trade;
   journal: Types.Journal;
   tags: {
-    tags: {id: string, name: string}[],
-    suggestions: {id: string, name: string}[],
+    tags: Tag[],
+    suggestions: Tag[],
   };
   emotions: {
-    entryTags: {id: string, name: string}[],
-    exitTags: {id: string, name: string}[],
-    suggestions: {id: string, name: string}[],
+    entryTags: Tag[],
+    exitTags: Tag[],
+    suggestions: Tag[],
   };
   auth: any;
 }
-
-const KeyCodes = {
-  comma: 188,
-  enter: 13,
-};
- 
-const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
 class TradePage extends Component<TradePageProps, TradePageState> {
   constructor(props: TradePageProps) {
@@ -118,7 +111,7 @@ class TradePage extends Component<TradePageProps, TradePageState> {
   updateInputState = (key: string, val: string | Date | boolean) => {
     let processedVal: string | Money | Date | Big | boolean;
     const moneyValues = ['pl', 'fees'];
-    const bigValues = ['entryPrice', 'positionSize', 'stopLoss', 'takeProfit', 'exitPrice'];
+    const bigValues = ['entryPrice', 'positionSize', 'stopLoss', 'takeProfit', 'exitPrice', 'mfe', 'mae'];
 
     if (key in moneyValues && typeof val === 'string') {
       processedVal = new Money(val, this.state.journal.currency);
@@ -131,33 +124,80 @@ class TradePage extends Component<TradePageProps, TradePageState> {
     this.setState((prevState: TradePageState) => {
       return {
         ...prevState,
-        [key]: processedVal,
+        trade: {
+          ...prevState.trade,
+          [key]: processedVal,
+        }
       }
     })
   }
 
-  handleDelete = (i: number) => {
-      this.setState((prevState: TradePageState) => {
-        return {
-          ...prevState,
-          tags: {
-            ...prevState.tags,
-            tags: prevState.tags.tags.filter((tag, index) => index !== i),
-          }
+  handleTagDelete = (kind: string, i: number) => {
+    let stateKey: string, tagsKey: string;
+
+    if (kind === 'tags') {
+      stateKey = 'tags';
+      tagsKey = 'tags';
+    } else if (kind === 'entryEmotion') {
+      stateKey = 'emotions';
+      tagsKey = 'entryTags';
+    } else if (kind === 'exitEmotion') {
+      stateKey = 'emotions';
+      tagsKey = 'exitTags';
+    }
+
+    this.setState((prevState: TradePageState) => {
+      return {
+        ...prevState,
+        [stateKey]: {
+          ...prevState.tags,
+          [tagsKey]: prevState[stateKey][tagsKey].filter((tag: Tag, index:number) => index !== i),
+        },
+        trade: {
+          ...prevState.trade,
+          [kind]: prevState.trade[kind].filter((tag: string, index: number) => index !== i),
         }
-      });
+      }
+    });
   }
 
-  handleAddition = (tag: {id: string, name: string}) => {
-      this.setState((prevState: TradePageState) => {
-        return {
-          ...prevState,
-          tags: {
-            ...prevState.tags,
-            tags: [...prevState.tags.tags, tag]
-          }
+  handleTagAddition = (kind: string, tag: Tag) => {
+    let stateKey: string, tagsKey: string;
+
+    if (kind === 'tags') {
+      stateKey = 'tags';
+      tagsKey = 'tags';
+    } else if (kind === 'entryEmotion') {
+      stateKey = 'emotions';
+      tagsKey = 'entryTags';
+    } else if (kind === 'exitEmotion') {
+      stateKey = 'emotions';
+      tagsKey = 'exitTags';
+    } else {
+      return
+    }
+
+    this.setState((prevState: TradePageState) => {
+      return {
+        ...prevState,
+        [stateKey]: {
+          ...prevState[stateKey],
+          [tagsKey]: [...prevState[stateKey][tagsKey], tag]
+        },
+        trade: {
+          ...prevState.trade,
+          [kind]: [...prevState.trade[kind], tag.name]
         }
-      })
+      }
+    })
+  }
+
+  modifyTrade = () => {
+    for(const key of Object.keys(this.state.trade)) {
+      typeof this.state.trade[key] === 'undefined' ? null : this.state.trade[key];
+    }
+
+    this.props.onModifyTrade(this.state.trade);
   }
 
   render() {
@@ -166,7 +206,10 @@ class TradePage extends Component<TradePageProps, TradePageState> {
     ? <div></div>
     :(
       <div className='trade'>
-        <Heading text={ this.state.journal.name + " >> " + (this.state.trade.kind.charAt(0).toUpperCase() + this.state.trade.kind.slice(1)) + " " + this.state.trade.instrument + " Trade" } />
+        <Heading text={ this.state.journal.name + " | " + (this.state.trade.kind.charAt(0).toUpperCase() + this.state.trade.kind.slice(1)) + " " + this.state.trade.instrument + " Trade" } />
+        <div className='trade-controls'>
+          <button className="btn btn-outline-primary trade-quick-create-button form-control col-sm-1" type="button" onClick={ this.modifyTrade }>Update</button>
+        </div>
         <div className="trade-body row">
           <div className='trade-details trade-inputs col-sm-3'>
             <div className="card">
@@ -216,8 +259,8 @@ class TradePage extends Component<TradePageProps, TradePageState> {
                   <label>Tags</label>
                   <ReactTags tags={ this.state.tags.tags }
                             suggestions={ this.state.tags.suggestions }
-                            handleDelete={ this.handleDelete }
-                            handleAddition={ this.handleAddition } 
+                            handleDelete={ (i) => this.handleTagDelete('tags', i) }
+                            handleAddition={ (tag) => this.handleTagAddition('tags', tag) } 
                             allowNew/>
                 </div>
               </div>
@@ -288,8 +331,8 @@ class TradePage extends Component<TradePageProps, TradePageState> {
                   <ReactTags tags={ this.state.emotions.entryTags }
                             suggestions={ this.state.emotions.suggestions }
                             placeholder='Add Emotion'
-                            handleDelete={ this.handleDelete }
-                            handleAddition={ this.handleAddition } 
+                            handleDelete={ (i) => this.handleTagDelete('entryEmotion', i) }
+                            handleAddition={ (tag) => this.handleTagAddition('entryEmotion', tag) } 
                             allowNew/>
                 </div>
               </div>
@@ -382,8 +425,8 @@ class TradePage extends Component<TradePageProps, TradePageState> {
                   <ReactTags tags={ this.state.emotions.exitTags }
                             placeholder='Add Emotion'
                             suggestions={ this.state.emotions.suggestions }
-                            handleDelete={ this.handleDelete }
-                            handleAddition={ this.handleAddition } 
+                            handleDelete={ (i) => this.handleTagDelete('exitEmotion', i) }
+                            handleAddition={ (tag) => this.handleTagAddition('exitEmotion', tag) } 
                             allowNew/>
                 </div>
               </div>
@@ -418,23 +461,23 @@ class TradePage extends Component<TradePageProps, TradePageState> {
                   </div>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="trade-exit-price">MFE</label>
-                  <input id="trade-exit-price"
+                  <label htmlFor="trade-exit-mfe">MFE</label>
+                  <input id="trade-exit-mfe"
                         type="text"
                         className="form-control"
                         placeholder="MFE"
-                        value={ this.state.trade.exitPrice ? this.state.trade.exitPrice.toString() : '' }
-                        onChange={ (e) => this.updateInputState('exitPrice', e.target.value) }
+                        value={ this.state.trade.mfe ? this.state.trade.mfe.toString() : '' }
+                        onChange={ (e) => this.updateInputState('mfe', e.target.value) }
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="trade-fees">MAE</label>
-                  <input id="trade-fees"
+                  <label htmlFor="trade-mae">MAE</label>
+                  <input id="trade-mae"
                         type="text"
                         className="form-control"
                         placeholder="MAE"
-                        value={ this.state.trade.fees ? this.state.trade.fees.toString() : '' }
-                        onChange={ (e) => this.updateInputState('fees', e.target.value) }
+                        value={ this.state.trade.mae ? this.state.trade.mae.toString() : '' }
+                        onChange={ (e) => this.updateInputState('mae', e.target.value) }
                   />
                 </div>
               </div>
@@ -458,6 +501,8 @@ const mapDispatchToProps = (dispatch: Dispatch<JournalAction>) => ({
   onFetchTrades: (journal: Types.Journal | string) => dispatch(fetchTrades(journal)),
   // @ts-ignore
   onRouteChange: (route: any) => dispatch(routeChange(route)),
+  // @ts-ignore
+  onModifyTrade: (trade: Types.Trade) => dispatch(modifyTrade(trade)),
 });
 
 export const Trade = connect(mapStateToProps, mapDispatchToProps)(TradePage);
