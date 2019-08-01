@@ -1,5 +1,5 @@
 .header {
-		margin-bottom: 3em;
+		margin-bottom: 0.3em;
 }
 
 .header-image {
@@ -9,6 +9,23 @@
 	background-size: cover;
 }
 
+.navbar-brand.logo {
+	margin-right: 3em;
+
+	img {
+		width: 6em;
+		height: auto;
+	}
+}
+
+.header-link {
+	color: white !important;
+}
+
 .header-breadcrumbs {
-	background-color: #e9ecef;
+	margin-top: 1em;
+
+	ol {
+		margin: 0;
+	}
 }

@@ -13,9 +13,7 @@ import '@fortawesome/fontawesome-free/js/regular'
 import '@fortawesome/fontawesome-free/js/brands'
 import 'bootstrap';
 import './style.scss';
-//import './greyson.scss';
-//import './greyson.css';
-import './fresca.scss';
+import './custom-theme.scss';
 import './react-tags.scss';
 import 'react-datepicker/dist/react-datepicker.css';
 

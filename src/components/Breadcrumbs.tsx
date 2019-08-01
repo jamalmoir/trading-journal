@@ -33,8 +33,8 @@ const BreadcrumbsComponent = (props: BreadcrumbsProps) => {
 
   if (props.route && props.route.path && props.route.params) {
     return (
-      <nav aria-label="breadcrumb">
-        <ol className="breadcrumb">
+      <nav aria-label="breadcrumb bg-transparent">
+        <ol className="breadcrumb bg-transparent">
           {crumbs[props.route.path].map((r: any) => <li className='breadcrumb-item' key={r.name}><Link to={r.url()}>{r.name}</Link></li>)}
         </ol>
       </nav>
