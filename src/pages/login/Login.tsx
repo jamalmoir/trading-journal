@@ -1,15 +1,13 @@
-import React, { Component, ChangeEvent, Dispatch } from 'react';
-import { Link } from 'react-router-dom';
+import { GoBack, push, Push } from 'connected-react-router';
+import React, { ChangeEvent, Component, Dispatch } from 'react';
 import { connect } from 'react-redux';
-import { goBack, GoBack, push, Push } from 'connected-react-router';
-
+import { Link, Redirect } from 'react-router-dom';
 import Types from 'Types';
-
-import styles from './login.scss';
-import { StandardButton } from '../../components/StandardButton';
+import { Heading } from '../../components/Heading';
 import { TextInput } from '../../components/TextInput';
 import { authenticateUser } from '../../redux/actions/auth';
-import { validate } from '../../utils/validation'
+import { validate } from '../../utils/validation';
+import './login.scss';
 
 
 interface LoginState {
@@ -26,6 +24,7 @@ interface LoginState {
 }
 
 interface LoginProps {
+  auth: any;
   onLogin: (authData: {email: string, password: string}) => null;
   goBack: GoBack;
   push: Push;
@@ -93,11 +92,16 @@ class LoginPage extends Component<LoginProps> {
   }
 
   render() {
+    if (this.props.auth.uid) {
+      return (
+        <Redirect to={ {pathname: '/', state: {from: '/login'}} } />
+      )
+    }
     return (
-      <div className={ styles.login }>
-        <div className={ styles.loginForm }>
-          <h4>Login</h4>
-          <div className={ styles.inputs }>
+      <div className='login'>
+        <div className='login-form'>
+          <Heading text='Login' />
+          <form className='inputs'>
             <TextInput type="email"
                        placeholder="email"
                        value={ this.state.controls.email.value }
@@ -109,15 +113,21 @@ class LoginPage extends Component<LoginProps> {
                        errors={ this.state.controls.password.errors.length && this.state.controls.password.touched }
                        onChange ={(event: ChangeEvent<HTMLInputElement>) => this.updateInputState('password', event) } />
             <Link to="/">
-              <StandardButton text="login" onClick={ this.loginHandler } />
+              <button className="btn btn-primary" onClick={ this.loginHandler }>Login</button>
             </Link>
-          </div>
-          <div className={ styles.registerText }>
+          </form>
+          <div className='register-text'>
             Don't have an account? <Link to="">Register</Link>
           </div>
         </div>
       </div>
     )
+  }
+}
+
+const mapStateToProps = (state: Types.RootState) => {
+  return {
+    auth: state.firebase.auth,
   }
 }
 
@@ -129,4 +139,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Types.RootAction>) => {
   }
 }
 
-export const Login = connect(null, mapDispatchToProps)(LoginPage);
+export const Login = connect(mapStateToProps, mapDispatchToProps)(LoginPage);

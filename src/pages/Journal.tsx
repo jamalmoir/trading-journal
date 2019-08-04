@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-
-import Types from 'Types';
-
-import { Heading } from '../../components/Heading';
-import { TradeList } from '../../components/TradeList';
-import { TradeQuickCreate } from '../../components/TradeQuickCreate';
-import { JournalAction } from '../../redux/reducers/journal';
-
-import styles from './journal.scss';
-import { fetchTrades } from '../../redux/actions/journal';
 import { match } from 'react-router';
-import { routeChange } from '../../redux/actions/app';
+import { Dispatch } from 'redux';
+import Types from 'Types';
+import { Heading } from '../components/Heading';
+import { TradeList } from '../components/TradeList';
+import { TradeQuickCreate } from '../components/TradeQuickCreate';
+import { routeChange } from '../redux/actions/app';
+import { fetchTrades } from '../redux/actions/journal';
+import { JournalAction } from '../redux/reducers/journal';
+
 
 interface JournalPageProps {
   journals: Types.Journal[];
@@ -75,7 +72,7 @@ class JournalPage extends Component<JournalPageProps, JournalPageState> {
   render() {
     return (
       <div className='journal'>
-        { this.state.journal ? <Heading className={ styles.journalsHeading } text={ this.state.journal.name } /> : ''}
+        { this.state.journal ? <Heading className='journals-heading' text={ this.state.journal.name } /> : ''}
         { this.state.journal ? <TradeQuickCreate journal={ this.state.journal } /> : ''}
         
         <TradeList trades={ this.props.trades } />

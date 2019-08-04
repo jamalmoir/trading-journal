@@ -1,5 +1,5 @@
 import Big from 'big.js';
-import React, { Component } from 'react';
+import React, { Component, ChangeEvent } from 'react';
 import DatePicker from 'react-datepicker';
 import { connect } from 'react-redux';
 import { match } from 'react-router';
@@ -12,6 +12,7 @@ import { fetchTrades, modifyTrade } from '../../redux/actions/journal';
 import { JournalAction } from '../../redux/reducers/journal';
 import { Money } from '../../utils/moolah';
 import './trade.scss';
+import { TextInput } from '../../components/TextInput';
 
 
 interface TradePageProps {
@@ -208,7 +209,8 @@ class TradePage extends Component<TradePageProps, TradePageState> {
       <div className='trade'>
         <Heading text={ this.state.journal.name + " | " + (this.state.trade.kind.charAt(0).toUpperCase() + this.state.trade.kind.slice(1)) + " " + this.state.trade.instrument + " Trade" } />
         <div className='trade-controls'>
-          <button className="btn btn-outline-primary trade-quick-create-button form-control col-sm-1" type="button" onClick={ this.modifyTrade }>Update</button>
+          <button className="btn btn-outline-primary trade-quick-create-button form-control col-sm-1" type="button" onClick={ this.modifyTrade }>
+          </button>
         </div>
         <div className="trade-body row">
           <div className='trade-details trade-inputs col-sm-3'>
@@ -217,32 +219,29 @@ class TradePage extends Component<TradePageProps, TradePageState> {
               <div className="card-body">
                 <div className="form-group">
                   <label htmlFor="trade-instrument">Instrument</label>
-                  <input id="trade-instrument"
+                  <TextInput id="trade-instrument"
                         type="text"
-                        className="form-control"
                         placeholder="Instrument"
                         value={ this.state.trade.instrument }
-                        onChange={ (e) => this.updateInputState('instrument', e.target.value) }
+                        onChange={ (e: ChangeEvent<HTMLInputElement>) => this.updateInputState('instrument', e.target.value) }
                   />
                 </div>
                 <div className="form-group">
                   <label htmlFor="trade-strategy">Strategy</label>
-                  <input id="trade-strategy"
+                  <TextInput id="trade-strategy"
                         type="text"
-                        className="form-control"
                         placeholder="Strategy"
                         value={ this.state.trade.strategy }
-                        onChange={ (e) => this.updateInputState('strategy', e.target.value) }
+                        onChange={ (e: ChangeEvent<HTMLInputElement>) => this.updateInputState('strategy', e.target.value) }
                   />
                 </div>
                 <div className="form-group">
                   <label htmlFor="trade-kind">Kind</label>
-                  <input id="trade-kind"
+                  <TextInput id="trade-kind"
                         type="text"
-                        className="form-control"
                         placeholder="Kind"
                         value={ this.state.trade.kind }
-                        onChange={ (e) => this.updateInputState('kind', e.target.value) }
+                        onChange={ (e: ChangeEvent<HTMLInputElement>) => this.updateInputState('kind', e.target.value) }
                   />
                 </div>
                 <div className="form-check">
@@ -288,42 +287,38 @@ class TradePage extends Component<TradePageProps, TradePageState> {
                 </div>
                 <div className="form-group">
                   <label htmlFor="trade-entry-price">Entry Price</label>
-                  <input id="trade-entry-price"
+                  <TextInput id="trade-entry-price"
                         type="text"
-                        className="form-control"
                         placeholder="Entry Price"
                         value={ this.state.trade.entryPrice ? this.state.trade.entryPrice.toString() : '' }
-                        onChange={ (e) => this.updateInputState('entryPrice', e.target.value) }
+                        onChange={ (e: ChangeEvent<HTMLInputElement>) => this.updateInputState('entryPrice', e.target.value) }
                   />
                 </div>
                 <div className="form-group">
                   <label htmlFor="trade-position-size">Position Size</label>
-                  <input id="trade-position-size"
+                  <TextInput id="trade-position-size"
                         type="text"
-                        className="form-control"
                         placeholder="Position Size"
                         value={ this.state.trade.positionSize ? this.state.trade.positionSize.toString() : '' }
-                        onChange={ (e) => this.updateInputState('positionSize', e.target.value) }
+                        onChange={ (e: ChangeEvent<HTMLInputElement>) => this.updateInputState('positionSize', e.target.value) }
                   />
                 </div>
                 <div className="form-group">
                   <label htmlFor="trade-stop-loss">Stop Loss</label>
-                  <input id="trade-stop-loss"
+                  <TextInput id="trade-stop-loss"
                         type="text"
-                        className="form-control"
                         placeholder="Stop Loss"
                         value={ this.state.trade.stopLoss ? this.state.trade.stopLoss.toString() : '' }
-                        onChange={ (e) => this.updateInputState('stopLoss', e.target.value) }
+                        onChange={ (e: ChangeEvent<HTMLInputElement>) => this.updateInputState('stopLoss', e.target.value) }
                   />
                 </div>
                 <div className="form-group">
                   <label htmlFor="trade-take-profit">Take Profit</label>
-                  <input id="trade-take-profit"
+                  <TextInput id="trade-take-profit"
                         type="text"
-                        className="form-control"
                         placeholder="Take Profit"
                         value={ this.state.trade.takeProfit ? this.state.trade.takeProfit.toString() : '' }
-                        onChange={ (e) => this.updateInputState('takeProfit', e.target.value) }
+                        onChange={ (e: ChangeEvent<HTMLInputElement>) => this.updateInputState('takeProfit', e.target.value) }
                   />
                 </div>
                 <div className="form-group">
@@ -360,32 +355,29 @@ class TradePage extends Component<TradePageProps, TradePageState> {
                 </div>
                 <div className="form-group">
                   <label htmlFor="trade-exit-price">Exit Price</label>
-                  <input id="trade-exit-price"
+                  <TextInput id="trade-exit-price"
                         type="text"
-                        className="form-control"
                         placeholder="Exit Price"
                         value={ this.state.trade.exitPrice ? this.state.trade.exitPrice.toString() : '' }
-                        onChange={ (e) => this.updateInputState('exitPrice', e.target.value) }
+                        onChange={ (e: ChangeEvent<HTMLInputElement>) => this.updateInputState('exitPrice', e.target.value) }
                   />
                 </div>
                 <div className="form-group">
                   <label htmlFor="trade-fees">Fees</label>
-                  <input id="trade-fees"
+                  <TextInput id="trade-fees"
                         type="text"
-                        className="form-control"
                         placeholder="Fees"
                         value={ this.state.trade.fees ? this.state.trade.fees.toString() : '' }
-                        onChange={ (e) => this.updateInputState('fees', e.target.value) }
+                        onChange={ (e: ChangeEvent<HTMLInputElement>) => this.updateInputState('fees', e.target.value) }
                   />
                 </div>
                 <div className="form-group">
                   <label htmlFor="trade-pl">P/L</label>
-                  <input id="trade-pl"
+                  <TextInput id="trade-pl"
                         type="text"
-                        className="form-control"
                         placeholder="P/L"
                         value={ this.state.trade.pl ? this.state.trade.pl.toString() : '' }
-                        onChange={ (e) => this.updateInputState('pl', e.target.value) }
+                        onChange={ (e: ChangeEvent<HTMLInputElement>) => this.updateInputState('pl', e.target.value) }
                   />
                 </div>
                 <div className="form-group">
@@ -462,22 +454,20 @@ class TradePage extends Component<TradePageProps, TradePageState> {
                 </div>
                 <div className="form-group">
                   <label htmlFor="trade-exit-mfe">MFE</label>
-                  <input id="trade-exit-mfe"
+                  <TextInput id="trade-exit-mfe"
                         type="text"
-                        className="form-control"
                         placeholder="MFE"
                         value={ this.state.trade.mfe ? this.state.trade.mfe.toString() : '' }
-                        onChange={ (e) => this.updateInputState('mfe', e.target.value) }
+                        onChange={ (e: ChangeEvent<HTMLInputElement>) => this.updateInputState('mfe', e.target.value) }
                   />
                 </div>
                 <div className="form-group">
                   <label htmlFor="trade-mae">MAE</label>
-                  <input id="trade-mae"
+                  <TextInput id="trade-mae"
                         type="text"
-                        className="form-control"
                         placeholder="MAE"
                         value={ this.state.trade.mae ? this.state.trade.mae.toString() : '' }
-                        onChange={ (e) => this.updateInputState('mae', e.target.value) }
+                        onChange={ (e: ChangeEvent<HTMLInputElement>) => this.updateInputState('mae', e.target.value) }
                   />
                 </div>
               </div>

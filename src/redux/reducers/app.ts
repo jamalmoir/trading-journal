@@ -1,5 +1,4 @@
 import { ActionType } from 'typesafe-actions';
-
 import { APP_LOAD, ROUTE_CHANGE } from '../actions/actionTypes';
 import * as actions from '../actions/app';
 

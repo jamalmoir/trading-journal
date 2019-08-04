@@ -2,25 +2,23 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { Dispatch } from 'redux';
-
-import Types from 'Types'
-
-import styles from './app.scss';
-
-import { AppAction } from '../../redux/reducers/app'
-import { APP_LOAD } from '../../redux/actions/actionTypes';
-import { Journals } from '../journals';
-import { Journal } from '../journal';
-import { Trade } from '../trade';
-import { Login } from '../login';
-import { ProtectedRoute } from '../../components/ProtectedRoute';
+import Types from 'Types';
 import { NavBar } from '../../components/NavBar';
+import { ProtectedRoute } from '../../components/ProtectedRoute';
+import { APP_LOAD } from '../../redux/actions/actionTypes';
 import { fetchJournals } from '../../redux/actions/journal';
+import { AppAction } from '../../redux/reducers/app';
+import { Journal } from '../Journal';
+import { Journals } from '../Journals';
+import { Login } from '../login';
+import { Trade } from '../trade';
+import styles from './app.scss';
 
 
 interface AppProps {
   appLoaded: boolean;
   journals: Types.Journal[];
+  auth: any;
   onLoad: () => null;
   onFetchJournals: () => null;
 }
@@ -41,7 +39,7 @@ const content = (
 
 class AppPage extends React.Component<AppProps> {
   componentDidMount() {
-    if (!this.props.journals.length) {
+    if (!this.props.journals.length && this.props.auth.uid) {
       this.props.onFetchJournals();
     }
 
@@ -60,6 +58,7 @@ class AppPage extends React.Component<AppProps> {
 const mapStateToProps = (state: Types.RootState) => {
   return {
     appLoaded: state.app.appLoaded,
+    auth: state.firebase.auth,
     journals: state.journal.journals,
   }
 };

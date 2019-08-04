@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-
-import Types from 'Types';
-
-import { Heading } from '../../components/Heading';
-import { JournalList } from '../../components/JournalList';
-import { JournalCreate } from '../../components/JournalCreate';
-import { JournalAction } from '../../redux/reducers/journal';
-
-import styles from './journals.scss';
-import { fetchJournals } from '../../redux/actions/journal';
-import { routeChange } from '../../redux/actions/app';
 import { match } from 'react-router';
+import { Dispatch } from 'redux';
+import Types from 'Types';
+import { Heading } from '../components/Heading';
+import { JournalCreate } from '../components/JournalCreate';
+import { JournalList } from '../components/JournalList';
+import { routeChange } from '../redux/actions/app';
+import { fetchJournals } from '../redux/actions/journal';
+import { JournalAction } from '../redux/reducers/journal';
+
 
 interface JournalsProps {
   journals: Types.Journal[];
@@ -46,12 +43,12 @@ class JournalsPage extends Component<JournalsProps, JournalsState> {
 
   render() {
     return (
-      <div className={ styles.journals }>
-        <Heading className={ styles.journalsHeading } text="Journals" />
+      <div className='journals'>
+        <Heading className='journals-heading' text="Journals" />
 
         <JournalCreate />
         <JournalList
-          className={ styles.journalList }
+          className='journal-list'
           journals={ this.props.journals }
         />
       </div>

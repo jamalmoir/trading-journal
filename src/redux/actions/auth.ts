@@ -1,9 +1,7 @@
-import { USER_AUTH } from './actionTypes';
-import { AuthUser } from '../reducers/auth';
-import { action } from 'typesafe-actions';
-import { Dispatch } from 'redux';
 import { getFirebase } from 'react-redux-firebase';
+import { Dispatch } from 'redux';
 import { getFirestore } from 'redux-firestore';
+import { USER_SIGN_IN_SUCCESS, USER_SIGN_OUT_SUCCESS } from './actionTypes';
 
 type Extras = {
   getFirebase: typeof getFirebase,
@@ -16,7 +14,18 @@ export const authenticateUser = (credentials: any) => {
     const firebase = getFirebase(); 
 
     firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.password).then(() => {
-      dispatch({ type: USER_AUTH });
+      dispatch({ type: USER_SIGN_IN_SUCCESS });
+    }).catch((err: Error) => console.log(err));
+  }
+};
+
+export const unauthenticateUser = () => {
+  return (dispatch: Dispatch, getState: () => any, { getFirebase, getFirestore }: Extras) => {
+    // @ts-ignore
+    const firebase = getFirebase(); 
+
+    firebase.auth().signOut().then(() => {
+      dispatch({ type: USER_SIGN_OUT_SUCCESS });
     }).catch((err: Error) => console.log(err));
   }
 };

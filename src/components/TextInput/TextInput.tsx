@@ -1,20 +1,23 @@
 import React, { ChangeEvent } from 'react';
+import './textInput.scss';
 
-import styles from './textInput.scss';
 
 interface TextInputProps {
-  type: 'text' | 'email' | 'password';
+  type: 'text' | 'email' | 'password' | 'number';
   placeholder: string;
   value: string;
   errors?: boolean;
+  className?: string;
+  id?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const TextInput = (props: TextInputProps) => {
-  let errorClass = props.errors ? styles.errors : '';
+  let errorClass = props.errors ? 'errors' : '';
 
   return (
-    <input className={ styles.textInput + ' ' + errorClass }
+    <input id={ props.id }
+           className={ props.className + ' text-input form-control ' + errorClass }
            type={ props.type }
            placeholder={ props.placeholder }
            onChange={ props.onChange }>

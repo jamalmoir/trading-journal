@@ -1,18 +1,8 @@
-import { ActionType } from 'typesafe-actions';
-
 import Types from 'Types';
-
-import { 
-  FETCH_JOURNALS,
-  CREATE_JOURNAL,
-  MODIFY_JOURNAL,
-  DELETE_JOURNAL,
-  FETCH_TRADES,
-  CREATE_TRADE,
-  MODIFY_TRADE,
-  DELETE_TRADE,
-} from '../actions/actionTypes';
+import { ActionType } from 'typesafe-actions';
+import { CREATE_JOURNAL, CREATE_TRADE, DELETE_JOURNAL, FETCH_JOURNALS, FETCH_TRADES, MODIFY_JOURNAL, MODIFY_TRADE } from '../actions/actionTypes';
 import * as actions from '../actions/journal';
+
 
 export interface JournalState {
   journals: Types.Journal[];

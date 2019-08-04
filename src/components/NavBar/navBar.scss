@@ -1,31 +1,24 @@
 .header {
-		margin-bottom: 0.3em;
-}
+	margin-bottom: 3em;
 
-.header-image {
-	height: 3em;
-	width: 100%;
-	background: url(/src/images/candlestick-chart01.jpg) no-repeat center center;
-	background-size: cover;
-}
+	.navbar-brand.logo {
+		margin-right: 3em;
 
-.navbar-brand.logo {
-	margin-right: 3em;
-
-	img {
-		width: 6em;
-		height: auto;
+		img {
+			width: 6em;
+			height: auto;
+		}
 	}
-}
 
-.header-link {
-	color: white !important;
-}
+	.header-link {
+		color: white !important;
+	}
 
-.header-breadcrumbs {
-	margin-top: 1em;
+	.header-breadcrumbs {
+		margin-top: 1em;
 
-	ol {
-		margin: 0;
+		ol {
+			margin: 0;
+		}
 	}
 }

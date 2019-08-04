@@ -7,7 +7,6 @@ import { JournalAction, JournalState } from '../redux/reducers/journal';
 import { CurrencySymbol, Money } from '../utils/moolah';
 
 
-
 declare module 'Types' {
   export interface RootState {
     readonly app: AppState;

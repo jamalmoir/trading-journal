@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux' 
-import { modifyJournal } from '../redux/actions/journal';
-
+import { useDispatch } from 'react-redux';
 import Types from 'Types';
+import { modifyJournal } from '../redux/actions/journal';
+import { TextInput } from './TextInput';
+
 
 interface ModalProps {
   id: string
@@ -37,7 +38,7 @@ export const JournalEditModal = (props: ModalProps) => {
 
           <div className="modal-body">
             <div>
-              <input type="text"
+              <TextInput type="text"
                       className="form-control col-8"
                       placeholder="Journal name"
                       value={ journalName }

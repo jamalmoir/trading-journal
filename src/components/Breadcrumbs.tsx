@@ -1,9 +1,8 @@
 import React from 'react';
-
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Types from 'Types';
 
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 interface BreadcrumbsProps {
   route: any;

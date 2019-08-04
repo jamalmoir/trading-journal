@@ -7,6 +7,7 @@ import Types from 'Types';
 import { createTrade } from '../../redux/actions/journal';
 import { Money } from '../../utils/moolah';
 import './tradeQuickCreate.scss';
+import { TextInput } from '../TextInput';
 
 
 interface TradeQuickCreateProps {
@@ -121,13 +122,13 @@ class TradeQuickCreateComponent extends Component<TradeQuickCreateProps, TradeQu
     return (
       <div className='trade-quick-create container'>
         <div className='input-group mb-3'>
-          <input type="text"
+          <TextInput type='text'
                 className="form-control col-sm-2"
                 placeholder="Instrument"
                 value={ this.state.instrument }
                 onChange={ (e) => this.updateInputState('instrument', e.target.value) }
           />
-          <input type="text"
+          <TextInput type="text"
                 className="form-control col-sm-2"
                 placeholder="Strategy"
                 value={ this.state.strategy }
@@ -154,36 +155,38 @@ class TradeQuickCreateComponent extends Component<TradeQuickCreateProps, TradeQu
               dateFormat="MMMM d, yyyy h:mm aa"
             />
           </div>
-          <input type="text"
+          <TextInput type="text"
                 className="form-control col-sm-1"
                 placeholder="Entry Price"
                 value={ this.state.entryPrice ? this.state.entryPrice.toString() : undefined }
                 onChange={ (e) => this.updateInputState('entryPrice', e.target.value) }
           />
-          <input type="number"
+          <TextInput type="number"
                 className="form-control col-sm-1"
                 placeholder="Size"
                 value={ this.state.positionSize ? this.state.positionSize.toString() : undefined }
                 onChange={ (e) => this.updateInputState('positionSize', e.target.value) }
           />
-          <input type="text"
+          <TextInput type="text"
                 className="form-control col-sm-1"
                 placeholder="Stop Loss"
                 value={ this.state.stopLoss ? this.state.stopLoss.toString() : undefined }
                 onChange={ (e) => this.updateInputState('stopLoss', e.target.value) }
           />
-          <input type="text"
+          <TextInput type="text"
                 className="form-control col-sm-1"
                 placeholder="Take Profit"
                 value={ this.state.takeProfit ? this.state.takeProfit.toString() : undefined }
                 onChange={ (e) => this.updateInputState('takeProfit', e.target.value) }
           />
-          <button className="btn btn-outline-primary trade-quick-create-button form-control col-sm-1" type="button" onClick={ this.createTrade }>Create</button>
+          <button className="btn btn-outline-primary trade-quick-create-button form-control col-sm-1" type="button" onClick={ this.createTrade }>
+            Create
+          </button>
         </div>
       </div>
     )
   }
-};
+}
 
 const mapStateToProps = (state: Types.RootState) => {
   return {

@@ -1,11 +1,11 @@
-import React, { Component, ChangeEvent } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-
 import Types from 'Types';
+import { createJournal } from '../redux/actions/journal';
+import { JournalAction } from '../redux/reducers/journal';
+import { TextInput } from './TextInput';
 
-import { createJournal } from '../../redux/actions/journal';
-import { JournalAction } from '../../redux/reducers/journal';
 
 interface JournalCreateProps {
   className?: string;
@@ -74,7 +74,7 @@ class JournalCreateComponent extends Component<JournalCreateProps, JournalCreate
   render() {
     return (
       <div className={ this.props.className + ' input-group mb-3'}>
-        <input type="text"
+        <TextInput type="text"
                className="form-control col-8"
                placeholder="Journal name"
                value={ this.state.journalName }

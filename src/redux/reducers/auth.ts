@@ -1,6 +1,5 @@
 import { ActionType } from 'typesafe-actions';
-
-import { USER_AUTH } from '../actions/actionTypes';
+import { USER_SIGN_IN_SUCCESS, USER_SIGN_OUT_SUCCESS } from '../actions/actionTypes';
 import * as actions from '../actions/auth';
 
 
@@ -25,7 +24,11 @@ const initialState: AuthState = {
 const reducer = (state = initialState, action: AuthAction) => {
   // @ts-ignore
   switch (action.type) {
-    case USER_AUTH:
+    case USER_SIGN_IN_SUCCESS:
+      return <AuthState>{
+        ...state,
+      }
+    case USER_SIGN_OUT_SUCCESS:
       return <AuthState>{
         ...state,
       }

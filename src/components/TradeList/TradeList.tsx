@@ -1,9 +1,6 @@
 import React from 'react';
-
 import Types from 'Types';
-
 import { TradeListItem } from '../TradeListItem';
-
 import './tradeList.scss';
 
 

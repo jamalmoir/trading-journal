@@ -1,21 +1,21 @@
+import '@fortawesome/fontawesome-free/js/brands';
+import '@fortawesome/fontawesome-free/js/fontawesome';
+import '@fortawesome/fontawesome-free/js/regular';
+import '@fortawesome/fontawesome-free/js/solid';
+import 'bootstrap';
+import { ConnectedRouter } from 'connected-react-router';
+import React from 'react';
+import 'react-datepicker/dist/react-datepicker.css';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import React from 'react';
-import { store, history } from './redux/store';
-
 import { Route, Switch } from 'react-router-dom';
-import { ConnectedRouter } from 'connected-react-router';
-
-import { App } from './pages/app';
-import '@fortawesome/fontawesome-free/js/fontawesome'
-import '@fortawesome/fontawesome-free/js/solid'
-import '@fortawesome/fontawesome-free/js/regular'
-import '@fortawesome/fontawesome-free/js/brands'
-import 'bootstrap';
-import './style.scss';
 import './custom-theme.scss';
+import { App } from './pages/app';
 import './react-tags.scss';
-import 'react-datepicker/dist/react-datepicker.css';
+import { history, store } from './redux/store';
+import './style.scss';
+
+
 
 // @ts-ignore
 store.firebaseAuthIsReady.then(() => {

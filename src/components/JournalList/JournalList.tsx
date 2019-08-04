@@ -1,9 +1,6 @@
 import React from 'react';
-
 import Types from 'Types';
-
 import { JournalListItem } from '../JournalListItem';
-
 import './journalList.scss';
 
 

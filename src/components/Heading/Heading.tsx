@@ -1,6 +1,6 @@
 import React from 'react';
-
 import './heading.scss';
+
 
 interface HeadingProps {
   className?: string;
