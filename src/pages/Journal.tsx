@@ -4,6 +4,7 @@ import { match } from 'react-router';
 import { Dispatch } from 'redux';
 import Types from 'Types';
 import { Heading } from '../components/Heading';
+import { TradeFilter } from '../components/TradeFilter';
 import { TradeList } from '../components/TradeList';
 import { TradeQuickCreate } from '../components/TradeQuickCreate';
 import { routeChange } from '../redux/actions/app';
@@ -73,6 +74,7 @@ class JournalPage extends Component<JournalPageProps, JournalPageState> {
     return (
       <div className='journal'>
         { this.state.journal ? <Heading className='journals-heading' text={ this.state.journal.name } /> : ''}
+        { this.state.journal ? <TradeFilter /> : ''}
         { this.state.journal ? <TradeQuickCreate journal={ this.state.journal } /> : ''}
         
         <TradeList trades={ this.props.trades } />

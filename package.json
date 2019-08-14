@@ -44,7 +44,7 @@
   },
   "scripts": {
     "start": "webpack --mode development",
-    "dev": "webpack-dev-server --mode development --open",
+    "dev": "webpack-dev-server --mode development --open --hot --inline",
     "build": "webpack --mode production",
     "predeploy": "yarn run build",
     "deploy": "gh-pages -d build"

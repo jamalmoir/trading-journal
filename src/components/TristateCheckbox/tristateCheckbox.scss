@@ -1,0 +1,16 @@
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";
+
+.tristate-checkbox {
+  width: 1em;
+  height: 1em;
+  border: 1px solid #ced4da;
+
+  &.checked-false {
+    background: $danger;
+  }
+
+  &.checked-true {
+    background: $success;
+  }
+}
