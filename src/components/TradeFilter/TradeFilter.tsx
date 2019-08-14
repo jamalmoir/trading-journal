@@ -16,8 +16,8 @@ interface TradeFilterProps {
 interface TradeFilters {
   instrument: string | null;
   strategy: string | null;
-  kind: 'long' | 'short' | null;
-  rating: -1 | 0 | 1 | null;
+  kind: 'long' | 'short' | '' | null;
+  rating: -1 | 0 | 1 | '' | null;
   entryDate: Date | null;
   exitDate: Date | null;
   profit: boolean | null;
@@ -42,10 +42,10 @@ interface Tags {
 
 const TradeFilterComponent = (props: TradeFilterProps) => {
   const initialFilters: TradeFilters = {
-    instrument: 'empty',
-    strategy: 'empty',
-    kind: null,
-    rating: null,
+    instrument: null,
+    strategy: null,
+    kind: '',
+    rating: '',
     entryDate: null,
     exitDate: null,
     profit: null,
@@ -137,7 +137,7 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
         <select className="trade-filter custom-select"
                 value={ filters.kind }
                 onChange={ (e) => updateFilter('kind', e.target.value) }>
-          <option value="empty" disabled>Kind</option>
+          <option value="">Kind</option>
           <option value="long">Long</option>
           <option value="short">Short</option>
         </select>
@@ -147,7 +147,7 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
         <select className="trade-filter custom-select"
                 value={ filters.rating }
                 onChange={ (e) => updateFilter('rating', e.target.value) }>
-          <option value="empty" disabled>Rating</option>
+          <option value="">Rating</option>
           <option value="-1">-1</option>
           <option value="0">0</option>
           <option value="1">1</option>
@@ -178,6 +178,25 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
         </div>
       </div>
 
+      <div className="trade-filter-group col-sm-4">
+        <div className="trade-filter">
+          <ReactTags tags={ tags.tags.tags }
+            suggestions={ [] }
+            handleDelete={ (i: number) => handleTagDelete('tags', i) }
+            handleAddition={ (tag: Tag) => handleTagAddition('tags', tag) } 
+            placeholder='Add Tag'
+            allowNew/>
+        </div>
+        <div className="trade-filter">
+          <ReactTags tags={ tags.emotions.tags }
+            suggestions={ [] }
+            handleDelete={ (i: number) => handleTagDelete('emotions', i) }
+            handleAddition={ (tag: Tag) => handleTagAddition('emotions', tag) } 
+            placeholder='Add Emotion'
+            allowNew/>
+        </div>
+      </div>
+
       <div className="trade-filter-group col-sm-2">
         <div className="trade-filter form-check">
           <TristateCheckbox id='profit-tristate'
@@ -202,25 +221,6 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
                             className="form-check-input"
                             onClick={ (val) => updateFilter('managed', val) } />
           <label className="form-check-label" htmlFor="mangaged-tristate">Managed</label>
-        </div>
-      </div>
-
-      <div className="trade-filter-group col-sm-4">
-        <div className="trade-filter">
-          <ReactTags tags={ tags.tags.tags }
-            suggestions={ [] }
-            handleDelete={ (i: number) => handleTagDelete('tags', i) }
-            handleAddition={ (tag: Tag) => handleTagAddition('tags', tag) } 
-            placeholder='Add Tag'
-            allowNew/>
-        </div>
-        <div className="trade-filter">
-          <ReactTags tags={ tags.emotions.tags }
-            suggestions={ [] }
-            handleDelete={ (i: number) => handleTagDelete('emotions', i) }
-            handleAddition={ (tag: Tag) => handleTagAddition('emotions', tag) } 
-            placeholder='Add Emotion'
-            allowNew/>
         </div>
       </div>
     </div>
