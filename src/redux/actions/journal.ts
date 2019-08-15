@@ -4,7 +4,8 @@ import { Dispatch } from 'redux';
 import { getFirestore } from 'redux-firestore';
 import Types from 'Types';
 import { JournalState } from '../reducers/journal';
-import { CREATE_JOURNAL, CREATE_TRADE, FETCH_JOURNALS, FETCH_TRADES, MODIFY_JOURNAL, MODIFY_TRADE } from './actionTypes';
+import { CREATE_JOURNAL, CREATE_TRADE, CLEAR_TRADES, FETCH_JOURNALS, FETCH_TRADES, MODIFY_JOURNAL, MODIFY_TRADE, SET_ACTIVE_JOURNAL } from './actionTypes';
+import { action } from 'typesafe-actions';
 
 
 type Extras = {
@@ -46,6 +47,8 @@ export const fetchJournals = () => {
     }).catch((err: Error) => console.error("Failed to retrieve journal list." + err.message))
   }
 } 
+
+export const setActiveJournal = (journal: Types.Journal) => action(SET_ACTIVE_JOURNAL, journal);
 
 export const createJournal = (journal: Types.Journal) => {
   return (dispatch: Dispatch, getState: () => Types.RootState, { getFirebase, getFirestore }: Extras) => {
@@ -131,6 +134,8 @@ export const fetchTrades = (journal: Types.Journal) => {
     }).catch((err: Error) => console.error("Failed to retrieve trade list." + err.message))
   }
 } 
+
+export const clearTrades = () => action(CLEAR_TRADES);
 
 export const createTrade = (trade: Types.Trade) => {
   return (dispatch: Dispatch, getState: () => Types.RootState, { getFirebase, getFirestore }: Extras) => {

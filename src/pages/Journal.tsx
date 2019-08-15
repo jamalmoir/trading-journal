@@ -8,7 +8,7 @@ import { TradeFilter } from '../components/TradeFilter';
 import { TradeList } from '../components/TradeList';
 import { TradeQuickCreate } from '../components/TradeQuickCreate';
 import { routeChange } from '../redux/actions/app';
-import { fetchTrades } from '../redux/actions/journal';
+import { setActiveJournal } from '../redux/actions/journal';
 import { JournalAction } from '../redux/reducers/journal';
 
 
@@ -16,66 +16,37 @@ interface JournalPageProps {
   journals: Types.Journal[];
   trades: Types.Trade[];
   match: match<{ journalId: string }>;
-  onFetchTrades: (journal: Types.Journal) => null;
+  activeJournal: Types.Journal;
+  onSetActiveJournal: (journal: Types.Journal) => null;
   onRouteChange: (route: any) => null;
 }
 
-interface JournalPageState {
-  journal: Types.Journal;
-  selectedTrade: Types.Trade | null;
-}
 
-class JournalPage extends Component<JournalPageProps, JournalPageState> {
+class JournalPage extends Component<JournalPageProps> {
   constructor(props: JournalPageProps) {
     super(props);
 
-    this.state = {
-      journal: null,
-      selectedTrade: null,
-    }
-  }
-
-  componentWillMount() {
     this.props.onRouteChange(this.props.match)
-  }
 
-  componentDidMount() {
     if (this.props.journals.length) {
       let journal = this.props.journals.find(j => j.id === this.props.match.params.journalId);
-
-      this.props.onFetchTrades(journal);
-
-      this.setState((prevState: JournalPageState) => {
-        return {
-          ...prevState,
-          journal: journal,
-        }
-      })
+      this.props.onSetActiveJournal(journal);
     }
   }
 
   componentDidUpdate(prevProps: JournalPageProps) {
-    if (this.props.journals.length !== prevProps.journals.length) {
+    if (prevProps.journals.length !== this.props.journals.length && this.props.journals.length && this.props.activeJournal == null) {
       let journal = this.props.journals.find(j => j.id === this.props.match.params.journalId);
-
-      if (!this.props.trades.length || this.props.trades[0].journalId !== journal.id) {
-        this.props.onFetchTrades(journal);
-        this.setState((prevState: JournalPageState) => {
-          return {
-            ...prevState,
-            journal: journal,
-          }
-        })
-      }
+      this.props.onSetActiveJournal(journal);
     }
   }
 
   render() {
     return (
       <div className='journal'>
-        { this.state.journal ? <Heading className='journals-heading' text={ this.state.journal.name } /> : ''}
-        { this.state.journal ? <TradeFilter /> : ''}
-        { this.state.journal ? <TradeQuickCreate journal={ this.state.journal } /> : ''}
+        { this.props.activeJournal ? <Heading className='journals-heading' text={ this.props.activeJournal.name } /> : ''}
+        { this.props.activeJournal ? <TradeFilter /> : ''}
+        { this.props.activeJournal ? <TradeQuickCreate journal={ this.props.activeJournal } /> : ''}
         
         <TradeList trades={ this.props.trades } />
       </div>
@@ -92,9 +63,9 @@ const mapStateToProps = (state: Types.RootState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<JournalAction>) => ({
   // @ts-ignore
-  onFetchTrades: (journal: Types.Journal) => dispatch(fetchTrades(journal)),
-  // @ts-ignore
   onRouteChange: (route: any) => dispatch(routeChange(route)),
+  // @ts-ignore
+  onSetActiveJournal: (journal: Types.Journal) => dispatch(setActiveJournal(journal)),
 });
 
 export const Journal = connect(mapStateToProps, mapDispatchToProps)(JournalPage);

@@ -8,7 +8,7 @@ import { Dispatch } from 'redux';
 import Types from 'Types';
 import { Heading } from '../../components/Heading';
 import { routeChange } from '../../redux/actions/app';
-import { fetchTrades, modifyTrade } from '../../redux/actions/journal';
+import { modifyTrade, setActiveJournal } from '../../redux/actions/journal';
 import { JournalAction } from '../../redux/reducers/journal';
 import { Money } from '../../utils/moolah';
 import './trade.scss';
@@ -18,16 +18,17 @@ import { TextInput } from '../../components/TextInput';
 interface TradePageProps {
   trades: Types.Trade[];
   journals: Types.Journal[];
+  activeJournal: Types.Journal;
   match: match<{ journalId: string, tradeId: string }>;
   onFetchTrades: (journal: Types.Journal | string) => null;
   onRouteChange: (route: any) => null;
   onModifyTrade: (trade: Types.Trade) => null;
+  onSetActiveJournal: (journal: Types.Journal) => null;
 }
 
 interface TradePageState {
   [index: string]: any;
   trade: Types.Trade;
-  journal: Types.Journal;
   tags: {
     tags: Tag[],
     suggestions: Tag[],
@@ -46,7 +47,6 @@ class TradePage extends Component<TradePageProps, TradePageState> {
 
     this.state = {
       trade: null,
-      journal: null,
       tags: {
         tags: [],
         suggestions: [
@@ -68,6 +68,7 @@ class TradePage extends Component<TradePageProps, TradePageState> {
       },
       auth: {},
     }
+
   }
 
   componentWillMount() {
@@ -78,32 +79,32 @@ class TradePage extends Component<TradePageProps, TradePageState> {
     if (this.props.trades.length) {
       let trade = this.props.trades.find(t => t.id === this.props.match.params.tradeId &&
                                               t.journalId === this.props.match.params.journalId);
-      let journal = this.props.journals.find(j => j.id === this.props.match.params.journalId);
 
       this.setState((prevState: TradePageState) => {
         return {
           ...prevState,
           trade: {...trade},
-          journal: journal,
         }
       })
-    } else {
-      this.props.onFetchTrades(this.props.match.params.journalId);
-    }
+    } 
   }
 
   componentDidUpdate(prevProps: TradePageProps) {
+    if (prevProps.journals.length !== this.props.journals.length
+        && this.props.journals.length
+        && this.props.activeJournal == null) {
+      let journal = this.props.journals.find(j => j.id === this.props.match.params.journalId);
+      this.props.onSetActiveJournal(journal);
+    }
 
     if (this.props.trades.length !== prevProps.trades.length) {
       let trade = this.props.trades.find(t => t.id === this.props.match.params.tradeId &&
                                               t.journalId === this.props.match.params.journalId);
-      let journal = this.props.journals.find(j => j.id === this.props.match.params.journalId);
 
       this.setState((prevState: TradePageState) => {
         return {
           ...prevState,
           trade: {...trade},
-          journal: journal,
         }
       })
     }
@@ -203,13 +204,14 @@ class TradePage extends Component<TradePageProps, TradePageState> {
 
   render() {
     
-    return !this.state.trade || ! this.state.journal
+    return !this.state.trade
     ? <div></div>
     :(
       <div className='trade'>
-        <Heading text={ this.state.journal.name + " | " + (this.state.trade.kind.charAt(0).toUpperCase() + this.state.trade.kind.slice(1)) + " " + this.state.trade.instrument + " Trade" } />
+        <Heading text={ this.props.activeJournal.name + " | " + (this.state.trade.kind.charAt(0).toUpperCase() + this.state.trade.kind.slice(1)) + " " + this.state.trade.instrument + " Trade" } />
         <div className='trade-controls'>
           <button className="btn btn-outline-primary trade-quick-create-button form-control col-sm-1" type="button" onClick={ this.modifyTrade }>
+            Submit
           </button>
         </div>
         <div className="trade-body row">
@@ -483,16 +485,17 @@ const mapStateToProps = (state: Types.RootState) => {
   return {
     trades: state.journal.trades,
     journals: state.journal.journals,
+    activeJournal: state.journal.activeJournal,
   }
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<JournalAction>) => ({
   // @ts-ignore
-  onFetchTrades: (journal: Types.Journal | string) => dispatch(fetchTrades(journal)),
-  // @ts-ignore
   onRouteChange: (route: any) => dispatch(routeChange(route)),
   // @ts-ignore
   onModifyTrade: (trade: Types.Trade) => dispatch(modifyTrade(trade)),
+  // @ts-ignore
+  onSetActiveJournal: (journal: Types.Journal) => dispatch(setActiveJournal(journal)),
 });
 
 export const Trade = connect(mapStateToProps, mapDispatchToProps)(TradePage);

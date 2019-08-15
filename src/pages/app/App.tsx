@@ -6,7 +6,7 @@ import Types from 'Types';
 import { NavBar } from '../../components/NavBar';
 import { ProtectedRoute } from '../../components/ProtectedRoute';
 import { APP_LOAD } from '../../redux/actions/actionTypes';
-import { fetchJournals } from '../../redux/actions/journal';
+import { fetchJournals, fetchTrades, clearTrades } from '../../redux/actions/journal';
 import { AppAction } from '../../redux/reducers/app';
 import { Journal } from '../Journal';
 import { Journals } from '../Journals';
@@ -18,9 +18,12 @@ import styles from './app.scss';
 interface AppProps {
   appLoaded: boolean;
   journals: Types.Journal[];
+  activeJournal: Types.Journal;
   auth: any;
   onLoad: () => null;
   onFetchJournals: () => null;
+  onFetchTrades: (journal: Types.Journal) => null;
+  onClearTrades: () => null;
 }
 
 const content = (
@@ -46,6 +49,16 @@ class AppPage extends React.Component<AppProps> {
     this.props.onLoad();
   }
 
+  componentDidUpdate(prevProps: AppProps) {
+    if (this.props.activeJournal !== prevProps.activeJournal) {
+      if (this.props.activeJournal) {
+        this.props.onFetchTrades(this.props.activeJournal);
+      } else {
+        this.props.onClearTrades()
+      }
+    }
+  }
+
   render () {
     return (
       <div className={ styles.app }>
@@ -60,6 +73,7 @@ const mapStateToProps = (state: Types.RootState) => {
     appLoaded: state.app.appLoaded,
     auth: state.firebase.auth,
     journals: state.journal.journals,
+    activeJournal: state.journal.activeJournal,
   }
 };
 
@@ -67,6 +81,10 @@ const mapDispatchToProps = (dispatch: Dispatch<AppAction>) => ({
   onLoad: () => dispatch({ type: APP_LOAD }),
   // @ts-ignore
   onFetchJournals: () => dispatch(fetchJournals()),
+  // @ts-ignore
+  onFetchTrades: (journal: Types.Journal) => dispatch(fetchTrades(journal)),
+  // @ts-ignore
+  onClearTrades: () => dispatch(clearTrades()),
 });
 
 

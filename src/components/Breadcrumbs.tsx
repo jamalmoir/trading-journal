@@ -6,6 +6,7 @@ import Types from 'Types';
 
 interface BreadcrumbsProps {
   route: any;
+  activeJournal: Types.Journal;
 }
 
 const BreadcrumbsComponent = (props: BreadcrumbsProps) => {
@@ -15,7 +16,7 @@ const BreadcrumbsComponent = (props: BreadcrumbsProps) => {
       'url': () => ('/'),
     },
     '/journal/:journalId': {
-      'name': 'Journal',
+      'name': props.activeJournal ? props.activeJournal.name : '...',
       'url': () => ('/journal/' + props.route.params.journalId),
     },
     '/journal/:journalId/trade/:tradeId': {
@@ -46,6 +47,7 @@ const BreadcrumbsComponent = (props: BreadcrumbsProps) => {
 const mapStateToProps = (state: Types.RootState) => {
   return {
     route: state.app.route,
+    activeJournal: state.journal.activeJournal,
   }
 };
 

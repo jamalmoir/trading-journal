@@ -7,14 +7,12 @@ import { Heading } from '../components/Heading';
 import { JournalCreate } from '../components/JournalCreate';
 import { JournalList } from '../components/JournalList';
 import { routeChange } from '../redux/actions/app';
-import { fetchJournals } from '../redux/actions/journal';
 import { JournalAction } from '../redux/reducers/journal';
 
 
 interface JournalsProps {
   journals: Types.Journal[];
   match: match;
-  onFetchJournals: () => null;
   onRouteChange: (route: any) => null;
 }
 
@@ -33,12 +31,6 @@ class JournalsPage extends Component<JournalsProps, JournalsState> {
 
   componentWillMount() {
     this.props.onRouteChange(this.props.match)
-  }
-
-  componentDidMount() {
-    if (!this.props.journals.length) {
-      this.props.onFetchJournals();
-    }
   }
 
   render() {
@@ -64,8 +56,6 @@ const mapStateToProps = (state: Types.RootState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<JournalAction>) => ({
-  // @ts-ignore
-  onFetchJournals: () => dispatch(fetchJournals()),
   // @ts-ignore
   onRouteChange: (route: any) => dispatch(routeChange(location)),
 });

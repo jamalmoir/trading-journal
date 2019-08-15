@@ -1,12 +1,13 @@
 import Types from 'Types';
 import { ActionType } from 'typesafe-actions';
-import { CREATE_JOURNAL, CREATE_TRADE, DELETE_JOURNAL, FETCH_JOURNALS, FETCH_TRADES, MODIFY_JOURNAL, MODIFY_TRADE } from '../actions/actionTypes';
+import { CREATE_JOURNAL, CREATE_TRADE, DELETE_JOURNAL, FETCH_JOURNALS, FETCH_TRADES, MODIFY_JOURNAL, MODIFY_TRADE, SET_ACTIVE_JOURNAL, CLEAR_TRADES } from '../actions/actionTypes';
 import * as actions from '../actions/journal';
 
 
 export interface JournalState {
   journals: Types.Journal[];
   trades: Types.Trade[];
+  activeJournal: Types.Journal | null;
 }
 
 export type JournalAction = ActionType<typeof actions>;
@@ -14,6 +15,7 @@ export type JournalAction = ActionType<typeof actions>;
 const initialState: JournalState = {
   journals: [],
   trades: [],
+  activeJournal: null,
 };
 
 const reducer = (state = initialState, action: JournalAction) => {
@@ -25,6 +27,11 @@ const reducer = (state = initialState, action: JournalAction) => {
         ...state,
         // @ts-ignore
         journals: action.journals,
+      }
+    case SET_ACTIVE_JOURNAL:
+      return <JournalState>{
+        ...state,
+        activeJournal: action.payload,
       }
     // @ts-ignore
     case CREATE_JOURNAL:
@@ -42,17 +49,19 @@ const reducer = (state = initialState, action: JournalAction) => {
         ...state,
         journals: journals,
       }
-    case DELETE_JOURNAL:
-      return <JournalState>{
-        ...state,
-        journals: state.journals,
-      }
     // @ts-ignore
     case FETCH_TRADES:
       return <JournalState>{
         ...state,
         // @ts-ignore
         trades: action.trades,
+      }
+    // @ts-ignore
+    case CLEAR_TRADES:
+      return <JournalState>{
+        ...state,
+        // @ts-ignore
+        trades: [],
       }
     // @ts-ignore
     case CREATE_TRADE:
@@ -69,11 +78,6 @@ const reducer = (state = initialState, action: JournalAction) => {
       return <JournalState>{
         ...state,
         trades: trades,
-      }
-    case DELETE_JOURNAL:
-      return <JournalState>{
-        ...state,
-        journals: state.journals,
       }
     default:
       return state;
