@@ -58,6 +58,7 @@ const mapStateToProps = (state: Types.RootState) => {
   return {
     trades: state.journal.trades,
     journals: state.journal.journals,
+    activeJournal: state.journal.activeJournal,
   }
 };
 
