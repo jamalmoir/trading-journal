@@ -1,6 +1,6 @@
 import Types from 'Types';
 import { ActionType } from 'typesafe-actions';
-import { CREATE_JOURNAL, CREATE_TRADE, DELETE_JOURNAL, FETCH_JOURNALS, FETCH_TRADES, MODIFY_JOURNAL, MODIFY_TRADE, SET_ACTIVE_JOURNAL, CLEAR_TRADES } from '../actions/actionTypes';
+import { CREATE_JOURNAL, CREATE_TRADE, FETCH_JOURNALS, FETCH_TRADES, MODIFY_JOURNAL, MODIFY_TRADE, SET_ACTIVE_JOURNAL, CLEAR_TRADES, SET_TRADE_FILTERS } from '../actions/actionTypes';
 import * as actions from '../actions/journal';
 
 
@@ -8,6 +8,7 @@ export interface JournalState {
   journals: Types.Journal[];
   trades: Types.Trade[];
   activeJournal: Types.Journal | null;
+  tradeFilters: Types.TradeFilters;
 }
 
 export type JournalAction = ActionType<typeof actions>;
@@ -16,6 +17,20 @@ const initialState: JournalState = {
   journals: [],
   trades: [],
   activeJournal: null,
+  tradeFilters: {
+    instrument: null,
+    strategy: null,
+    kind: '',
+    rating: '',
+    entryDate: null,
+    exitDate: null,
+    profit: null,
+    hitTakeProfit: null,
+    flagged: null,
+    managed: null,
+    tags: null,
+    emotions: null,
+  },
 };
 
 const reducer = (state = initialState, action: JournalAction) => {
@@ -78,6 +93,14 @@ const reducer = (state = initialState, action: JournalAction) => {
       return <JournalState>{
         ...state,
         trades: trades,
+      }
+    // @ts-ignore
+    case SET_TRADE_FILTERS:
+      // @ts-ignore
+      return <JournalState>{
+        ...state,
+        // @ts-ignore
+        tradeFilters: action.filters,
       }
     default:
       return state;

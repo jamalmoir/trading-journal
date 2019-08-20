@@ -4,7 +4,7 @@ import { Dispatch } from 'redux';
 import { getFirestore } from 'redux-firestore';
 import Types from 'Types';
 import { JournalState } from '../reducers/journal';
-import { CREATE_JOURNAL, CREATE_TRADE, CLEAR_TRADES, FETCH_JOURNALS, FETCH_TRADES, MODIFY_JOURNAL, MODIFY_TRADE, SET_ACTIVE_JOURNAL } from './actionTypes';
+import { CREATE_JOURNAL, CREATE_TRADE, CLEAR_TRADES, FETCH_JOURNALS, FETCH_TRADES, MODIFY_JOURNAL, MODIFY_TRADE, SET_ACTIVE_JOURNAL, SET_TRADE_FILTERS } from './actionTypes';
 import { action } from 'typesafe-actions';
 
 
@@ -176,3 +176,5 @@ export const modifyTrade = (trade: Types.Trade) => {
     }).catch((err: Error) => console.log(err));
   }
 }
+
+export const setTradeFilters = (filters: Types.TradeFilters) => action(SET_TRADE_FILTERS);

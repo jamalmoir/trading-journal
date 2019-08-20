@@ -7,25 +7,11 @@ import ReactDatePicker from 'react-datepicker';
 import { TristateCheckbox } from '../TristateCheckbox';
 import ReactTags, { Tag } from 'react-tag-autocomplete';
 import './tradeFilter.scss';
+import { setTradeFilters } from '../../redux/actions/journal';
 
 
 interface TradeFilterProps {
-  trades: Types.Trade[];
-}
-
-interface TradeFilters {
-  instrument: string | null;
-  strategy: string | null;
-  kind: 'long' | 'short' | '' | null;
-  rating: -1 | 0 | 1 | '' | null;
-  entryDate: Date | null;
-  exitDate: Date | null;
-  profit: boolean | null;
-  hitTakeProfit: boolean | null;
-  flagged: boolean | null;
-  managed: boolean | null;
-  tags: Tag[] | null;
-  emotions: Tag[] | null;
+  onSetTradeFilters: (filters: Types.TradeFilters) => null;
 }
 
 interface Tags {
@@ -41,7 +27,7 @@ interface Tags {
 }
 
 const TradeFilterComponent = (props: TradeFilterProps) => {
-  const initialFilters: TradeFilters = {
+  const initialFilters: Types.TradeFilters = {
     instrument: null,
     strategy: null,
     kind: '',
@@ -67,17 +53,12 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
     }
   }
 
-  const [filters, setFilters]: [TradeFilters, (val: any) => void] = useState(initialFilters)
+  const [filters, setFilters]: [Types.TradeFilters, (val: any) => void] = useState(initialFilters)
   const [tags, setTags]: [Tags, (val: any) => void] = useState(intialTags);
 
   let updateFilter = (name: string, value: string | string[] | number | boolean | Date | null) => {
     setFilters({...filters, [name]: value})
-
-    filterTrades();
-  }
-
-  let filterTrades = () => {
-
+    props.onSetTradeFilters(filters);
   }
 
   let handleTagDelete = (kind: string, i: number) => {
@@ -227,15 +208,9 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
   )
 };
 
-const mapStateToProps = (state: Types.RootState) => {
-  return {
-    trades: state.journal.trades,
-  }
-};
-
 const mapDispatchToProps = (dispatch: Dispatch<Types.RootAction>) => ({
   // @ts-ignore
-  onFilterTrades: (trades: Types.Trade[]) => dispatch(filterTrades(trades)),
+  onSetTradeFilters: (filters: Types.TradeFilters) => dispatch(setTradeFilters(filters)),
 });
 
-export const TradeFilter = connect(mapStateToProps, mapDispatchToProps)(TradeFilterComponent);
+export const TradeFilter = connect(null, mapDispatchToProps)(TradeFilterComponent);

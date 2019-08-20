@@ -10,6 +10,7 @@ import { TradeQuickCreate } from '../components/TradeQuickCreate';
 import { routeChange } from '../redux/actions/app';
 import { setActiveJournal } from '../redux/actions/journal';
 import { JournalAction } from '../redux/reducers/journal';
+import { getFilteredTrades } from '../redux/selectors/journal';
 
 
 interface JournalPageProps {
@@ -56,7 +57,7 @@ class JournalPage extends Component<JournalPageProps> {
 
 const mapStateToProps = (state: Types.RootState) => {
   return {
-    trades: state.journal.trades,
+    trades: getFilteredTrades(state),
     journals: state.journal.journals,
     activeJournal: state.journal.activeJournal,
   }

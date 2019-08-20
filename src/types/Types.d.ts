@@ -5,6 +5,7 @@ import { AppAction, AppState } from '../redux/reducers/app';
 import { AuthAction, AuthState } from '../redux/reducers/auth';
 import { JournalAction, JournalState } from '../redux/reducers/journal';
 import { CurrencySymbol, Money } from '../utils/moolah';
+import { Tag } from 'react-tag-autocomplete';
 
 
 declare module 'Types' {
@@ -62,5 +63,20 @@ declare module 'Types' {
     exitEmotion: string[];
     rating: -1 | 0 | 1;
     charts: string[];
+  }
+
+  export interface TradeFilters {
+    instrument: string | null;
+    strategy: string | null;
+    kind: 'long' | 'short' | '' | null;
+    rating: -1 | 0 | 1 | '' | null;
+    entryDate: Date | null;
+    exitDate: Date | null;
+    profit: boolean | null;
+    hitTakeProfit: boolean | null;
+    flagged: boolean | null;
+    managed: boolean | null;
+    tags: Tag[] | null;
+    emotions: Tag[] | null;
   }
 }

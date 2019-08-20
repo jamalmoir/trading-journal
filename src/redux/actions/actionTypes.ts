@@ -17,3 +17,4 @@ export const CREATE_TRADE = 'CREATE_TRADE';
 export const CLEAR_TRADES = 'CLEAR_TRADES';
 export const MODIFY_TRADE = 'MODIFY_TRADE';
 export const DELETE_TRADE = 'DELETE_TRADE';
+export const SET_TRADE_FILTERS = 'SET_TRADE_FILTERS';
