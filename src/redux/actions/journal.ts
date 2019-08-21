@@ -177,4 +177,4 @@ export const modifyTrade = (trade: Types.Trade) => {
   }
 }
 
-export const setTradeFilters = (filters: Types.TradeFilters) => action(SET_TRADE_FILTERS);
+export const setTradeFilters = (filters: Types.TradeFilters) => action(SET_TRADE_FILTERS, filters);

@@ -57,8 +57,9 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
   const [tags, setTags]: [Tags, (val: any) => void] = useState(intialTags);
 
   let updateFilter = (name: string, value: string | string[] | number | boolean | Date | null) => {
-    setFilters({...filters, [name]: value})
-    props.onSetTradeFilters(filters);
+    const newFilters = {...filters, [name]: value};
+    setFilters(newFilters)
+    props.onSetTradeFilters(newFilters);
   }
 
   let handleTagDelete = (kind: string, i: number) => {

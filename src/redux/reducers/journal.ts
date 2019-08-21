@@ -100,7 +100,7 @@ const reducer = (state = initialState, action: JournalAction) => {
       return <JournalState>{
         ...state,
         // @ts-ignore
-        tradeFilters: action.filters,
+        tradeFilters: action.payload,
       }
     default:
       return state;

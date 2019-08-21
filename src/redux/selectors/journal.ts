@@ -34,14 +34,14 @@ export const getStrategyTrades = createSelector(
 export const getKindTrades = createSelector(
   [getKind, getTrades],
   (kindFilter, trades) => {
-    return kindFilter === null ? trades : trades.filter(trade => trade.instrument === kindFilter);
+    return kindFilter === '' ? trades : trades.filter(trade => trade.instrument === kindFilter);
   }
 )
 
 export const getRatingTrades = createSelector(
   [getRating, getTrades],
   (ratingFilter, trades) => {
-    return ratingFilter === null ? trades : trades.filter(trade => trade.rating === ratingFilter);
+    return ratingFilter === '' ? trades : trades.filter(trade => trade.rating === ratingFilter);
   }
 )
 
@@ -109,21 +109,22 @@ export const getEmotionsTrades = createSelector(
   }
 )
 
-export const getFilteredTrades = (state: Types.RootState) => {
-  let trades;
-  
-  trades = getInstrumentTrades(state);
-  trades = getStrategyTrades(state);
-  trades = getKindTrades(state);
-  trades = getRatingTrades(state);
-  trades = getEntryDateTrades(state);
-  trades = getExitDateTrades(state);
-  trades = getProfitTrades(state);
-  trades = getHitTakeProfitTrades(state);
-  trades = getFlaggedTrades(state);
-  trades = getManagedTrades(state);
-  trades = getTagsTrades(state);
-  trades = getEmotionsTrades(state);
-
-  return trades;
-}
+export const getFilteredTrades = createSelector(
+  [getInstrumentTrades, getStrategyTrades, getKindTrades, getRatingTrades, getEntryDateTrades,
+   getExitDateTrades, getProfitTrades, getHitTakeProfitTrades, getFlaggedTrades,
+   getManagedTrades, getTagsTrades, getEmotionsTrades],
+   (instrumentTrades, strategyTrades, kindTrades, ratingTrades, entryDateTrades, exitDateTrades,
+    profitTrades, hitTakeProfitTrades, flaggedTrades, managedTrades, tagsTrades, emotionsTrades) => {
+      return instrumentTrades.filter(t => strategyTrades.includes(t))
+                             .filter(t => kindTrades.includes(t))
+                             .filter(t => ratingTrades.includes(t))
+                             .filter(t => entryDateTrades.includes(t))
+                             .filter(t => exitDateTrades.includes(t))
+                             .filter(t => profitTrades.includes(t))
+                             .filter(t => hitTakeProfitTrades.includes(t))
+                             .filter(t => flaggedTrades.includes(t))
+                             .filter(t => managedTrades.includes(t))
+                             .filter(t => tagsTrades.includes(t))
+                             .filter(t => emotionsTrades.includes(t))
+    }
+)
