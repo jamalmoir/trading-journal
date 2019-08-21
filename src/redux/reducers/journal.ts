@@ -20,8 +20,8 @@ const initialState: JournalState = {
   tradeFilters: {
     instrument: null,
     strategy: null,
-    kind: '',
-    rating: '',
+    kind: null,
+    rating: null,
     entryDate: null,
     exitDate: null,
     profit: null,

@@ -27,21 +27,21 @@ export const getInstrumentTrades = createSelector(
 export const getStrategyTrades = createSelector(
   [getStrategy, getTrades],
   (strategyFilter, trades) => {
-    return strategyFilter === null ? trades : trades.filter(trade => trade.instrument === strategyFilter);
+    return strategyFilter === null ? trades : trades.filter(trade => trade.strategy === strategyFilter);
   }
 )
 
 export const getKindTrades = createSelector(
   [getKind, getTrades],
   (kindFilter, trades) => {
-    return kindFilter === '' ? trades : trades.filter(trade => trade.instrument === kindFilter);
+    return kindFilter === null ? trades : trades.filter(trade => trade.kind === kindFilter);
   }
 )
 
 export const getRatingTrades = createSelector(
   [getRating, getTrades],
   (ratingFilter, trades) => {
-    return ratingFilter === '' ? trades : trades.filter(trade => trade.rating === ratingFilter);
+    return ratingFilter === null ? trades : trades.filter(trade => trade.rating === ratingFilter);
   }
 )
 

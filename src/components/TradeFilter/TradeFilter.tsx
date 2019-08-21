@@ -30,8 +30,8 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
   const initialFilters: Types.TradeFilters = {
     instrument: null,
     strategy: null,
-    kind: '',
-    rating: '',
+    kind: null,
+    rating: null,
     entryDate: null,
     exitDate: null,
     profit: null,
@@ -57,7 +57,12 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
   const [tags, setTags]: [Tags, (val: any) => void] = useState(intialTags);
 
   let updateFilter = (name: string, value: string | string[] | number | boolean | Date | null) => {
+    if (value === '') {
+      value = null;
+    }
+
     const newFilters = {...filters, [name]: value};
+
     setFilters(newFilters)
     props.onSetTradeFilters(newFilters);
   }
@@ -79,7 +84,7 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
       }
     });
 
-    updateFilter(stateKey, tags.reduce((t: Tag) => t.name));
+    updateFilter(stateKey, tags.tags.tags.map((t: Tag) => t.name));
   }
 
   let handleTagAddition = (kind: string, tag: Tag) => {
@@ -99,7 +104,7 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
       }
     })
 
-    updateFilter(stateKey, tags.reduce((t: Tag) => t.name));
+    updateFilter(stateKey, tags.tags.tags.map((t: Tag) => t.name));
   }
 
   return (
@@ -117,7 +122,7 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
               value={ filters.strategy }
               onChange={ (e) => updateFilter('strategy', e.target.value) }/>
         <select className="trade-filter custom-select"
-                value={ filters.kind }
+                value={ filters.kind === null ? '' : filters.kind }
                 onChange={ (e) => updateFilter('kind', e.target.value) }>
           <option value="">Kind</option>
           <option value="long">Long</option>
@@ -127,7 +132,7 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
 
       <div className="trade-filter-group col-sm-3">
         <select className="trade-filter custom-select"
-                value={ filters.rating }
+                value={ filters.rating === null ? '' : filters.rating }
                 onChange={ (e) => updateFilter('rating', e.target.value) }>
           <option value="">Rating</option>
           <option value="-1">-1</option>
