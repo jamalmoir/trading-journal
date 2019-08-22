@@ -76,15 +76,17 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
       stateKey = 'emotions';
     }
 
-    setTags({
+    const newTags = {
       ...tags,
       [stateKey]: {
         ...tags[stateKey],
         tags: tags[stateKey].tags.filter((tag: Tag, index:number) => index !== i),
       }
-    });
+    }
+    
+    setTags(newTags);
 
-    updateFilter(stateKey, tags.tags.tags.map((t: Tag) => t.name));
+    updateFilter(stateKey, newTags.tags.tags.map((t: Tag) => t.name));
   }
 
   let handleTagAddition = (kind: string, tag: Tag) => {
@@ -96,15 +98,17 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
       stateKey = 'emotions';
     }
 
-    setTags({
+    const newTags = {
       ...tags,
       [stateKey]: {
         ...tags[stateKey],
         tags: [...tags[stateKey].tags, tag]
       }
-    })
+    }
 
-    updateFilter(stateKey, tags.tags.tags.map((t: Tag) => t.name));
+    setTags(newTags)
+
+    updateFilter(stateKey, newTags.tags.tags.map((t: Tag) => t.name));
   }
 
   return (
@@ -144,23 +148,17 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
             selected={ filters.entryDate }
             onChange={ (d) => updateFilter('entryDate', d)}
             placeholderText="Entry Date"
-            showTimeSelect
-            timeFormat="HH:mm"
-            timeIntervals={15}
-            timeCaption="time"
-            dateFormat="MMMM d, yyyy h:mm aa"
+            dateFormat="MMMM d, yyyy"
+            isClearable
           />
         </div>
         <div className="trade-filter trade-quick-create-date form-control">
           <ReactDatePicker
-            selected={ filters.entryDate }
-            onChange={ (d) => updateFilter('entryDate', d)}
+            selected={ filters.exitDate }
+            onChange={ (d) => updateFilter('exitDate', d)}
             placeholderText="Exit Date"
-            showTimeSelect
-            timeFormat="HH:mm"
-            timeIntervals={15}
-            timeCaption="time"
-            dateFormat="MMMM d, yyyy h:mm aa"
+            dateFormat="MMMM d, yyyy"
+            isClearable
           />
         </div>
       </div>

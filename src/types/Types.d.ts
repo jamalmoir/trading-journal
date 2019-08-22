@@ -76,7 +76,7 @@ declare module 'Types' {
     hitTakeProfit: boolean | null;
     flagged: boolean | null;
     managed: boolean | null;
-    tags: Tag[] | null;
-    emotions: Tag[] | null;
+    tags: string[] | null;
+    emotions: string[] | null;
   }
 }

@@ -48,14 +48,14 @@ export const getRatingTrades = createSelector(
 export const getEntryDateTrades = createSelector(
   [getEntryDate, getTrades],
   (entryDateFilter, trades) => {
-    return entryDateFilter === null ? trades : trades.filter(trade => trade.entryDate === entryDateFilter);
+    return entryDateFilter === null ? trades : trades.filter(trade => trade.entryDate && trade.entryDate.setHours(0, 0, 0, 0) === entryDateFilter.setHours(0, 0, 0, 0));
   }
 )
 
 export const getExitDateTrades = createSelector(
   [getExitDate, getTrades],
   (exitDateFilter, trades) => {
-    return exitDateFilter === null ? trades : trades.filter(trade => trade.exitDate === exitDateFilter);
+    return exitDateFilter === null ? trades : trades.filter(trade => trade.exitDate && trade.exitDate.setHours(0, 0, 0, 0) === exitDateFilter.setHours(0, 0, 0, 0));
   }
 )
 
@@ -90,9 +90,9 @@ export const getManagedTrades = createSelector(
 export const getTagsTrades = createSelector(
   [getTags, getTrades],
   (tagsFilter, trades) => {
-    return tagsFilter === null ? trades : trades.filter(trade => {
+    return tagsFilter === null || !tagsFilter.length ? trades : trades.filter(trade => {
       for (let filter of tagsFilter) {
-        if (trade.tags.includes(filter.name)) return true;
+        if (trade.tags.includes(filter)) return true;
       }
     });
   }
@@ -101,9 +101,9 @@ export const getTagsTrades = createSelector(
 export const getEmotionsTrades = createSelector(
   [getEmotions, getTrades],
   (emotionsFilter, trades) => {
-    return emotionsFilter === null ? trades : trades.filter(trade => {
+    return emotionsFilter === null || !emotionsFilter.length ? trades : trades.filter(trade => {
       for (let filter of emotionsFilter) {
-        if (trade.entryEmotion.includes(filter.name) || trade.exitEmotion.includes(filter.name)) return true;
+        if (trade.entryEmotion.includes(filter) || trade.exitEmotion.includes(filter)) return true;
       }
     });
   }
