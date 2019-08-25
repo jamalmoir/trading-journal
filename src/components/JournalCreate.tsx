@@ -1,99 +1,83 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import Types from 'Types';
 import { createJournal } from '../redux/actions/journal';
 import { JournalAction } from '../redux/reducers/journal';
 import { TextInput } from './TextInput';
+import { CurrencyCode, isCurrencyCode } from '../utils/moolah';
 
 
 interface JournalCreateProps {
   className?: string;
   onCreateJournal: (journal: Types.Journal) => null;
-}
-
-interface JournalCreateState {
-  journalName: string;
-  journalKind: 'live' | 'demo' | 'backtest',
   auth: any,
 }
 
-class JournalCreateComponent extends Component<JournalCreateProps, JournalCreateState> {
-  constructor(props: JournalCreateProps) {
-    super(props);
+const JournalCreateComponent = (props: JournalCreateProps) => {
+  const [journalName, setJournalName]: [string, (val: string) => void] = useState('');
+  const [journalKind, setJournalKind]: [Types.JournalKind, (val: Types.JournalKind) => void] = useState<Types.JournalKind>('live');
+  const [journalCurrency, setJournalCurrency]: [CurrencyCode, (val: CurrencyCode) => void] = useState<CurrencyCode>('USD');
 
-    this.state = {
-      journalName: '',
-      journalKind: 'live',
-      auth: {},
+  const updateJournalName = (val: string) => {
+    setJournalName(val);
+  }
+
+  const updateJournalKind = (val: 'live' | 'demo' | 'backtest') => {
+    setJournalKind(val);
+  }
+
+  const updateJournalCurrency = (val: string) => {
+    if (isCurrencyCode(val)) {
+      setJournalCurrency(val);
     }
   }
 
-  updateJournalName = (val: string) => {
-    this.setState((prevState: JournalCreateState) => {
-      return {
-        ...prevState,
-        journalName: val,
-      }
-    })
-  }
-
-  updateJournalKind = (val: 'live' | 'demo' | 'backtest') => {
-
-    this.setState((prevState: JournalCreateState) => {
-      return {
-        ...prevState,
-        journalKind: val as 'live' | 'demo' | 'backtest',
-      }
-    })
-  }
-
-  createJournal = () => {
+  const createJournal = () => {
     let journal: Types.Journal = {
       id: null,
-      userId: this.state.auth.uid,
-      kind: this.state.journalKind,
-      currency: 'USD',
-      name: this.state.journalName,
+      userId: props.auth.uid,
+      kind: journalKind,
+      currency: journalCurrency,
+      name: journalName,
       created: new Date(),
       modified: new Date(),
       tradeCount: 0,
     }
 
-    this.setState((prevState: JournalCreateState) => {
-      return {
-        ...prevState,
-        journalName: '',
-        journalKind: 'live'
-      }
-    })
-
-    this.props.onCreateJournal(journal);
+    setJournalName('');
+    setJournalKind('live');
+    setJournalCurrency('USD');
+    props.onCreateJournal(journal);
   }
 
-  render() {
-    return (
-      <div className={ this.props.className + ' input-group mb-3'}>
-        <TextInput type="text"
-               className="form-control col-8"
-               placeholder="Journal name"
-               value={ this.state.journalName }
-               onChange={ (e) => this.updateJournalName(e.target.value) }
-        />
-        <select className="form-control custom-select col-4"
-                value={ this.state.journalKind }
-                onChange={ (e) => this.updateJournalKind(e.target.value as 'live' | 'demo' | 'backtest') }
-        >
-          <option value="live">Live</option>
-          <option value="demo">Demo</option>
-          <option value="backtest">Backtest</option>
-        </select>
-        <div className="input-group-append">
-          <button className="btn btn-outline-primary" type="button" onClick={ this.createJournal }>Create</button>
-        </div>
+  return (
+    <div className={ props.className + ' input-group mb-3'}>
+      <TextInput type="text"
+              className="form-control col-8"
+              placeholder="Journal name"
+              value={ journalName }
+              onChange={ (e) => updateJournalName(e.target.value) }
+      />
+      <select className="form-control custom-select col-4"
+              value={ journalKind }
+              onChange={ (e) => updateJournalKind(e.target.value as 'live' | 'demo' | 'backtest') }
+      >
+        <option value="live">Live</option>
+        <option value="demo">Demo</option>
+        <option value="backtest">Backtest</option>
+      </select>
+      <TextInput type="text"
+              className="form-control col-8"
+              placeholder="Currency"
+              value={ journalCurrency }
+              onChange={ (e) => updateJournalCurrency(e.target.value) }
+      />
+      <div className="input-group-append">
+        <button className="btn btn-outline-primary" type="button" onClick={ createJournal }>Create</button>
       </div>
-    )
-  }
+    </div>
+  )
 };
 
 const mapStateToProps = (state: Types.RootState) => {
@@ -107,4 +91,4 @@ const mapDispatchToProps = (dispatch: Dispatch<JournalAction>) => ({
   onCreateJournal: (journal: Types.Journal) => dispatch(createJournal(journal)),
 });
 
-export const JournalCreate = connect(null, mapDispatchToProps)(JournalCreateComponent);
+export const JournalCreate = connect(mapStateToProps, mapDispatchToProps)(JournalCreateComponent);

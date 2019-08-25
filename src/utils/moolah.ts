@@ -1,7 +1,8 @@
 import Big from 'big.js';
 
+const stringLitArray = <L extends string>(arr: L[]) => arr;
 
-const CURRENCY_DECIMALS = {
+const CURRENCY_DECIMALS: {[index: string]: Big} = {
     'AED': Big('2'),
     'AFN': Big('2'),
     'ALL': Big('2'),
@@ -169,16 +170,19 @@ const CURRENCY_DECIMALS = {
     'ZMW': Big('2'),
     'ZWL': Big('2'),
 }
+const currencyCodeList = stringLitArray(['AED', 'AFN', 'ALL', 'AMD', 'ANG', 'AOA', 'ARS', 'AUD', 'AWG', 'AZN', 'BAM', 'BBD', 'BDT', 'BGN', 'BHD', 'BIF', 'BMD', 'BND', 'BOB', 'BOV', 'BRL', 'BSD', 'BTN', 'BWP', 'BYN', 'BZD', 'CAD', 'CDF', 'CHE', 'CHF', 'CHW', 'CLF', 'CLP', 'CNY', 'COP', 'COU', 'CRC', 'CUC', 'CUP', 'CVE', 'CZK', 'DJF', 'DKK', 'DOP', 'DZD', 'EGP', 'ERN', 'ETB', 'EUR', 'FJD', 'FKP', 'GBP', 'GEL', 'GHS', 'GIP', 'GMD', 'GNF', 'GTQ', 'GYD', 'HKD', 'HNL', 'HRK', 'HTG', 'HUF', 'IDR', 'ILS', 'INR', 'IQD', 'IRR', 'ISK', 'JMD', 'JOD', 'JPY', 'KES', 'KGS', 'KHR', 'KMF', 'KPW', 'KRW', 'KWD', 'KYD', 'KZT', 'LAK', 'LBP', 'LKR', 'LRD', 'LSL', 'LYD', 'MAD', 'MDL', 'MGA', 'MKD', 'MMK', 'MNT', 'MOP', 'MRU', 'MUR', 'MVR', 'MWK', 'MXN', 'MXV', 'MYR', 'MZN', 'NAD', 'NGN', 'NIO', 'NOK', 'NPR', 'NZD', 'OMR', 'PAB', 'PEN', 'PGK', 'PHP', 'PKR', 'PLN', 'PYG', 'QAR', 'RON', 'RSD', 'RUB', 'RWF', 'SAR', 'SBD', 'SCR', 'SDG', 'SEK', 'SGD', 'SHP', 'SLL', 'SOS', 'SRD', 'SSP', 'STN', 'SVC', 'SYP', 'SZL', 'THB', 'TJS', 'TMT', 'TND', 'TOP', 'TRY', 'TTD', 'TWD', 'TZS', 'UAH', 'UGX', 'USD', 'USN', 'UYI', 'UYU', 'UYW', 'UZS', 'VES', 'VND', 'VUV', 'WST', 'XAF', 'XCD', 'XOF', 'XPF', 'YER', 'ZAR', 'ZMW', 'ZWL']);
 
-export type CurrencySymbol = 'AED'|'AFN'|'ALL'|'AMD'|'ANG'|'AOA'|'ARS'|'AUD'|'AWG'|'AZN'|'BAM'|'BBD'|'BDT'|'BGN'|'BHD'|'BIF'|'BMD'|'BND'|'BOB'|'BOV'|'BRL'|'BSD'|'BTN'|'BWP'|'BYN'|'BZD'|'CAD'|'CDF'|'CHE'|'CHF'|'CHW'|'CLF'|'CLP'|'CNY'|'COP'|'COU'|'CRC'|'CUC'|'CUP'|'CVE'|'CZK'|'DJF'|'DKK'|'DOP'|'DZD'|'EGP'|'ERN'|'ETB'|'EUR'|'FJD'|'FKP'|'GBP'|'GEL'|'GHS'|'GIP'|'GMD'|'GNF'|'GTQ'|'GYD'|'HKD'|'HNL'|'HRK'|'HTG'|'HUF'|'IDR'|'ILS'|'INR'|'IQD'|'IRR'|'ISK'|'JMD'|'JOD'|'JPY'|'KES'|'KGS'|'KHR'|'KMF'|'KPW'|'KRW'|'KWD'|'KYD'|'KZT'|'LAK'|'LBP'|'LKR'|'LRD'|'LSL'|'LYD'|'MAD'|'MDL'|'MGA'|'MKD'|'MMK'|'MNT'|'MOP'|'MRU'|'MUR'|'MVR'|'MWK'|'MXN'|'MXV'|'MYR'|'MZN'|'NAD'|'NGN'|'NIO'|'NOK'|'NPR'|'NZD'|'OMR'|'PAB'|'PEN'|'PGK'|'PHP'|'PKR'|'PLN'|'PYG'|'QAR'|'RON'|'RSD'|'RUB'|'RWF'|'SAR'|'SBD'|'SCR'|'SDG'|'SEK'|'SGD'|'SHP'|'SLL'|'SOS'|'SRD'|'SSP'|'STN'|'SVC'|'SYP'|'SZL'|'THB'|'TJS'|'TMT'|'TND'|'TOP'|'TRY'|'TTD'|'TWD'|'TZS'|'UAH'|'UGX'|'USD'|'USN'|'UYI'|'UYU'|'UYW'|'UZS'|'VES'|'VND'|'VUV'|'WST'|'XAF'|'XCD'|'XOF'|'XPF'|'YER'|'ZAR'|'ZMW'|'ZWL';
+export type CurrencyCode = (typeof currencyCodeList)[number];
+export const currencyCodes: CurrencyCode[] = [...currencyCodeList];
+export const isCurrencyCode = (val: any): val is CurrencyCode => currencyCodes.includes(<CurrencyCode>val);
 
 export class Currency {
-    symbol: CurrencySymbol;
+    code: CurrencyCode;
     decimals: Big;
 
-    constructor(symbol: CurrencySymbol) {
-        this.symbol = symbol;
-        this.decimals = CURRENCY_DECIMALS[symbol]
+    constructor(code: CurrencyCode) {
+        this.code = code;
+        this.decimals = CURRENCY_DECIMALS[code]
     }
 }
 
@@ -186,7 +190,7 @@ export class Money {
     amount: Big;
     currency: Currency;
 
-    constructor(amount: string | Big, currency: CurrencySymbol) {
+    constructor(amount: string | Big, currency: CurrencyCode) {
         this.currency = new Currency(currency);
         this.amount = Big(amount);
     }
@@ -195,21 +199,49 @@ export class Money {
         return this.amount.toFixed(Number(this.currency.decimals))
     }
 
-    _arithmetic = (op: (a: Big, b?: Big) => Big, other?: Money | Big) => {
-        if (other instanceof Money && this.currency.symbol != other.currency.symbol) {
+    toJSObject = () => {
+        return {
+            amount: this.amount,
+            currency: {
+                code: this.currency.code,
+                decimals: this.currency.decimals
+            }
+        }
+    }
+
+    _validate_other = (other: Money | Big) => {
+        if (other instanceof Money && this.currency.code != other.currency.code) {
             throw Error("Currencies are different");
         }
+    }
 
-        let b = other instanceof Money ? other.amount : other
+    _getOtherAsBig = (other: Money | Big) => {
+        this._validate_other(other);
 
-        return new Money(op(this.amount, b), this.currency.symbol);
+        return other instanceof Money ? other.amount : other;
+    }
+
+    _arithmetic = (op: (a: Big, b?: Big) => Big, other?: Money | Big) => {
+        let b = this._getOtherAsBig(other);
+
+        return new Money(op(this.amount, b), this.currency.code);
+    }
+    
+    _logic = (op: (a: Big, b?: Big) => boolean, other?: Money | Big) => {
+        let b = this._getOtherAsBig(other);
+
+        return op(this.amount, b);
     }
 
     plus = (other: Money) => this._arithmetic((a: Big, b: Big) => a.add(b), other);
     minus = (other: Money) => this._arithmetic((a: Big, b: Big) => a.sub(b), other);
     times = (other: Money | Big) => this._arithmetic((a: Big, b: Big) => a.times(b), other);
-    divide = (other: Money | Big) => this._arithmetic((a: Big, b: Big) => a.div(b), other);
+    div = (other: Money | Big) => this._arithmetic((a: Big, b: Big) => a.div(b), other);
     pow = (other: Big) => this._arithmetic((a: Big, b: Big) => a.pow(Number(b)), other);
     sqrt = () => this._arithmetic((a: Big) => a.sqrt());
     abs = () => this._arithmetic((a: Big) => a.abs());
+    lt = (other: Money | Big) => this._logic((a: Big, b: Big) => a.lt(b), other);
+    gt = (other: Money | Big) => this._logic((a: Big, b: Big) => a.gt(b), other);
+    lte = (other: Money | Big) => this._logic((a: Big, b: Big) => a.lte(b), other);
+    gte = (other: Money | Big) => this._logic((a: Big, b: Big) => a.gte(b), other);
 }

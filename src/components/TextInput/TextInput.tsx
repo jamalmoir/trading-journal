@@ -20,6 +20,7 @@ export const TextInput = (props: TextInputProps) => {
            className={ props.className + ' text-input form-control ' + errorClass }
            type={ props.type }
            placeholder={ props.placeholder }
+           value={ props.value }
            onChange={ props.onChange }>
     </input>
   )

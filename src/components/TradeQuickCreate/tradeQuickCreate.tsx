@@ -48,11 +48,11 @@ class TradeQuickCreateComponent extends Component<TradeQuickCreateProps, TradeQu
   updateInputState = (key: string, val: string | Date) => {
     let processedVal: string | Money | Date | Big;
 
-    if (key in ['entryPrice', 'stopLoss', 'takeProfit', 'exitPrice', 'pl'] && typeof val === 'string') {
+    if (['entryPrice', 'stopLoss', 'takeProfit', 'exitPrice', 'pl'].includes(key) && typeof val === 'string') {
       processedVal = new Money(val, this.props.journal.currency);
-    } else if (key in ['entryDate', 'exitDate']) {
+    } else if (['entryDate', 'exitDate'].includes(key)) {
       processedVal = val;
-    } else if (key in ['positionSize'] && typeof val === 'string') {
+    } else if (['positionSize'].includes(key) && typeof val === 'string') {
       processedVal = new Big(val);
     } else {
       processedVal = val;

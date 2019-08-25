@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect'
 import Types from 'Types';
+import Big from 'big.js';
 
 const getTrades = (state: Types.RootState) => state.journal.trades;
 
@@ -62,7 +63,11 @@ export const getExitDateTrades = createSelector(
 export const getProfitTrades = createSelector(
   [getProfit, getTrades],
   (profitFilter, trades) => {
-    return profitFilter === null ? trades : trades.filter(trade => trade.profit === profitFilter);
+    return profitFilter === null ? trades : trades.filter(trade => {
+      if (typeof trade.pl !== 'undefined' && trade.pl !== null) {
+         return profitFilter ? trade.pl.gt(Big(0)) : trade.pl.lte(Big(0));
+      }
+    })
   }
 )
 
@@ -92,7 +97,7 @@ export const getTagsTrades = createSelector(
   (tagsFilter, trades) => {
     return tagsFilter === null || !tagsFilter.length ? trades : trades.filter(trade => {
       for (let filter of tagsFilter) {
-        if (trade.tags.includes(filter)) return true;
+        if (trade.tags.filter(t => t.id === filter).length) return true;
       }
     });
   }
@@ -103,7 +108,7 @@ export const getEmotionsTrades = createSelector(
   (emotionsFilter, trades) => {
     return emotionsFilter === null || !emotionsFilter.length ? trades : trades.filter(trade => {
       for (let filter of emotionsFilter) {
-        if (trade.entryEmotion.includes(filter) || trade.exitEmotion.includes(filter)) return true;
+        if (trade.entryEmotion.filter(t => t.id === filter).length || trade.exitEmotion.filter(t => t.id === filter).length) return true;
       }
     });
   }

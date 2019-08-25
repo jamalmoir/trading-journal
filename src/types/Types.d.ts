@@ -4,7 +4,7 @@ import { Action, AnyAction, Dispatch } from 'redux';
 import { AppAction, AppState } from '../redux/reducers/app';
 import { AuthAction, AuthState } from '../redux/reducers/auth';
 import { JournalAction, JournalState } from '../redux/reducers/journal';
-import { CurrencySymbol, Money } from '../utils/moolah';
+import { CurrencyCode, Money } from '../utils/moolah';
 import { Tag } from 'react-tag-autocomplete';
 
 
@@ -22,16 +22,32 @@ declare module 'Types' {
     dispatch: Dispatch<A>
   }
 
+  export interface InputControls {
+    [key: string]: {
+      value: string
+      errors: string[],
+      touched: boolean,
+      validationRules: {
+        [key: string]: any,
+      }
+    }
+  }
+
+  export type JournalKind = 'live' | 'demo' | 'backtest';
+
   export interface Journal {
     id: string;
     userId: string;
-    kind: 'live' | 'demo' | 'backtest';
-    currency: CurrencySymbol;
+    kind: JournalKind;
+    currency: CurrencyCode;
     name: string;
     created: Date;
     modified: Date;
     tradeCount: number;
   }
+
+  export type TradeKind = 'long' | 'short';
+  export type TradeRating = -1 | 0 | 1;
 
   export interface Trade {
     [index: string]: any;
@@ -41,7 +57,7 @@ declare module 'Types' {
     modified: Date;
     instrument: string;
     strategy: string;
-    kind: 'long' | 'short';
+    kind: TradeKind;
     entryDate: Date;
     entryPrice: Big;
     positionSize: Big;
@@ -54,21 +70,21 @@ declare module 'Types' {
     hitTakeProfit: boolean;
     mfe: Big;
     mae: Big;
-    tags: string[];
+    tags: Tag[];
     entryComment: string;
     duringComment: string;
     exitComment: string;
     flag: boolean;
-    entryEmotion: string[];
-    exitEmotion: string[];
-    rating: -1 | 0 | 1;
+    entryEmotion: Tag[];
+    exitEmotion: Tag[];
+    rating: TradeRating;
     charts: string[];
   }
 
   export interface TradeFilters {
     instrument: string | null;
     strategy: string | null;
-    kind: 'long' | 'short' | '' | null;
+    kind: TradeKind | '' | null;
     rating: -1 | 0 | 1 | '' | null;
     entryDate: Date | null;
     exitDate: Date | null;

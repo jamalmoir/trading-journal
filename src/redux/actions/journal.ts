@@ -6,6 +6,8 @@ import Types from 'Types';
 import { JournalState } from '../reducers/journal';
 import { CREATE_JOURNAL, CREATE_TRADE, CLEAR_TRADES, FETCH_JOURNALS, FETCH_TRADES, MODIFY_JOURNAL, MODIFY_TRADE, SET_ACTIVE_JOURNAL, SET_TRADE_FILTERS } from './actionTypes';
 import { action } from 'typesafe-actions';
+import { Money } from '../../utils/moolah';
+import { stringsToTags } from '../../utils/utils';
 
 
 type Extras = {
@@ -63,7 +65,7 @@ export const createJournal = (journal: Types.Journal) => {
       journal.id = doc.id;
 
       dispatch({type: CREATE_JOURNAL, journal});
-    }).catch((err: Error) => console.log(err));
+    }).catch((err: Error) => console.error(err));
   }
 }
 
@@ -74,7 +76,7 @@ export const modifyJournal = (journal: Types.Journal) => {
 
     firestore.collection('journals').doc(journal.id).update(journal).then(() => {
       dispatch({type: MODIFY_JOURNAL, journal});
-    }).catch((err: Error) => console.log(err));
+    }).catch((err: Error) => console.error(err));
   }
 }
 
@@ -99,8 +101,8 @@ let extractTrades = (snapshot: firestore.QuerySnapshot): Types.Trade[] => {
       takeProfit: data.takeProfit,
       exitDate: data.exitDate ? new Date(data.exitDate.seconds * 1000) : null,
       exitPrice: data.exitPrice,
-      fees: data.fees,
-      pl: data.pl,
+      fees: data.fees ? new Money(data.fees.amount, data.fees.currency) : null,
+      pl: data.pl? new Money(data.pl.amount, data.pl.currency) : null,
       hitTakeProfit: data.hitTakeProfit,
       mfe: data.mfe || null,
       mae: data.message || null,
@@ -109,8 +111,8 @@ let extractTrades = (snapshot: firestore.QuerySnapshot): Types.Trade[] => {
       duringComment: data.duringComment,
       exitComment: data.exitComment,
       flag: data.flag,
-      entryEmotion: data.emotion || null,
-      exitEmotion: data.emotion || null,
+      entryEmotion: data.entryEmotion,
+      exitEmotion: data.exitEmotion,
       rating: data.rating,
       charts: data.charts,
     }
@@ -153,15 +155,15 @@ export const createTrade = (trade: Types.Trade) => {
       stopLoss: trade.stopLoss.toString(),
       takeProfit: trade.takeProfit.toString(),
       exitPrice: trade.exitDate ? trade.exitPrice.toString() : null,
-      fees:  trade.exitDate ? trade.fees.toString() : null,
-      pl:  trade.exitDate ? trade.fees.toString() : null,
+      fees:  trade.exitDate ? trade.fees.toJSObject() : null,
+      pl:  trade.exitDate ? trade.fees.toJSObject() : null,
     }
 
     firestore.collection('trades').add(flatTrade).then((doc: any) => {
       trade.id = doc.id;
 
       dispatch({type: CREATE_TRADE, trade});
-    }).catch((err: Error) => console.log(err));
+    }).catch((err: Error) => console.error(err));
   }
 }
 
@@ -171,9 +173,20 @@ export const modifyTrade = (trade: Types.Trade) => {
     const firestore = getFirestore(); 
     trade.modified = new Date();
 
-    firestore.collection('trades').doc(trade.id).update(trade).then(() => {
+    let flatTrade = {
+      ...trade,
+      entryPrice: trade.entryPrice.toString(), //TODO: OR THESE
+      positionSize: trade.positionSize.toString(),
+      stopLoss: trade.stopLoss.toString(),
+      takeProfit: trade.takeProfit.toString(),
+      exitPrice: trade.exitDate ? trade.exitPrice.toString() : null,
+      fees:  trade.exitDate ? trade.fees.toJSObject() : null,
+      pl:  trade.exitDate ? trade.fees.toJSObject() : null,
+    }
+
+    firestore.collection('trades').doc(trade.id).update(flatTrade).then(() => {
       dispatch({type: MODIFY_TRADE, trade});
-    }).catch((err: Error) => console.log(err));
+    }).catch((err: Error) => console.error(err));
   }
 }
 
