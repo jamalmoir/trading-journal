@@ -1,0 +1,82 @@
+rules_version = '2';
+service cloud.firestore {
+	match /databases/{database}/documents {
+		match /journals/{journalId} {
+			function journalBelongsToUser() {
+				return 	request.auth.uid != null &&
+								request.auth.uid == request.resource.data.userId;
+								//request.auth.token.email_verified == true;
+			}
+
+			function creatingJournalBelongsToUser() {
+				return request.resource.data.userId == request.auth.uid;
+			}
+
+			function isJournal() {
+				return 	request.resource.data.name is string &&
+								request.resource.data.name.size() > 0 &&
+								request.resource.data.kind in ['live', 'demo', 'backtest'] &&
+								request.resource.data.currency is string &&
+								request.resource.data.currency.size() == 3;
+			}
+
+			allow read: if journalBelongsToUser();
+			allow create: if creatingJournalBelongsToUser() && isJournal();
+			allow update: if journalBelongsToUser() && creatingJournalBelongsToUser() && isJournal() &&
+												request.resource.data.kind == resource.data.kind;
+			allow delete: if false;
+		}
+
+		match /trades/{tradeId} {
+			function tradeBelongsToUser() {
+				return	request.auth.uid != null && 
+								get(/databases/$(database)/documents/journals/$(resource.data.journalId)).data.userId == request.auth.uid;
+								//request.auth.toke.email_verified == true;
+			}
+			
+			function creatingTradeBelongsToUser() {
+				return get(/databases/$(database)/documents/journals/$(request.resource.data.journalId)).data.userId == request.auth.uid;
+			}
+
+			function isNumberString(num) {
+				return num is string && !math.isNaN(num);
+			}
+
+			function isTrade() {
+				return	request.resource.data.journalId is string &&
+								request.resource.data.created is timestamp &&
+								request.resource.data.modified is timestamp &&
+								request.resource.data.instrument is string &&
+								request.resource.data.strategy is string &&
+								request.resource.data.kind in ['long', 'short'] &&
+								request.resource.data.entryDate is timestamp &&
+								isNumberString(request.resource.data.entryPrice) &&
+								isNumberString(request.resource.data.positionSize) &&
+								isNumberString(request.resource.data.stopLoss) &&
+								isNumberString(request.resource.data.takeProfit) &&
+								request.resource.data.exitDate is timestamp &&
+								isNumberString(request.resource.data.exitPrice) &&
+								isNumberString(request.resource.data.fees) &&
+								isNumberString(request.resource.data.pl) &&
+								request.resource.data.hitTakeProfit is bool &&
+								isNumberString(request.resource.data.mfe) &&
+								isNumberString(request.resource.data.mae) &&
+								request.resource.data.tags is list &&
+								request.resource.data.entryComment is string &&
+								request.resource.data.duringComment is string &&
+								request.resource.data.exitComment is string &&
+								request.resource.data.flag is bool &&
+								request.resource.data.entryEmotion is list &&
+								request.resource.data.exitEmotion is list &&
+								request.resource.data.rating in [-1, 0, 1] &&
+								request.resource.data.charts is list;
+			}
+			
+			allow read: if tradeBelongsToUser();
+			allow create: if creatingTradeBelongsToUser() && isTrade();
+			allow update: if	tradeBelongsToUser() && creatingTradeBelongsToUser() && isTrade() &&
+												resource.data.journalId == request.resource.data.journalId;
+			allow delete: if false;
+		}
+	}
+}
