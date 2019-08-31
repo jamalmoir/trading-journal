@@ -12,7 +12,7 @@ import { JournalAction } from '../../redux/reducers/journal';
 import './trade.scss';
 import { TextInput } from '../../components/TextInput';
 import { TristateCheckbox } from '../../components/TristateCheckbox';
-import { setUpControls, buildTrade } from '../../utils/utils';
+import { setUpControls, buildTrade, controlsValid } from '../../utils/utils';
 import { inputControls } from './inputControls';
 
 
@@ -31,6 +31,7 @@ interface TradePageProps {
 
 const TradePage = (props: TradePageProps) => {
 	const [trade, setTrade] = useState(null);
+	const [controlsValid, setControlsValid] = useState(false);
 	const [controls, setControls] = setUpControls(null);
 
 	props.onRouteChange(props.match);
@@ -57,7 +58,7 @@ const TradePage = (props: TradePageProps) => {
 		}
 	}, [props.journals])
 
-	const updateInputState = (key: string, value: any) => setControls(key, value);
+	const updateInputState = (key: string, value: any) => setControlsValid(setControls(key, value));
 
 	const handleTagDelete = (kind: string, i: number) => {
 		let newTags = controls[kind].value.filter((tag: Tag, index:number) => index !== i);
@@ -81,7 +82,10 @@ const TradePage = (props: TradePageProps) => {
 		<div className='trade'>
 			<Heading text={ props.activeJournal.name + " | " + (controls.kind.value.charAt(0).toUpperCase() + trade.kind.slice(1)) + " " + trade.instrument + " Trade" } />
 			<div className='trade-controls'>
-				<button className="btn btn-outline-primary trade-quick-create-button form-control col-sm-1" type="button" onClick={ modifyTrade }>
+				<button className="btn btn-outline-primary trade-quick-create-button form-control col-sm-1"
+								type="button"
+								disabled={ !controlsValid }
+								onClick={ modifyTrade }>
 					Submit
 				</button>
 			</div>

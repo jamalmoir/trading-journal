@@ -7,10 +7,10 @@ import Big from 'big.js';
 
 export const stringsToTags = (strings: string[]): Tag[] => Array.isArray(strings) ? strings.map(s => ({id:s, name: s})) : [];
 
-export const setUpControls = (initialControls: Types.InputControls): [Types.InputControls, (key: string, value: any) => void] => {
+export const setUpControls = (initialControls: Types.InputControls): [Types.InputControls, (key: string, value: any) => boolean] => {
 	const [controls, setControls]: [Types.InputControls, (controls: Types.InputControls) => void] = useState(initialControls);
 
-	const updateControls = (key: string, value: any): void => {
+	const updateControls = (key: string, value: any): boolean => {
 		let connectedValue = {};
 
 		if (key === null) {
@@ -40,10 +40,14 @@ export const setUpControls = (initialControls: Types.InputControls): [Types.Inpu
 		};
 
 		setControls(newControls);
+
+		return controlsValid(newControls);
 	}
 
 	return [controls, updateControls]
 }
+
+export const controlsValid = (controls: Types.InputControls) => Object.keys(controls).map(key => controls[key].errors.length).every(v => !v);
 
 export const buildTrade = (args: any): Types.Trade => ({
 	id: args.id || null,

@@ -1,4 +1,5 @@
 import Big from 'big.js';
+import { isCurrencyCode } from '../utils/moolah';
 
 export const validate = (val: any, rules: {[key: string]: any}, connectedValue: any) => {
   let errors: string[] = [];
@@ -36,6 +37,9 @@ export const validate = (val: any, rules: {[key: string]: any}, connectedValue: 
       case 'lte':
         if (!lteValidator(val, rules[rule])) { errors.push("Must be greater than " + val) }
         break;
+      case 'isCurrencyCode':
+        if (!isCurrencyCodeValidator(val)) { errors.push("Must be greater than " + val) }
+        break;
       default:
         errors = [];
     }
@@ -60,3 +64,4 @@ const gtValidator = (val: string, floor: number) => !notEmptyValidator(val) || (
 const gteValidator = (val: string, floor: number) => !notEmptyValidator(val) || (isNumberValidator(val) && Big(val).gte(floor));
 const ltValidator = (val: string, ceil: number) => !notEmptyValidator(val) || (isNumberValidator(val) && Big(val).lt(ceil));
 const lteValidator = (val: string, ceil: number) => !notEmptyValidator(val) || (isNumberValidator(val) && Big(val).lte(ceil));
+const isCurrencyCodeValidator = (val: string) => !notEmptyValidator(val) || isCurrencyCode(val);

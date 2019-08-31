@@ -5,90 +5,115 @@ import Types from 'Types';
 import { createJournal } from '../redux/actions/journal';
 import { JournalAction } from '../redux/reducers/journal';
 import { TextInput } from './TextInput';
-import { CurrencyCode, isCurrencyCode } from '../utils/moolah';
+import { setUpControls } from '../utils/utils';
 
 
 interface JournalCreateProps {
-  className?: string;
-  onCreateJournal: (journal: Types.Journal) => null;
-  auth: any,
+	className?: string;
+	onCreateJournal: (journal: Types.Journal) => null;
+	auth: any,
 }
 
 const JournalCreateComponent = (props: JournalCreateProps) => {
-  const [journalName, setJournalName]: [string, (val: string) => void] = useState('');
-  const [journalKind, setJournalKind]: [Types.JournalKind, (val: Types.JournalKind) => void] = useState<Types.JournalKind>('live');
-  const [journalCurrency, setJournalCurrency]: [CurrencyCode, (val: CurrencyCode) => void] = useState<CurrencyCode>('USD');
+	const [controlsValid, setControlsValid] = useState(false);
+	const [controls, setControls] = setUpControls({
+		name: {
+			value: null,
+			errors: [],
+			touched: false,
+			validationRules: {
+				minLength: 2,
+				notEmpty: true,
+			}
+		},
+		kind: {
+			value: null,
+			errors: [],
+			touched: false,
+			validationRules: {
+				minLength: 2,
+				notEmpty: true,
+			}
+		},
+		currency: {
+			value: null,
+			errors: [],
+			touched: false,
+			validationRules: {
+				notEmpty: true,
+				minLength: 3,
+				maxLength: 3,
+				isCurrencyCode: true,
+			}
+		},
+	});
 
-  const updateJournalName = (val: string) => {
-    setJournalName(val);
-  }
+	const updateControls = (kind: string, value: any) => {
+		setControlsValid(setControls(kind, value));
+	}
 
-  const updateJournalKind = (val: 'live' | 'demo' | 'backtest') => {
-    setJournalKind(val);
-  }
+	const createJournal = () => {
+		let journal: Types.Journal = {
+			id: null,
+			userId: props.auth.uid,
+			kind: controls.kind.value,
+			currency: controls.currency.value,
+			name: controls.name.value,
+			created: new Date(),
+			modified: new Date(),
+			tradeCount: 0,
+		}
+		props.onCreateJournal(journal);
+		setControls('name', '');
+		setControls('kind', 'live');
+		setControls('currency', '');
+	}
 
-  const updateJournalCurrency = (val: string) => {
-    if (isCurrencyCode(val)) {
-      setJournalCurrency(val);
-    }
-  }
-
-  const createJournal = () => {
-    let journal: Types.Journal = {
-      id: null,
-      userId: props.auth.uid,
-      kind: journalKind,
-      currency: journalCurrency,
-      name: journalName,
-      created: new Date(),
-      modified: new Date(),
-      tradeCount: 0,
-    }
-
-    setJournalName('');
-    setJournalKind('live');
-    setJournalCurrency('USD');
-    props.onCreateJournal(journal);
-  }
-
-  return (
-    <div className={ props.className + ' input-group mb-3'}>
-      <TextInput type="text"
-              className="form-control col-8"
-              placeholder="Journal name"
-              value={ journalName }
-              onChange={ (e) => updateJournalName(e.target.value) }
-      />
-      <select className="form-control custom-select col-4"
-              value={ journalKind }
-              onChange={ (e) => updateJournalKind(e.target.value as 'live' | 'demo' | 'backtest') }
-      >
-        <option value="live">Live</option>
-        <option value="demo">Demo</option>
-        <option value="backtest">Backtest</option>
-      </select>
-      <TextInput type="text"
-              className="form-control col-8"
-              placeholder="Currency"
-              value={ journalCurrency }
-              onChange={ (e) => updateJournalCurrency(e.target.value) }
-      />
-      <div className="input-group-append">
-        <button className="btn btn-outline-primary" type="button" onClick={ createJournal }>Create</button>
-      </div>
-    </div>
-  )
+	return (
+		<div className={ props.className + ' input-group mb-3'}>
+			<TextInput type="text"
+							className="form-control col-8"
+							placeholder="Journal name"
+							value={ controls.name.value || '' }
+							onChange={ (e) => updateControls('name', e.target.value) }
+							errors={ controls.name.errors }
+							touched={ controls.name.touched }
+			/>
+			<select className="form-control custom-select col-4"
+							value={ controls.kind.value || 'live' }
+							onChange={ (e) => updateControls('kind', e.target.value as 'live' | 'demo' | 'backtest') }
+			>
+				<option value="live">Live</option>
+				<option value="demo">Demo</option>
+				<option value="backtest">Backtest</option>
+			</select>
+			<TextInput type="text"
+							className="form-control col-8"
+							placeholder="Currency"
+							value={ controls.currency.value || '' }
+							onChange={ (e) => updateControls('currency', e.target.value) }
+							errors={ controls.currency.errors }
+							touched={ controls.currency.touched }
+			/>
+			<div className="input-group-append">
+				<button className="btn btn-outline-primary"
+								type="button"
+								onClick={ createJournal }
+								disabled={ !controlsValid }>Create</button>
+			</div>
+		</div>
+	)
 };
 
 const mapStateToProps = (state: Types.RootState) => {
-  return {
-    auth: state.firebase.auth,
-  }
+	return {
+		auth: state.firebase.auth,
+	}
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<JournalAction>) => ({
-  // @ts-ignore
-  onCreateJournal: (journal: Types.Journal) => dispatch(createJournal(journal)),
+	// @ts-ignore
+	onCreateJournal: (journal: Types.Journal) => dispatch(createJournal(journal)),
 });
 
 export const JournalCreate = connect(mapStateToProps, mapDispatchToProps)(JournalCreateComponent);
