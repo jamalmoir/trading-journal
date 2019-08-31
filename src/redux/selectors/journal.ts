@@ -97,7 +97,7 @@ export const getTagsTrades = createSelector(
   (tagsFilter, trades) => {
     return tagsFilter === null || !tagsFilter.length ? trades : trades.filter(trade => {
       for (let filter of tagsFilter) {
-        if (trade.tags.filter(t => t.id === filter).length) return true;
+        return !!trade.tags.filter(t => t.name === filter).length;
       }
     });
   }
@@ -108,7 +108,7 @@ export const getEmotionsTrades = createSelector(
   (emotionsFilter, trades) => {
     return emotionsFilter === null || !emotionsFilter.length ? trades : trades.filter(trade => {
       for (let filter of emotionsFilter) {
-        if (trade.entryEmotion.filter(t => t.id === filter).length || trade.exitEmotion.filter(t => t.id === filter).length) return true;
+        return trade.entryEmotion.filter(t => t.name === filter).length || trade.exitEmotion.filter(t => t.name === filter).length;
       }
     });
   }

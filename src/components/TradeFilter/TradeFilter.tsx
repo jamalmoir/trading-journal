@@ -86,7 +86,7 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
     
     setTags(newTags);
 
-    updateFilter(stateKey, newTags.tags.tags.map((t: Tag) => t.name));
+    updateFilter(stateKey, newTags[stateKey].tags.map((t: Tag) => t.name));
   }
 
   let handleTagAddition = (kind: string, tag: Tag) => {
@@ -108,7 +108,7 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
 
     setTags(newTags)
 
-    updateFilter(stateKey, newTags.tags.tags.map((t: Tag) => t.name));
+    updateFilter(stateKey, newTags[stateKey].tags.map((t: Tag) => t.name));
   }
 
   return (
