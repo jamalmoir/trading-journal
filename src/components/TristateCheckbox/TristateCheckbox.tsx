@@ -3,9 +3,10 @@ import './tristateCheckbox.scss';
 
 
 interface TristateCheckboxProps {
-  className?: string;
-  id?: string;
-  onClick?: (val: boolean | null) => void;
+	className?: string;
+	id?: string;
+	onClick?: (val: boolean | null) => void;
+	initial?: boolean | null;
 }
 
 const stateMap = new Map([[null, true], [true, false], [false, null]]);
@@ -13,21 +14,21 @@ const stateClassMap = new Map([[null, 'unchecked'], [true, 'checked-true'], [fal
 
 
 export const TristateCheckbox = (props: TristateCheckboxProps) => {
-  let [checked, setChecked] = useState(null)
-  let [checkedClass, setCheckedClass] = useState(stateClassMap.get(checked));
+	const initialState = typeof props.initial !== 'undefined'  ? props.initial : null;
+	const [checked, setChecked] = useState(initialState)
+	const [checkedClass, setCheckedClass] = useState(stateClassMap.get(initialState));
 
-  let handleClick = () => {
-    setChecked(stateMap.get(checked));
-    setCheckedClass(stateClassMap.get(checked))
-    
-    props.onClick(checked);
-  }
+	let handleClick = () => {
+		let nextState = stateMap.get(checked);
+		setChecked(nextState);
+		setCheckedClass(stateClassMap.get(nextState));
+		props.onClick(checked);
+	}
 
-  return (
-    <div id={ props.id }
-         className={ props.className + ' tristate-checkbox ' + checkedClass }
-         onClick={ handleClick }>
-      
-    </div>
-  )
+	return (
+		<div id={ props.id }
+				 className={ props.className + ' tristate-checkbox ' + checkedClass }
+				 onClick={ handleClick }>
+		</div>
+	)
 }
