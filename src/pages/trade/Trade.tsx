@@ -118,7 +118,8 @@ const TradePage = (props: TradePageProps) => {
 							</div>
 							<div className="form-group">
 								<label htmlFor="trade-kind">Kind</label>
-									<select className="custom-select col-sm-1"
+									<select id="trade-kind"
+													className="custom-select"
 													value={ controls.kind.value }
 													onChange={ (e) => updateInputState('kind', e.target.value as 'live' | 'demo' | 'backtest') }
 									>
