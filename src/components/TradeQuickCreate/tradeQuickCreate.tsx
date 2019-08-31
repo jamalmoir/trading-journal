@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import Types from 'Types';
 import { createTrade } from '../../redux/actions/journal';
-import { Money } from '../../utils/moolah';
 import './tradeQuickCreate.scss';
 import { TextInput } from '../TextInput';
+import { buildTrade } from '../../utils/utils';
 
 
 interface TradeQuickCreateProps {
@@ -46,57 +46,16 @@ class TradeQuickCreateComponent extends Component<TradeQuickCreateProps, TradeQu
   }
 
   updateInputState = (key: string, val: string | Date) => {
-    let processedVal: string | Money | Date | Big;
-
-    if (['entryPrice', 'stopLoss', 'takeProfit', 'exitPrice', 'pl'].includes(key) && typeof val === 'string') {
-      processedVal = new Money(val, this.props.journal.currency);
-    } else if (['entryDate', 'exitDate'].includes(key)) {
-      processedVal = val;
-    } else if (['positionSize'].includes(key) && typeof val === 'string') {
-      processedVal = new Big(val);
-    } else {
-      processedVal = val;
-    }
-
     this.setState((prevState: TradeQuickCreateState) => {
       return {
         ...prevState,
-        [key]: processedVal,
+        [key]: val,
       }
     })
   }
 
   createTrade = () => {
-    let trade: Types.Trade = {
-      id: null,
-      journalId: this.props.journal.id,
-      created: null,
-      modified: null,
-      instrument: this.state.instrument,
-      strategy: this.state.strategy,
-      kind: this.state.kind,
-      entryDate: this.state.entryDate,
-      entryPrice: this.state.entryPrice,
-      positionSize: this.state.positionSize,
-      stopLoss: this.state.stopLoss,
-      takeProfit: this.state.takeProfit,
-      exitDate: null,
-      exitPrice: null,
-      fees: null,
-      pl: null,
-      mfe: null,
-      mae: null,
-      hitTakeProfit: null,
-      tags: [],
-      entryComment: '',
-      duringComment: '',
-      exitComment: '',
-      flag: false,
-      entryEmotion: [],
-      exitEmotion: [],
-      rating: null,
-      charts: [],
-    }
+    let trade = buildTrade({ journal: this.props.journal, ...this.state});
 
     this.setState((prevState: TradeQuickCreateState) => {
       return {
@@ -104,11 +63,11 @@ class TradeQuickCreateComponent extends Component<TradeQuickCreateProps, TradeQu
         instrument: '',
         strategy: '',
         kind: 'long',
-        entryDate: new Date(),
-        entryPrice: new Big('0'),
-        positionSize: new Big('0'),
-        stopLoss: new Big('0'),
-        takeProfit: new Big('0'),
+        entryDate: null,
+        entryPrice: null,
+        positionSize: null,
+        stopLoss: null,
+        takeProfit: null,
         exitDate: null,
         exitPrice: null,
         pl: null,

@@ -1,3 +1,5 @@
+import Big from 'big.js';
+
 export const validate = (val: any, rules: {[key: string]: any}, connectedValue: any) => {
   let errors: string[] = [];
 
@@ -18,6 +20,22 @@ export const validate = (val: any, rules: {[key: string]: any}, connectedValue: 
       case 'notEmpty':
         if (!notEmptyValidator(val)) { errors.push("Can't be empty") }
         break;
+      case 'isNumber':
+        if (!isNumberValidator(val)) { errors.push("Not a Number") }
+        break;
+      case 'gt':
+        console.log(val, rules[rule])
+        if (!gtValidator(val, rules[rule])) { errors.push("Must be greater than " + val) }
+        break;
+      case 'gte':
+        if (!gteValidator(val, rules[rule])) { errors.push("Must be greater than " + val) }
+        break;
+      case 'lt':
+        if (!ltValidator(val, rules[rule])) { errors.push("Must be greater than " + val) }
+        break;
+      case 'lte':
+        if (!lteValidator(val, rules[rule])) { errors.push("Must be greater than " + val) }
+        break;
       default:
         errors = [];
     }
@@ -33,18 +51,12 @@ const emailValidator = (val: string ) => {
 	.test(val)
 }
 
-const minLengthValidator = (val: string, minLength: number) => {
-	return val.length >= minLength;
-}
-
-const maxLengthValidator = (val: string, maxLength: number) => {
-	return val.length <= maxLength;
-}
-
-const equalToValidator = (val: string, checkValue: string) => {
-	return val === checkValue;
-}
-
-const notEmptyValidator = (val: string) => {
-	return val.trim() !== '';
-}
+const minLengthValidator = (val: string, minLength: number) => val.length >= minLength;
+const maxLengthValidator = (val: string, maxLength: number) => val.length <= maxLength;
+const equalToValidator = (val: string, checkValue: string) => val === checkValue;
+const notEmptyValidator = (val: string) => val.trim() !== '';
+const isNumberValidator = (val: string) => !Number.isNaN(Number(val));
+const gtValidator = (val: string, floor: number) => !notEmptyValidator(val) || (isNumberValidator(val) && Big(val).gt(floor));
+const gteValidator = (val: string, floor: number) => !notEmptyValidator(val) || (isNumberValidator(val) && Big(val).gte(floor));
+const ltValidator = (val: string, ceil: number) => !notEmptyValidator(val) || (isNumberValidator(val) && Big(val).lt(ceil));
+const lteValidator = (val: string, ceil: number) => !notEmptyValidator(val) || (isNumberValidator(val) && Big(val).lte(ceil));

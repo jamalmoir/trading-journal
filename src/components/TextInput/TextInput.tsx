@@ -6,14 +6,15 @@ interface TextInputProps {
   type: 'text' | 'email' | 'password' | 'number';
   placeholder: string;
   value: string;
-  errors?: boolean;
+  errors?: string[];
+  touched?: boolean;
   className?: string;
   id?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const TextInput = (props: TextInputProps) => {
-  let errorClass = props.errors ? 'errors' : '';
+  let errorClass = props.errors && props.errors.length && props.touched ? 'errors' : '';
 
   return (
     <input id={ props.id }

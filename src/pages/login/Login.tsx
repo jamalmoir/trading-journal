@@ -105,12 +105,14 @@ class LoginPage extends Component<LoginProps> {
             <TextInput type="email"
                        placeholder="email"
                        value={ this.state.controls.email.value }
-                       errors={ this.state.controls.email.errors.length && this.state.controls.email.touched }
+                       errors={ this.state.controls.email.errors }
+                       touched={ this.state.controls.email.touched }
                        onChange={ (event: ChangeEvent<HTMLInputElement>) => this.updateInputState('email', event) } />
             <TextInput type="password"
                        placeholder="password"
                        value={ this.state.controls.password.value }
-                       errors={ this.state.controls.password.errors.length && this.state.controls.password.touched }
+                       errors={ this.state.controls.password.errors }
+                       touched={ this.state.controls.password.touched }
                        onChange ={(event: ChangeEvent<HTMLInputElement>) => this.updateInputState('password', event) } />
             <Link to="/">
               <button className="btn btn-primary" onClick={ this.loginHandler }>Login</button>

@@ -24,7 +24,7 @@ declare module 'Types' {
 
   export interface InputControls {
     [key: string]: {
-      value: string
+      value: any,
       errors: string[],
       touched: boolean,
       validationRules: {
