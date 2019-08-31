@@ -81,7 +81,7 @@ export const getHitTakeProfitTrades = createSelector(
 export const getFlaggedTrades = createSelector(
   [getFlagged, getTrades],
   (flaggedFilter, trades) => {
-    return flaggedFilter === null ? trades : trades.filter(trade => trade.flagged === flaggedFilter);
+    return flaggedFilter === null ? trades : trades.filter(trade => trade.flag === flaggedFilter);
   }
 )
 

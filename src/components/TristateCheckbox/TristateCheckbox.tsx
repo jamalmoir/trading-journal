@@ -22,7 +22,7 @@ export const TristateCheckbox = (props: TristateCheckboxProps) => {
 		let nextState = stateMap.get(checked);
 		setChecked(nextState);
 		setCheckedClass(stateClassMap.get(nextState));
-		props.onClick(checked);
+		props.onClick(nextState);
 	}
 
 	return (

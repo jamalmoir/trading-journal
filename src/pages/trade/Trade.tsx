@@ -58,7 +58,10 @@ const TradePage = (props: TradePageProps) => {
 		}
 	}, [props.journals])
 
-	const updateInputState = (key: string, value: any) => setControlsValid(setControls(key, value));
+	const updateInputState = (key: string, value: any) => {
+		value = key === 'flag' ? !controls.flag.value : value;
+		setControlsValid(setControls(key, value));
+	}
 
 	const handleTagDelete = (kind: string, i: number) => {
 		let newTags = controls[kind].value.filter((tag: Tag, index:number) => index !== i);
@@ -131,7 +134,6 @@ const TradePage = (props: TradePageProps) => {
 								<input id="trade-flag"
 											type="checkbox"
 											className="form-check-input"
-											placeholder="Kind"
 											checked={ controls.flag.value }
 											onChange={ (e) => updateInputState('flag', e.target.value) }
 								/>
