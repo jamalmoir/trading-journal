@@ -18,12 +18,12 @@ const NavBarComponent = (props: NavBarProps) => {
 			<nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
 				<div className='content-wrapper navbar navbar-expand-lg navbar-dark bg-dark justify-content-between'>
 					<Link className='navbar-brand logo' to='/'>
-    				<img src="/src/images/stroply-logo-white.png" alt="Stroply" />
+    				<img src="/public/stroply-logo-white.png" alt="Stroply" />
 					</Link>
 
 					<div className="collapse navbar-collapse" id="navbarSupportedContent">
     				<ul className="navbar-nav mr-auto">
-      				<li className="nav-item">
+      				{/*<li className="nav-item">
 								<Link to='/' className="nav-link header-link">Overview</Link>
       				</li>
       				<li className="nav-item">
@@ -34,7 +34,7 @@ const NavBarComponent = (props: NavBarProps) => {
       				</li>
       				<li className="nav-item">
 								<Link to='/' className="nav-link header-link">Chartbook</Link>
-      				</li>
+							</li>*/}
 						</ul>
 						
 						<button className="logout-button btn btn-outline-secondary my-2 my-lg-0"
