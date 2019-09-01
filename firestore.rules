@@ -4,8 +4,8 @@ service cloud.firestore {
 		match /journals/{journalId} {
 			function journalBelongsToUser() {
 				return 	request.auth.uid != null &&
-								request.auth.uid == request.resource.data.userId;
-								//request.auth.token.email_verified == true;
+								request.auth.uid == resource.data.userId &&
+								request.auth.token.email_verified == true;
 			}
 
 			function creatingJournalBelongsToUser() {
@@ -30,8 +30,8 @@ service cloud.firestore {
 		match /trades/{tradeId} {
 			function tradeBelongsToUser() {
 				return	request.auth.uid != null && 
-								get(/databases/$(database)/documents/journals/$(resource.data.journalId)).data.userId == request.auth.uid;
-								//request.auth.toke.email_verified == true;
+								get(/databases/$(database)/documents/journals/$(resource.data.journalId)).data.userId == request.auth.uid &&
+								request.auth.token.email_verified == true;
 			}
 			
 			function creatingTradeBelongsToUser() {

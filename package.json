@@ -47,7 +47,8 @@
     "dev": "webpack-dev-server --mode development --open --hot --inline",
     "build": "webpack --mode production",
     "predeploy": "yarn run build",
-    "deploy": "gh-pages -d build"
+    "deploy-rules": "yarn firebase deploy --only firestore:rules",
+    "deploy-all": "yarn firebase deploy"
   },
   "dependencies": {
     "@types/big.js": "^4.0.5",
