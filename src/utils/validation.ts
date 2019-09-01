@@ -25,7 +25,6 @@ export const validate = (val: any, rules: {[key: string]: any}, connectedValue: 
         if (!isNumberValidator(val)) { errors.push("Not a Number") }
         break;
       case 'gt':
-        console.log(val, rules[rule])
         if (!gtValidator(val, rules[rule])) { errors.push("Must be greater than " + val) }
         break;
       case 'gte':
