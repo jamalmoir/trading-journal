@@ -39,7 +39,15 @@ service cloud.firestore {
 			}
 
 			function isNumberString(num) {
-				return num is string && !math.isNaN(num);
+				return (num is string && !math.isNaN(num)) || num == null;
+			}
+
+			function isOptionalType(field, type) {
+				return	(type == 'string' && field is string) ||
+								(type == 'bool' && field is bool) ||
+								(type == 'list' && field is list) ||
+								(type == 'timestamp' && field is timestamp) ||
+								field == null;
 			}
 
 			function isTrade() {
@@ -47,29 +55,29 @@ service cloud.firestore {
 								request.resource.data.created is timestamp &&
 								request.resource.data.modified is timestamp &&
 								request.resource.data.instrument is string &&
-								request.resource.data.strategy is string &&
-								request.resource.data.kind in ['long', 'short'] &&
-								request.resource.data.entryDate is timestamp &&
+								isOptionalType(request.resource.data.strategy, 'string') &&
+								request.resource.data.kind in ['long', 'short', null] &&
+								isOptionalType(request.resource.data.entryDate, 'timestamp') &&
 								isNumberString(request.resource.data.entryPrice) &&
 								isNumberString(request.resource.data.positionSize) &&
 								isNumberString(request.resource.data.stopLoss) &&
 								isNumberString(request.resource.data.takeProfit) &&
-								request.resource.data.exitDate is timestamp &&
+								isOptionalType(request.resource.data.exitDate, 'timestamp') &&
 								isNumberString(request.resource.data.exitPrice) &&
 								isNumberString(request.resource.data.fees) &&
 								isNumberString(request.resource.data.pl) &&
-								request.resource.data.hitTakeProfit is bool &&
+								isOptionalType(request.resource.data.hitTakeProfit, 'bool') &&
 								isNumberString(request.resource.data.mfe) &&
 								isNumberString(request.resource.data.mae) &&
-								request.resource.data.tags is list &&
-								request.resource.data.entryComment is string &&
-								request.resource.data.duringComment is string &&
-								request.resource.data.exitComment is string &&
-								request.resource.data.flag is bool &&
-								request.resource.data.entryEmotion is list &&
-								request.resource.data.exitEmotion is list &&
-								request.resource.data.rating in [-1, 0, 1] &&
-								request.resource.data.charts is list;
+								isOptionalType(request.resource.data.tags, 'list') &&
+								isOptionalType(request.resource.data.entryComment, 'string') &&
+								isOptionalType(request.resource.data.duringComment, 'string') &&
+								isOptionalType(request.resource.data.exitComment, 'string') &&
+								isOptionalType(request.resource.data.flag, 'bool') &&
+								isOptionalType(request.resource.data.entryEmotion, 'list') &&
+								isOptionalType(request.resource.data.exitEmotion, 'list') &&
+								request.resource.data.rating in [-1, 0, 1, null] &&
+								isOptionalType(request.resource.data.charts, 'list');
 			}
 			
 			allow read: if tradeBelongsToUser();
