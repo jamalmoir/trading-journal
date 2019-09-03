@@ -201,10 +201,10 @@ export class Money {
 
     toJSObject = () => {
         return {
-            amount: this.amount,
+            amount: this.amount.toFixed(Number(this.currency.decimals)),
             currency: {
                 code: this.currency.code,
-                decimals: this.currency.decimals
+                decimals: this.currency.decimals.toString()
             }
         }
     }

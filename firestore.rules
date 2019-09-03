@@ -4,8 +4,8 @@ service cloud.firestore {
 		match /journals/{journalId} {
 			function journalBelongsToUser() {
 				return 	request.auth.uid != null &&
-								request.auth.uid == resource.data.userId &&
-								request.auth.token.email_verified == true;
+								request.auth.uid == resource.data.userId;
+								// request.auth.token.email_verified == true;
 			}
 
 			function creatingJournalBelongsToUser() {
@@ -30,8 +30,8 @@ service cloud.firestore {
 		match /trades/{tradeId} {
 			function tradeBelongsToUser() {
 				return	request.auth.uid != null && 
-								get(/databases/$(database)/documents/journals/$(resource.data.journalId)).data.userId == request.auth.uid &&
-								request.auth.token.email_verified == true;
+								get(/databases/$(database)/documents/journals/$(resource.data.journalId)).data.userId == request.auth.uid;
+								// request.auth.token.email_verified == true;
 			}
 			
 			function creatingTradeBelongsToUser() {
@@ -54,30 +54,30 @@ service cloud.firestore {
 				return	request.resource.data.journalId is string &&
 								request.resource.data.created is timestamp &&
 								request.resource.data.modified is timestamp &&
-								request.resource.data.instrument is string &&
-								isOptionalType(request.resource.data.strategy, 'string') &&
-								request.resource.data.kind in ['long', 'short', null] &&
-								isOptionalType(request.resource.data.entryDate, 'timestamp') &&
-								isNumberString(request.resource.data.entryPrice) &&
-								isNumberString(request.resource.data.positionSize) &&
-								isNumberString(request.resource.data.stopLoss) &&
-								isNumberString(request.resource.data.takeProfit) &&
-								isOptionalType(request.resource.data.exitDate, 'timestamp') &&
-								isNumberString(request.resource.data.exitPrice) &&
-								isNumberString(request.resource.data.fees) &&
-								isNumberString(request.resource.data.pl) &&
-								isOptionalType(request.resource.data.hitTakeProfit, 'bool') &&
-								isNumberString(request.resource.data.mfe) &&
-								isNumberString(request.resource.data.mae) &&
-								isOptionalType(request.resource.data.tags, 'list') &&
-								isOptionalType(request.resource.data.entryComment, 'string') &&
-								isOptionalType(request.resource.data.duringComment, 'string') &&
-								isOptionalType(request.resource.data.exitComment, 'string') &&
-								isOptionalType(request.resource.data.flag, 'bool') &&
-								isOptionalType(request.resource.data.entryEmotion, 'list') &&
-								isOptionalType(request.resource.data.exitEmotion, 'list') &&
-								request.resource.data.rating in [-1, 0, 1, null] &&
-								isOptionalType(request.resource.data.charts, 'list');
+								request.resource.data.instrument is string;
+								// isOptionalType(request.resource.data.strategy, 'string') &&
+								// request.resource.data.kind in ['long', 'short', null] &&
+								// isOptionalType(request.resource.data.entryDate, 'timestamp') &&
+								// isNumberString(request.resource.data.entryPrice) &&
+								// isNumberString(request.resource.data.positionSize) &&
+								// isNumberString(request.resource.data.stopLoss) &&
+								// isNumberString(request.resource.data.takeProfit) &&
+								// isOptionalType(request.resource.data.exitDate, 'timestamp') &&
+								// isNumberString(request.resource.data.exitPrice) &&
+								// isNumberString(request.resource.data.fees) &&
+								// isNumberString(request.resource.data.pl) &&
+								// isOptionalType(request.resource.data.hitTakeProfit, 'bool') &&
+								// isNumberString(request.resource.data.mfe) &&
+								// isNumberString(request.resource.data.mae) &&
+								// isOptionalType(request.resource.data.tags, 'list') &&
+								// isOptionalType(request.resource.data.entryComment, 'string') &&
+								// isOptionalType(request.resource.data.duringComment, 'string') &&
+								// isOptionalType(request.resource.data.exitComment, 'string') &&
+								// isOptionalType(request.resource.data.flag, 'bool') &&
+								// isOptionalType(request.resource.data.entryEmotion, 'list') &&
+								// isOptionalType(request.resource.data.exitEmotion, 'list') &&
+								// request.resource.data.rating in [-1, 0, 1, null] &&
+								// isOptionalType(request.resource.data.charts, 'list');
 			}
 			
 			allow read: if tradeBelongsToUser();

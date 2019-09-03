@@ -101,8 +101,8 @@ let extractTrades = (snapshot: firestore.QuerySnapshot): Types.Trade[] => {
       takeProfit: data.takeProfit,
       exitDate: data.exitDate ? new Date(data.exitDate.seconds * 1000) : null,
       exitPrice: data.exitPrice,
-      fees: data.fees ? new Money(data.fees.amount, data.fees.currency) : null,
-      pl: data.pl? new Money(data.pl.amount, data.pl.currency) : null,
+      fees: data.fees ? new Money(data.fees.amount, data.fees.currency.decimals ? data.fees.currency.code : data.fees.currency) : null,
+      pl: data.pl? new Money(data.pl.amount, data.pl.currency.decimals ? data.pl.currency.code : data.pl.currency) : null,
       hitTakeProfit: data.hitTakeProfit,
       mfe: data.mfe || null,
       mae: data.message || null,
@@ -172,16 +172,16 @@ export const modifyTrade = (trade: Types.Trade) => {
     // @ts-ignore
     const firestore = getFirestore(); 
     trade.modified = new Date();
-
+    console.log(trade)
     let flatTrade = {
       ...trade,
       entryPrice: trade.entryPrice.toString(), //TODO: OR THESE
       positionSize: trade.positionSize.toString(),
       stopLoss: trade.stopLoss.toString(),
       takeProfit: trade.takeProfit.toString(),
-      exitPrice: trade.exitDate ? trade.exitPrice.toString() : null,
-      fees:  trade.exitDate ? trade.fees.toJSObject() : null,
-      pl:  trade.exitDate ? trade.fees.toJSObject() : null,
+      exitPrice: trade.exitPrice ? trade.exitPrice.toString() : null,
+      fees: trade.fees ? trade.fees.toJSObject() : null,
+      pl: trade.pl ? trade.pl.toJSObject() : null,
     }
 
     firestore.collection('trades').doc(trade.id).update(flatTrade).then(() => {
