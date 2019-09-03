@@ -95,4 +95,21 @@ declare module 'Types' {
     tags: string[] | null;
     emotions: string[] | null;
   }
+
+  export interface User {
+    id: string;
+    created: Date;
+    lastSeen: Date;
+    email: string;
+    planId: string;
+    displayName: string;
+    timeZone: string;
+  }
+
+  export interface Plan {
+    id: string;
+    name: string;
+    price: Money;
+    features: {[key: string]: any};
+  }
 }
