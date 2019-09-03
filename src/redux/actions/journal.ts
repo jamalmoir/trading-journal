@@ -172,7 +172,7 @@ export const modifyTrade = (trade: Types.Trade) => {
     // @ts-ignore
     const firestore = getFirestore(); 
     trade.modified = new Date();
-    console.log(trade)
+
     let flatTrade = {
       ...trade,
       entryPrice: trade.entryPrice.toString(), //TODO: OR THESE
