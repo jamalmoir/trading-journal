@@ -18,7 +18,7 @@ const JournalCreateComponent = (props: JournalCreateProps) => {
 	const [controlsValid, setControlsValid] = useState(false);
 	const [controls, setControls] = setUpControls({
 		name: {
-			value: null,
+			value: '',
 			errors: [],
 			touched: false,
 			validationRules: {
@@ -27,7 +27,7 @@ const JournalCreateComponent = (props: JournalCreateProps) => {
 			}
 		},
 		kind: {
-			value: null,
+			value: 'long',
 			errors: [],
 			touched: false,
 			validationRules: {
@@ -36,7 +36,7 @@ const JournalCreateComponent = (props: JournalCreateProps) => {
 			}
 		},
 		currency: {
-			value: null,
+			value: '',
 			errors: [],
 			touched: false,
 			validationRules: {
