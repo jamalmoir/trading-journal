@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<JournalListItem /> should match snapshot 1`] = `
+<Link
+  className="journal-list-item undefined"
+  to="journal/someId"
+>
+  Some Journal
+   
+  <span
+    className="journal-list-item-kind badge badle-pill badge-success"
+  >
+    live
+  </span>
+  <i
+    className="journal-list-item-edit far fa-edit"
+    data-target="#journalEditModal"
+    data-toggle="modal"
+  />
+  <Component
+    id="journalEditModal"
+    journal={
+      Object {
+        "created": 2019-09-09T15:00:00.000Z,
+        "currency": "GBP",
+        "id": "someId",
+        "kind": "live",
+        "modified": 2019-09-09T15:00:00.000Z,
+        "name": "Some Journal",
+        "tradeCount": 10,
+        "userId": "someUserId",
+      }
+    }
+  />
+</Link>
+`;

@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<JournalList /> should match snapshot 1`] = `
+<div
+  className="journal-list undefined"
+>
+  <Component
+    journal={
+      Object {
+        "created": 2019-09-09T15:00:00.000Z,
+        "currency": "GBP",
+        "id": "someId",
+        "kind": "live",
+        "modified": 2019-09-09T15:00:00.000Z,
+        "name": "Some Journal",
+        "tradeCount": 10,
+        "userId": "someUserId",
+      }
+    }
+    key="someId"
+  />
+  <Component
+    journal={
+      Object {
+        "created": 2019-09-10T15:00:00.000Z,
+        "currency": "JPY",
+        "id": "someId2",
+        "kind": "demo",
+        "modified": 2019-09-10T15:00:00.000Z,
+        "name": "Some Journal2",
+        "tradeCount": 22,
+        "userId": "someUserId",
+      }
+    }
+    key="someId2"
+  />
+</div>
+`;

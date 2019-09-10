@@ -1,11 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 import Types from 'Types';
 import { JournalListItem } from '../JournalListItem';
 import './journalList.scss';
 
 
 interface JournalListProps {
-  className: string;
+  className?: string;
   journals: Types.Journal[];
 }
 
