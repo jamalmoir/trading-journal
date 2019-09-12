@@ -4,10 +4,10 @@ import * as actions from '../actions/auth';
 
 
 export interface AuthState {
-  isAuthed: boolean;
-  user: {
-    email: string;
-  }
+  // isAuthed: boolean;
+  // user: {
+  //   email: string;
+  // }
 }
 
 export type AuthAction = ActionType<typeof actions>

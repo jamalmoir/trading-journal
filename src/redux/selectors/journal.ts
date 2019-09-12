@@ -2,8 +2,10 @@ import { createSelector } from 'reselect'
 import Types from 'Types';
 import Big from 'big.js';
 
-const getTrades = (state: Types.RootState) => state.journal.trades;
+const getAllTrades = (state: Types.RootState) => state.journal.trades;
 
+const getUser = (state: Types.RootState) => state.firebase.auth.uid;
+const getJournal = (state: Types.RootState) => state.journal.activeJournal;
 const getInstrument = (state: Types.RootState) => state.journal.tradeFilters.instrument;
 const getStrategy = (state: Types.RootState) => state.journal.tradeFilters.strategy;
 const getKind = (state: Types.RootState) => state.journal.tradeFilters.kind;
@@ -17,6 +19,12 @@ const getManaged = (state: Types.RootState) => state.journal.tradeFilters.manage
 const getTags = (state: Types.RootState) => state.journal.tradeFilters.tags;
 const getEmotions = (state: Types.RootState) => state.journal.tradeFilters.emotions;
 
+export const getTrades = createSelector(
+  [getUser, getJournal, getAllTrades],
+  (userFilter, journalFilter , trades) => {
+    return userFilter === null || journalFilter === null ? trades : trades.filter(trade => journalFilter.userId === userFilter && trade.journalId === journalFilter.id);
+  }
+)
 
 export const getInstrumentTrades = createSelector(
   [getInstrument, getTrades],
@@ -85,6 +93,7 @@ export const getFlaggedTrades = createSelector(
   }
 )
 
+// TODO: sort out managed mechanics
 export const getManagedTrades = createSelector(
   [getManaged, getTrades],
   (managedFilter, trades) => {
