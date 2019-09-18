@@ -1,0 +1,128 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TradeQuickCreate /> should match snapshot 1`] = `
+<div
+  className="trade-quick-create container"
+>
+  <div
+    className="input-group mb-3"
+  >
+    <Component
+      className="form-control col-sm-2 tqc-instrument"
+      errors={Array []}
+      onChange={[Function]}
+      placeholder="Instrument"
+      touched={false}
+      type="text"
+      value={null}
+    />
+    <Component
+      className="form-control col-sm-2 tqc-strategy"
+      errors={Array []}
+      onChange={[Function]}
+      placeholder="Strategy"
+      touched={false}
+      type="text"
+      value={null}
+    />
+    <select
+      className="custom-select col-sm-1 tqc-kind"
+      onChange={[Function]}
+      value={null}
+    >
+      <option
+        value="long"
+      >
+        Long
+      </option>
+      <option
+        value="short"
+      >
+        Short
+      </option>
+    </select>
+    <div
+      className="trade-quick-create-date form-control col-sm-2"
+    >
+      <DatePicker
+        allowSameDay={false}
+        className="tqc-entry-date"
+        dateFormat="MMMM d, yyyy h:mm aa"
+        dateFormatCalendar="LLLL yyyy"
+        disabled={false}
+        disabledKeyboardNavigation={false}
+        dropdownMode="scroll"
+        inlineFocusSelectedMonth={false}
+        monthsShown={1}
+        nextMonthButtonLabel="Next month"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onClickOutside={[Function]}
+        onFocus={[Function]}
+        onInputClick={[Function]}
+        onInputError={[Function]}
+        onKeyDown={[Function]}
+        onMonthChange={[Function]}
+        onSelect={[Function]}
+        onYearChange={[Function]}
+        placeholderText="Entry Date"
+        preventOpenOnFocus={false}
+        previousMonthButtonLabel="Previous Month"
+        readOnly={false}
+        renderDayContents={[Function]}
+        selected={null}
+        shouldCloseOnSelect={true}
+        showMonthYearPicker={false}
+        showTimeInput={false}
+        showTimeSelect={true}
+        strictParsing={false}
+        timeCaption="time"
+        timeFormat="HH:mm"
+        timeInputLabel="Time"
+        timeIntervals={15}
+        withPortal={false}
+      />
+    </div>
+    <Component
+      className="form-control col-sm-1 tqc-entry-price"
+      errors={Array []}
+      onChange={[Function]}
+      placeholder="Entry Price"
+      touched={false}
+      type="text"
+    />
+    <Component
+      className="form-control col-sm-1 tqc-size"
+      errors={Array []}
+      onChange={[Function]}
+      placeholder="Size"
+      touched={false}
+      type="text"
+    />
+    <Component
+      className="form-control col-sm-1 tqc-stop-loss"
+      errors={Array []}
+      onChange={[Function]}
+      placeholder="Stop Loss"
+      touched={false}
+      type="text"
+    />
+    <Component
+      className="form-control col-sm-1 tqc-take-profit"
+      errors={Array []}
+      onChange={[Function]}
+      placeholder="Take Profit"
+      touched={false}
+      type="text"
+    />
+    <button
+      className="btn btn-outline-primary trade-quick-create-button form-control col-sm-1"
+      disabled={true}
+      onClick={[Function]}
+      type="button"
+    >
+      Create
+    </button>
+  </div>
+</div>
+`;

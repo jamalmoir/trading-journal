@@ -1,0 +1,395 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TradeList /> should match snapshot 1`] = `
+<table
+  className="undefined trade-list table table-striped table-bordered"
+>
+  <thead
+    className="undefined trade-list-item"
+  >
+    <tr>
+      <th
+        className="trade-list-item-cell"
+        scope="col"
+      >
+        Instrument
+      </th>
+      <th
+        className="trade-list-item-cell"
+        scope="col"
+      >
+        Strategy
+      </th>
+      <th
+        className="trade-list-item-cell"
+        scope="col"
+      >
+        Kind
+      </th>
+      <th
+        className="trade-list-item-cell"
+        scope="col"
+      >
+        Entry Date
+      </th>
+      <th
+        className="trade-list-item-cell"
+        scope="col"
+      >
+        Entry Price
+      </th>
+      <th
+        className="trade-list-item-cell"
+        scope="col"
+      >
+        Position Size
+      </th>
+      <th
+        className="trade-list-item-cell"
+        scope="col"
+      >
+        Stop Loss
+      </th>
+      <th
+        className="trade-list-item-cell"
+        scope="col"
+      >
+        Take Profit
+      </th>
+      <th
+        className="trade-list-item-cell"
+        scope="col"
+      >
+        Exit Date
+      </th>
+      <th
+        className="trade-list-item-cell"
+        scope="col"
+      >
+        Exit Price
+      </th>
+      <th
+        className="trade-list-item-cell"
+        scope="col"
+      >
+        P/L
+      </th>
+      <th
+        className="trade-list-item-cell"
+        scope="col"
+      >
+        Edit
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <Component
+      key="2"
+      trade={
+        Object {
+          "charts": Array [],
+          "created": 2019-10-30T15:00:00.000Z,
+          "duringComment": "",
+          "entryComment": "",
+          "entryDate": 2019-10-30T15:00:00.000Z,
+          "entryEmotion": Array [
+            Object {
+              "id": "rushed",
+              "name": "rushed",
+            },
+          ],
+          "entryPrice": "90",
+          "exitComment": "",
+          "exitDate": 2019-10-30T15:00:00.000Z,
+          "exitEmotion": Array [
+            Object {
+              "id": "worried",
+              "name": "worried",
+            },
+          ],
+          "exitPrice": "91",
+          "fees": Money {
+            "_arithmetic": [Function],
+            "_getOtherAsBig": [Function],
+            "_logic": [Function],
+            "_validate_other": [Function],
+            "abs": [Function],
+            "amount": "150",
+            "currency": Currency {
+              "code": "JPY",
+              "decimals": "0",
+            },
+            "div": [Function],
+            "gt": [Function],
+            "gte": [Function],
+            "lt": [Function],
+            "lte": [Function],
+            "minus": [Function],
+            "plus": [Function],
+            "pow": [Function],
+            "sqrt": [Function],
+            "times": [Function],
+            "toJSObject": [Function],
+            "toString": [Function],
+          },
+          "flag": true,
+          "hitTakeProfit": false,
+          "id": "2",
+          "instrument": "USDJPY",
+          "journalId": "1",
+          "kind": "short",
+          "mae": "91",
+          "mfe": "89",
+          "modified": 2019-10-30T15:00:00.000Z,
+          "pl": Money {
+            "_arithmetic": [Function],
+            "_getOtherAsBig": [Function],
+            "_logic": [Function],
+            "_validate_other": [Function],
+            "abs": [Function],
+            "amount": "-650",
+            "currency": Currency {
+              "code": "JPY",
+              "decimals": "0",
+            },
+            "div": [Function],
+            "gt": [Function],
+            "gte": [Function],
+            "lt": [Function],
+            "lte": [Function],
+            "minus": [Function],
+            "plus": [Function],
+            "pow": [Function],
+            "sqrt": [Function],
+            "times": [Function],
+            "toJSObject": [Function],
+            "toString": [Function],
+          },
+          "positionSize": "500",
+          "rating": -1,
+          "stopLoss": "91",
+          "strategy": "Strategy 2",
+          "tags": Array [],
+          "takeProfit": "88",
+        }
+      }
+    />
+    <Component
+      key="3"
+      trade={
+        Object {
+          "charts": Array [],
+          "created": 2019-10-30T15:00:00.000Z,
+          "duringComment": "",
+          "entryComment": "",
+          "entryDate": 2019-10-30T15:00:00.000Z,
+          "entryEmotion": Array [
+            Object {
+              "id": "rushed",
+              "name": "rushed",
+            },
+          ],
+          "entryPrice": "90",
+          "exitComment": "",
+          "exitDate": null,
+          "exitEmotion": Array [],
+          "exitPrice": null,
+          "fees": null,
+          "flag": false,
+          "hitTakeProfit": null,
+          "id": "3",
+          "instrument": "EURJPY",
+          "journalId": "1",
+          "kind": "short",
+          "mae": null,
+          "mfe": null,
+          "modified": 2019-10-30T15:00:00.000Z,
+          "pl": null,
+          "positionSize": "500",
+          "rating": null,
+          "stopLoss": "91",
+          "strategy": "Strategy 3",
+          "tags": Array [],
+          "takeProfit": "88",
+        }
+      }
+    />
+    <Component
+      key="4"
+      trade={
+        Object {
+          "charts": Array [],
+          "created": 2019-10-30T15:00:00.000Z,
+          "duringComment": "",
+          "entryComment": "",
+          "entryDate": 2019-10-30T15:00:00.000Z,
+          "entryEmotion": Array [
+            Object {
+              "id": "rushed",
+              "name": "rushed",
+            },
+          ],
+          "entryPrice": "90",
+          "exitComment": "",
+          "exitDate": null,
+          "exitEmotion": Array [],
+          "exitPrice": null,
+          "fees": null,
+          "flag": false,
+          "hitTakeProfit": null,
+          "id": "4",
+          "instrument": "EURJPY",
+          "journalId": "2",
+          "kind": "short",
+          "mae": null,
+          "mfe": null,
+          "modified": 2019-10-30T15:00:00.000Z,
+          "pl": null,
+          "positionSize": "500",
+          "rating": null,
+          "stopLoss": "91",
+          "strategy": "Strategy 3",
+          "tags": Array [],
+          "takeProfit": "88",
+        }
+      }
+    />
+    <Component
+      key="5"
+      trade={
+        Object {
+          "charts": Array [],
+          "created": 2019-10-30T15:00:00.000Z,
+          "duringComment": "",
+          "entryComment": "",
+          "entryDate": 2019-10-30T15:00:00.000Z,
+          "entryEmotion": Array [
+            Object {
+              "id": "rushed",
+              "name": "rushed",
+            },
+          ],
+          "entryPrice": "90",
+          "exitComment": "",
+          "exitDate": null,
+          "exitEmotion": Array [],
+          "exitPrice": null,
+          "fees": null,
+          "flag": false,
+          "hitTakeProfit": null,
+          "id": "5",
+          "instrument": "EURJPY",
+          "journalId": "3",
+          "kind": "short",
+          "mae": null,
+          "mfe": null,
+          "modified": 2019-10-30T15:00:00.000Z,
+          "pl": null,
+          "positionSize": "500",
+          "rating": null,
+          "stopLoss": "91",
+          "strategy": "Strategy 3",
+          "tags": Array [],
+          "takeProfit": "88",
+        }
+      }
+    />
+    <Component
+      key="1"
+      trade={
+        Object {
+          "charts": Array [],
+          "created": 2019-10-29T15:00:00.000Z,
+          "duringComment": "",
+          "entryComment": "",
+          "entryDate": 2019-10-29T15:00:00.000Z,
+          "entryEmotion": Array [
+            Object {
+              "id": "calm",
+              "name": "calm",
+            },
+          ],
+          "entryPrice": "100",
+          "exitComment": "",
+          "exitDate": 2019-10-29T15:00:00.000Z,
+          "exitEmotion": Array [
+            Object {
+              "id": "collected",
+              "name": "collected",
+            },
+          ],
+          "exitPrice": "103",
+          "fees": Money {
+            "_arithmetic": [Function],
+            "_getOtherAsBig": [Function],
+            "_logic": [Function],
+            "_validate_other": [Function],
+            "abs": [Function],
+            "amount": "150",
+            "currency": Currency {
+              "code": "JPY",
+              "decimals": "0",
+            },
+            "div": [Function],
+            "gt": [Function],
+            "gte": [Function],
+            "lt": [Function],
+            "lte": [Function],
+            "minus": [Function],
+            "plus": [Function],
+            "pow": [Function],
+            "sqrt": [Function],
+            "times": [Function],
+            "toJSObject": [Function],
+            "toString": [Function],
+          },
+          "flag": false,
+          "hitTakeProfit": true,
+          "id": "1",
+          "instrument": "GBPJPY",
+          "journalId": "1",
+          "kind": "long",
+          "mae": "100",
+          "mfe": "102",
+          "modified": 2019-10-29T15:00:00.000Z,
+          "pl": Money {
+            "_arithmetic": [Function],
+            "_getOtherAsBig": [Function],
+            "_logic": [Function],
+            "_validate_other": [Function],
+            "abs": [Function],
+            "amount": "1850",
+            "currency": Currency {
+              "code": "JPY",
+              "decimals": "0",
+            },
+            "div": [Function],
+            "gt": [Function],
+            "gte": [Function],
+            "lt": [Function],
+            "lte": [Function],
+            "minus": [Function],
+            "plus": [Function],
+            "pow": [Function],
+            "sqrt": [Function],
+            "times": [Function],
+            "toJSObject": [Function],
+            "toString": [Function],
+          },
+          "positionSize": "1000",
+          "rating": 1,
+          "stopLoss": "99",
+          "strategy": "Strategy 1",
+          "tags": Array [
+            Object {
+              "id": "monday",
+              "name": "monday",
+            },
+          ],
+          "takeProfit": "102",
+        }
+      }
+    />
+  </tbody>
+</table>
+`;

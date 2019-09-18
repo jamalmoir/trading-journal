@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TradeListItem /> should match snapshot 1`] = `
+<tr
+  className="undefined trade-list-item"
+>
+  <td
+    className="trade-list-item-cell"
+  >
+    GBPJPY
+  </td>
+  <td
+    className="trade-list-item-cell"
+  >
+    Strategy 1
+  </td>
+  <td
+    className="trade-list-item-cell"
+  >
+    long
+  </td>
+  <td
+    className="trade-list-item-cell"
+  >
+    10/30/2019
+  </td>
+  <td
+    className="trade-list-item-cell"
+  >
+    100
+  </td>
+  <td
+    className="trade-list-item-cell"
+  >
+    1000
+  </td>
+  <td
+    className="trade-list-item-cell"
+  >
+    99
+  </td>
+  <td
+    className="trade-list-item-cell"
+  >
+    102
+  </td>
+  <td
+    className="trade-list-item-cell"
+  >
+    10/30/2019
+  </td>
+  <td
+    className="trade-list-item-cell"
+  >
+    103
+  </td>
+  <td
+    className="trade-list-item-cell"
+  >
+    1850
+  </td>
+  <td
+    className="trade-list-item-cell"
+  >
+    <Link
+      to="1/trade/1"
+    >
+      <i
+        className="trade-list-item-edit far fa-edit"
+        data-target="#journalEditModal"
+        data-toggle="modal"
+      />
+    </Link>
+  </td>
+</tr>
+`;
