@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<JournalCreate /> matches snapshot 1`] = `
+<div
+  className="undefined input-group mb-3"
+>
+  <Component
+    className="journal-create-name form-control col-8"
+    errors={Array []}
+    onChange={[Function]}
+    placeholder="Journal name"
+    touched={false}
+    type="text"
+    value=""
+  />
+  <select
+    className="journal-create-kind form-control custom-select col-4"
+    onChange={[Function]}
+    value="long"
+  >
+    <option
+      value="live"
+    >
+      Live
+    </option>
+    <option
+      value="demo"
+    >
+      Demo
+    </option>
+    <option
+      value="backtest"
+    >
+      Backtest
+    </option>
+  </select>
+  <Component
+    className="journal-create-currency form-control col-8"
+    errors={Array []}
+    onChange={[Function]}
+    placeholder="Currency"
+    touched={false}
+    type="text"
+    value=""
+  />
+  <div
+    className="input-group-append"
+  >
+    <button
+      className="btn btn-outline-primary"
+      disabled={true}
+      onClick={[Function]}
+      type="button"
+    >
+      Create
+    </button>
+  </div>
+</div>
+`;

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import * as React from 'react';
+import { useState } from 'react';
 import { connect } from 'react-redux';
 import Types from 'Types';
 import { TextInput } from '../TextInput';
@@ -26,7 +27,7 @@ interface Tags {
   }
 }
 
-const TradeFilterComponent = (props: TradeFilterProps) => {
+export const TradeFilterComponent = (props: TradeFilterProps) => {
   const initialFilters: Types.TradeFilters = {
     instrument: null,
     strategy: null,
@@ -116,16 +117,16 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
       <div className="col-sm-12">Filters</div>
       <div className="trade-filter-group col-sm-3">
         <TextInput type="text"
-              className="trade-filter form-control"
+              className="trade-filter trade-filter-instrument form-control"
               placeholder="Instrument"
               value={ filters.instrument }
               onChange={ (e) => updateFilter('instrument', e.target.value) }/>
         <TextInput type="text"
-              className="trade-filter form-control"
+              className="trade-filter trade-filter-strategy form-control"
               placeholder="Strategy"
               value={ filters.strategy }
               onChange={ (e) => updateFilter('strategy', e.target.value) }/>
-        <select className="trade-filter custom-select"
+        <select className="trade-filter trade-filter-kind custom-select"
                 value={ filters.kind === null ? '' : filters.kind }
                 onChange={ (e) => updateFilter('kind', e.target.value) }>
           <option value="">Kind</option>
@@ -135,7 +136,7 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
       </div>
 
       <div className="trade-filter-group col-sm-3">
-        <select className="trade-filter custom-select"
+        <select className="trade-filter trade-filter-rating custom-select"
                 value={ filters.rating === null ? '' : filters.rating }
                 onChange={ (e) => updateFilter('rating', e.target.value) }>
           <option value="">Rating</option>
@@ -145,6 +146,7 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
         </select>
         <div className="trade-filter trade-quick-create-date form-control">
           <ReactDatePicker
+            className="trade-filter-entryDate"
             selected={ filters.entryDate }
             onChange={ (d) => updateFilter('entryDate', d)}
             placeholderText="Entry Date"
@@ -154,6 +156,7 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
         </div>
         <div className="trade-filter trade-quick-create-date form-control">
           <ReactDatePicker
+            className="trade-filter-exitDate"
             selected={ filters.exitDate }
             onChange={ (d) => updateFilter('exitDate', d)}
             placeholderText="Exit Date"
@@ -185,25 +188,25 @@ const TradeFilterComponent = (props: TradeFilterProps) => {
       <div className="trade-filter-group col-sm-2">
         <div className="trade-filter form-check">
           <TristateCheckbox id='profit-tristate'
-                            className="form-check-input"
+                            className="form-check-input trade-filter-profit"
                             onClick={ (val) => updateFilter('profit', val) } />
           <label className="form-check-label" htmlFor="profit-tristate">Profitable</label>
         </div>
         <div className="trade-filter form-check">
           <TristateCheckbox id='hit-take-profit-tristate'
-                            className="form-check-input"
+                            className="form-check-input trade-filter-hit-take-profit"
                             onClick={ (val) => updateFilter('hitTakeProfit', val) } />
           <label className="form-check-label" htmlFor="hit-take-profit-tristate">Hit Target</label>
         </div>
         <div className="trade-filter form-check">
           <TristateCheckbox id='flagged-tristate'
-                            className="form-check-input"
+                            className="form-check-input trade-filter-flagged"
                             onClick={ (val) => updateFilter('flagged', val) } />
           <label className="form-check-label" htmlFor="flagged-tristate">Flagged</label>
         </div>
         <div className="trade-filter form-check">
           <TristateCheckbox id='managed-tristate'
-                            className="form-check-input"
+                            className="form-check-input trade-filter-managed"
                             onClick={ (val) => updateFilter('managed', val) } />
           <label className="form-check-label" htmlFor="mangaged-tristate">Managed</label>
         </div>

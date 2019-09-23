@@ -17,12 +17,12 @@ const testJournal: () => Types.Journal = () => ({
 });
 
 describe("<JournalListItem />", () => {
-  it('should match snapshot', () => {
+  it('matches snapshot', () => {
     const component = shallow(<JournalListItem journal={ testJournal() }/>);
     expect(component).toMatchSnapshot();
 	});
 	
-	it('should have the right badge depending on journal type', () => {
+	it('has the right badge depending on journal type', () => {
 		const journal: Types.Journal = testJournal();
 		const component = shallow(<JournalListItem journal={ journal }/>);
 		

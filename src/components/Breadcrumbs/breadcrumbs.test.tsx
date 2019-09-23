@@ -1,13 +1,12 @@
-
 import * as React from 'react';
-import { JournalList } from './JournalList';
+import { BreadcrumbsComponent } from './Breadcrumbs';
 import { shallow } from 'enzyme';
 import { testJournals } from '../../utils/testHelpers';
 
 
-describe("<JournalList />", () => {
+describe("<Breadcrumbs />", () => {
   it('matches snapshot', () => {
-    const component = shallow(<JournalList journals={ testJournals() }/>);
+    const component = shallow(<BreadcrumbsComponent route={ null } activeJournal={ testJournals()[0]} />);
     expect(component).toMatchSnapshot();
-  });
+	});
 });

@@ -5,7 +5,7 @@ import { testTrades } from '../../utils/testHelpers';
 
 
 describe("<TradeList />", () => {
-  it('should match snapshot', () => {
+  it('matches snapshot', () => {
     const component = shallow(<TradeList trades={ testTrades() } />);
     expect(component).toMatchSnapshot();
 	});

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import Types from 'Types';
-import { JournalEditModal } from '../JournalEditModal';
 import './journalListItem.scss';
 
 
@@ -20,10 +19,9 @@ export const JournalListItem = (props: JournalListProps) => {
 
   return (
     <Link to={ 'journal/' + props.journal.id } className={ 'journal-list-item ' + props.className }>
-      { props.journal.name } { /*| { props.journal.tradeCount } { props.journal.tradeCount === 1 ? ' trade ' : ' trades ' } */}
+      { props.journal.name }
       <span className={ "journal-list-item-kind badge badle-pill " + getBadgeType() }>{ props.journal.kind }</span>
-      <i className="journal-list-item-edit far fa-edit" data-toggle="modal" data-target="#journalEditModal"></i>
-      <JournalEditModal id='journalEditModal' journal={ props.journal } />
+      <i className="journal-list-item-edit far fa-edit"></i>
     </Link>
   )
 }

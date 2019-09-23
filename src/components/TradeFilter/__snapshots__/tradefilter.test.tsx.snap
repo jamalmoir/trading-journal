@@ -1,0 +1,258 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TradeFilter /> matches snapshot 1`] = `
+<div
+  className="trade-filter-panel row bg-light"
+>
+  <div
+    className="col-sm-12"
+  >
+    Filters
+  </div>
+  <div
+    className="trade-filter-group col-sm-3"
+  >
+    <Component
+      className="trade-filter trade-filter-instrument form-control"
+      onChange={[Function]}
+      placeholder="Instrument"
+      type="text"
+      value={null}
+    />
+    <Component
+      className="trade-filter trade-filter-strategy form-control"
+      onChange={[Function]}
+      placeholder="Strategy"
+      type="text"
+      value={null}
+    />
+    <select
+      className="trade-filter trade-filter-kind custom-select"
+      onChange={[Function]}
+      value=""
+    >
+      <option
+        value=""
+      >
+        Kind
+      </option>
+      <option
+        value="long"
+      >
+        Long
+      </option>
+      <option
+        value="short"
+      >
+        Short
+      </option>
+    </select>
+  </div>
+  <div
+    className="trade-filter-group col-sm-3"
+  >
+    <select
+      className="trade-filter trade-filter-rating custom-select"
+      onChange={[Function]}
+      value=""
+    >
+      <option
+        value=""
+      >
+        Rating
+      </option>
+      <option
+        value="-1"
+      >
+        -1
+      </option>
+      <option
+        value="0"
+      >
+        0
+      </option>
+      <option
+        value="1"
+      >
+        1
+      </option>
+    </select>
+    <div
+      className="trade-filter trade-quick-create-date form-control"
+    >
+      <DatePicker
+        allowSameDay={false}
+        className="trade-filter-entryDate"
+        dateFormat="MMMM d, yyyy"
+        dateFormatCalendar="LLLL yyyy"
+        disabled={false}
+        disabledKeyboardNavigation={false}
+        dropdownMode="scroll"
+        inlineFocusSelectedMonth={false}
+        isClearable={true}
+        monthsShown={1}
+        nextMonthButtonLabel="Next month"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onClickOutside={[Function]}
+        onFocus={[Function]}
+        onInputClick={[Function]}
+        onInputError={[Function]}
+        onKeyDown={[Function]}
+        onMonthChange={[Function]}
+        onSelect={[Function]}
+        onYearChange={[Function]}
+        placeholderText="Entry Date"
+        preventOpenOnFocus={false}
+        previousMonthButtonLabel="Previous Month"
+        readOnly={false}
+        renderDayContents={[Function]}
+        selected={null}
+        shouldCloseOnSelect={true}
+        showMonthYearPicker={false}
+        showTimeInput={false}
+        showTimeSelect={false}
+        strictParsing={false}
+        timeCaption="Time"
+        timeInputLabel="Time"
+        timeIntervals={30}
+        withPortal={false}
+      />
+    </div>
+    <div
+      className="trade-filter trade-quick-create-date form-control"
+    >
+      <DatePicker
+        allowSameDay={false}
+        className="trade-filter-exitDate"
+        dateFormat="MMMM d, yyyy"
+        dateFormatCalendar="LLLL yyyy"
+        disabled={false}
+        disabledKeyboardNavigation={false}
+        dropdownMode="scroll"
+        inlineFocusSelectedMonth={false}
+        isClearable={true}
+        monthsShown={1}
+        nextMonthButtonLabel="Next month"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onClickOutside={[Function]}
+        onFocus={[Function]}
+        onInputClick={[Function]}
+        onInputError={[Function]}
+        onKeyDown={[Function]}
+        onMonthChange={[Function]}
+        onSelect={[Function]}
+        onYearChange={[Function]}
+        placeholderText="Exit Date"
+        preventOpenOnFocus={false}
+        previousMonthButtonLabel="Previous Month"
+        readOnly={false}
+        renderDayContents={[Function]}
+        selected={null}
+        shouldCloseOnSelect={true}
+        showMonthYearPicker={false}
+        showTimeInput={false}
+        showTimeSelect={false}
+        strictParsing={false}
+        timeCaption="Time"
+        timeInputLabel="Time"
+        timeIntervals={30}
+        withPortal={false}
+      />
+    </div>
+  </div>
+  <div
+    className="trade-filter-group col-sm-4"
+  >
+    <div
+      className="trade-filter"
+    >
+      <Component
+        allowNew={true}
+        handleAddition={[Function]}
+        handleDelete={[Function]}
+        placeholder="Add Tag"
+        suggestions={Array []}
+        tags={Array []}
+      />
+    </div>
+    <div
+      className="trade-filter"
+    >
+      <Component
+        allowNew={true}
+        handleAddition={[Function]}
+        handleDelete={[Function]}
+        placeholder="Add Emotion"
+        suggestions={Array []}
+        tags={Array []}
+      />
+    </div>
+  </div>
+  <div
+    className="trade-filter-group col-sm-2"
+  >
+    <div
+      className="trade-filter form-check"
+    >
+      <Component
+        className="form-check-input trade-filter-profit"
+        id="profit-tristate"
+        onClick={[Function]}
+      />
+      <label
+        className="form-check-label"
+        htmlFor="profit-tristate"
+      >
+        Profitable
+      </label>
+    </div>
+    <div
+      className="trade-filter form-check"
+    >
+      <Component
+        className="form-check-input trade-filter-hit-take-profit"
+        id="hit-take-profit-tristate"
+        onClick={[Function]}
+      />
+      <label
+        className="form-check-label"
+        htmlFor="hit-take-profit-tristate"
+      >
+        Hit Target
+      </label>
+    </div>
+    <div
+      className="trade-filter form-check"
+    >
+      <Component
+        className="form-check-input trade-filter-flagged"
+        id="flagged-tristate"
+        onClick={[Function]}
+      />
+      <label
+        className="form-check-label"
+        htmlFor="flagged-tristate"
+      >
+        Flagged
+      </label>
+    </div>
+    <div
+      className="trade-filter form-check"
+    >
+      <Component
+        className="form-check-input trade-filter-managed"
+        id="managed-tristate"
+        onClick={[Function]}
+      />
+      <label
+        className="form-check-label"
+        htmlFor="mangaged-tristate"
+      >
+        Managed
+      </label>
+    </div>
+  </div>
+</div>
+`;

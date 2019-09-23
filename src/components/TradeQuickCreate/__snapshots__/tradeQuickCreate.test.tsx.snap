@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<TradeQuickCreate /> should match snapshot 1`] = `
+exports[`<TradeQuickCreate /> matches snapshot 1`] = `
 <div
   className="trade-quick-create container"
 >

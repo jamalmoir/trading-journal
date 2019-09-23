@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import * as React from 'react';
+import { useState } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import Types from 'Types';
-import { createJournal } from '../redux/actions/journal';
-import { JournalAction } from '../redux/reducers/journal';
-import { TextInput } from './TextInput';
-import { setUpControls } from '../utils/utils';
+import { createJournal } from '../../redux/actions/journal';
+import { JournalAction } from '../../redux/reducers/journal';
+import { TextInput } from '../TextInput';
+import { setUpControls } from '../../utils/utils';
 
 
 interface JournalCreateProps {
@@ -14,7 +15,7 @@ interface JournalCreateProps {
 	auth: any,
 }
 
-const JournalCreateComponent = (props: JournalCreateProps) => {
+export const JournalCreateComponent = (props: JournalCreateProps) => {
 	const [controlsValid, setControlsValid] = useState(false);
 	const [controls, setControls] = setUpControls({
 		name: {
@@ -72,14 +73,14 @@ const JournalCreateComponent = (props: JournalCreateProps) => {
 	return (
 		<div className={ props.className + ' input-group mb-3'}>
 			<TextInput type="text"
-							className="form-control col-8"
+							className="journal-create-name form-control col-8"
 							placeholder="Journal name"
 							value={ controls.name.value || '' }
 							onChange={ (e) => updateControls('name', e.target.value) }
 							errors={ controls.name.errors }
 							touched={ controls.name.touched }
 			/>
-			<select className="form-control custom-select col-4"
+			<select className="journal-create-kind form-control custom-select col-4"
 							value={ controls.kind.value || 'live' }
 							onChange={ (e) => updateControls('kind', e.target.value as 'live' | 'demo' | 'backtest') }
 			>
@@ -88,7 +89,7 @@ const JournalCreateComponent = (props: JournalCreateProps) => {
 				<option value="backtest">Backtest</option>
 			</select>
 			<TextInput type="text"
-							className="form-control col-8"
+							className="journal-create-currency form-control col-8"
 							placeholder="Currency"
 							value={ controls.currency.value || '' }
 							onChange={ (e) => updateControls('currency', e.target.value) }

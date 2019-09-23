@@ -4,12 +4,12 @@ import { shallow } from 'enzyme';
 
 
 describe("<TextInput />", () => {
-  it('should match snapshot', () => {
+  it('matches snapshot', () => {
     const component = shallow(<TextInput type='text' placeholder='test' value='test' />);
     expect(component).toMatchSnapshot();
   });
 
-  it('should handle input change', () => {
+  it('handles input change', () => {
     const onChange = jest.fn();
     const component = shallow(<TextInput type='text' placeholder='test' value='test' onChange={ onChange } />);
 
@@ -20,7 +20,7 @@ describe("<TextInput />", () => {
     expect(onChange).toBeCalled();
   });
 
-  it('should have an errors class if conditions are met', () => {
+  it('has an errors class if conditions are met', () => {
     const component = shallow(<TextInput type='text' placeholder='test' value='test' />);
 
     // not touched, no errors

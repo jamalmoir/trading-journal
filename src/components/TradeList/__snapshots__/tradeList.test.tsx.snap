@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<TradeList /> should match snapshot 1`] = `
+exports[`<TradeList /> matches snapshot 1`] = `
 <table
   className="undefined trade-list table table-striped table-bordered"
 >

@@ -4,7 +4,7 @@ import { match } from 'react-router';
 import { Dispatch } from 'redux';
 import Types from 'Types';
 import { Heading } from '../components/Heading';
-import { JournalCreate } from '../components/JournalCreate';
+import { JournalCreate } from '../components/JournalCreate/JournalCreate';
 import { JournalList } from '../components/JournalList';
 import { routeChange } from '../redux/actions/app';
 import { JournalAction } from '../redux/reducers/journal';

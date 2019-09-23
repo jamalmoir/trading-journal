@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Types from 'Types';
@@ -9,7 +9,7 @@ interface BreadcrumbsProps {
   activeJournal: Types.Journal;
 }
 
-const BreadcrumbsComponent = (props: BreadcrumbsProps) => {
+export const BreadcrumbsComponent = (props: BreadcrumbsProps) => {
   const routes: {[index: string]: {name: string, url: () => string}} = {
     '/': {
       'name': 'Journals',
