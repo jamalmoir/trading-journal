@@ -4,7 +4,9 @@ export const ROUTE_CHANGE = 'ROUTE_CHANGE';
 
 // Authentication
 export const USER_SIGN_IN_SUCCESS = 'USER_SIGN_IN_SUCCESS'
+export const USER_SIGN_IN_FAILURE = 'USER_SIGN_IN_SUCCESS'
 export const USER_SIGN_OUT_SUCCESS = 'USER_SIGN_OUT_SUCCESS'
+export const USER_SIGN_OUT_FAILURE = 'USER_SIGN_OUT_SUCCESS'
 
 // Journal
 export const FETCH_JOURNALS = 'FETCH_JOURNALS';
