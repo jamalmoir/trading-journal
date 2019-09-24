@@ -1,4 +1,5 @@
-import React, { ChangeEvent } from 'react';
+import * as React from 'react';
+import { ChangeEvent } from 'react';
 import './textInput.scss';
 
 
@@ -14,7 +15,7 @@ interface TextInputProps {
 }
 
 export const TextInput = (props: TextInputProps) => {
-  let errorClass = props.errors && props.errors.length && props.touched ? 'errors' : '';
+  const errorClass = props.errors && props.errors.length && props.touched ? 'errors' : '';
 
   return (
     <input id={ props.id }

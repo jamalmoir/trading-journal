@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import * as React from 'react';
+import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -19,7 +20,7 @@ interface TradeQuickCreateProps {
 }
 
 
-const TradeQuickCreateComponent = (props: TradeQuickCreateProps) => {
+export const TradeQuickCreateComponent = (props: TradeQuickCreateProps) => {
 	const [controlsValid, setControlsValid] = useState(false);
 	const [controls, setControls] = setUpControls(inputControls);
 
@@ -37,7 +38,7 @@ const TradeQuickCreateComponent = (props: TradeQuickCreateProps) => {
 		<div className='trade-quick-create container'>
 			<div className='input-group mb-3'>
 				<TextInput type='text'
-							className="form-control col-sm-2"
+							className="form-control col-sm-2 tqc-instrument"
 							placeholder="Instrument"
 							value={ controls.instrument.value }
 							onChange={ (e) => updateInputState('instrument', e.target.value) }
@@ -45,14 +46,14 @@ const TradeQuickCreateComponent = (props: TradeQuickCreateProps) => {
 							touched={ controls.instrument.touched }
 				/>
 				<TextInput type="text"
-							className="form-control col-sm-2"
+							className="form-control col-sm-2 tqc-strategy"
 							placeholder="Strategy"
 							value={ controls.strategy.value }
 							onChange={ (e) => updateInputState('strategy', e.target.value) }
 							errors={ controls.strategy.errors }
 							touched={ controls.strategy.touched }
 				/>
-				<select className="custom-select col-sm-1"
+				<select className="custom-select col-sm-1 tqc-kind"
 								value={ controls.kind.value }
 								onChange={ (e) => updateInputState('kind', e.target.value as 'live' | 'demo' | 'backtest') }
 				>
@@ -63,6 +64,7 @@ const TradeQuickCreateComponent = (props: TradeQuickCreateProps) => {
 						className="trade-quick-create-date form-control col-sm-2"
 				>
 					<DatePicker
+						className={ 'tqc-entry-date'}
 						selected={ controls.entryDate.value }
 						onChange={ (d) => updateInputState('entryDate', d)}
 						placeholderText="Entry Date"
@@ -74,15 +76,15 @@ const TradeQuickCreateComponent = (props: TradeQuickCreateProps) => {
 					/>
 				</div>
 				<TextInput type="text"
-							className="form-control col-sm-1"
+							className="form-control col-sm-1 tqc-entry-price"
 							placeholder="Entry Price"
 							value={ controls.entryPrice.value ? controls.entryPrice.value.toString() : undefined }
 							onChange={ (e) => updateInputState('entryPrice', e.target.value) }
 							errors={ controls.entryPrice.errors }
 							touched={ controls.entryPrice.touched }
 				/>
-				<TextInput type="number"
-							className="form-control col-sm-1"
+				<TextInput type="text"
+							className="form-control col-sm-1 tqc-size"
 							placeholder="Size"
 							value={ controls.positionSize.value ? controls.positionSize.value.toString() : undefined }
 							onChange={ (e) => updateInputState('positionSize', e.target.value) }
@@ -90,7 +92,7 @@ const TradeQuickCreateComponent = (props: TradeQuickCreateProps) => {
 							touched={ controls.positionSize.touched }
 				/>
 				<TextInput type="text"
-							className="form-control col-sm-1"
+							className="form-control col-sm-1 tqc-stop-loss"
 							placeholder="Stop Loss"
 							value={ controls.stopLoss.value ? controls.stopLoss.value.toString() : undefined }
 							onChange={ (e) => updateInputState('stopLoss', e.target.value) }
@@ -98,7 +100,7 @@ const TradeQuickCreateComponent = (props: TradeQuickCreateProps) => {
 							touched={ controls.stopLoss.touched }
 				/>
 				<TextInput type="text"
-							className="form-control col-sm-1"
+							className="form-control col-sm-1 tqc-take-profit"
 							placeholder="Take Profit"
 							value={ controls.takeProfit.value ? controls.takeProfit.value.toString() : undefined }
 							onChange={ (e) => updateInputState('takeProfit', e.target.value) }

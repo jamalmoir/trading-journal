@@ -11,6 +11,7 @@ import './login.scss';
 
 
 interface LoginState {
+	isAuthing: boolean;
 	controls : {
 		[key: string]: {
 			value: string
@@ -24,7 +25,7 @@ interface LoginState {
 }
 
 interface LoginProps {
-	auth: any;
+	firebase: any;
 	onLogin: (authData: {email: string, password: string}) => null;
 	goBack: GoBack;
 	push: Push;
@@ -32,6 +33,7 @@ interface LoginProps {
 
 class LoginPage extends Component<LoginProps> {
 	state: LoginState = {
+		isAuthing: false,
 		controls: {
 			email: {
 				value: '',
@@ -88,14 +90,18 @@ class LoginPage extends Component<LoginProps> {
 			password: this.state.controls.password.value
 		}
 
+		this.setState((prevState: LoginState) => ({...prevState, isAuthing: true}));
 		this.props.onLogin(credentials);
 	}
 
 	render() {
-		if (this.props.auth.uid) {
+		if (this.props.firebase.auth.uid) {
 			return (
 				<Redirect to={ {pathname: '/', state: {from: '/login'}} } />
 			)
+		}
+		if (!this.props.firebase.authError && this.state.isAuthing) {
+			return <div>Loading...</div>
 		}
 		return (
 			<div className='login'>
@@ -117,6 +123,7 @@ class LoginPage extends Component<LoginProps> {
 						<Link to="/">
 							<button className="btn btn-primary" onClick={ this.loginHandler }>Login</button>
 						</Link>
+						<span className='failure-text'>{ this.props.firebase.authError ? this.props.firebase.authError.message : '' } </span>
 					</form>
 					{/*<div className='register-text'>
 						Don't have an account? <Link to="">Register</Link>
@@ -129,7 +136,7 @@ class LoginPage extends Component<LoginProps> {
 
 const mapStateToProps = (state: Types.RootState) => {
 	return {
-		auth: state.firebase.auth,
+		firebase: state.firebase,
 	}
 }
 

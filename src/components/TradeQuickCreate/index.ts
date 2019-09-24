@@ -1,1 +1,1 @@
-export * from './tradeQuickCreate'
+export * from './TradeQuickCreate'

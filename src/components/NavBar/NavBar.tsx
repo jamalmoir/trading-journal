@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
@@ -12,7 +12,7 @@ interface NavBarProps {
 	onUnauthenticateUser: () => null,
 }
 
-const NavBarComponent = (props: NavBarProps) => {
+export const NavBarComponent = (props: NavBarProps) => {
 	return (
 		<div className='header'>
 			<nav className='navbar navbar-expand-lg navbar-dark bg-dark'>

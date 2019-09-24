@@ -17,15 +17,12 @@ import './style.scss';
 
 
 
-// @ts-ignore
-store.firebaseAuthIsReady.then(() => {
-    ReactDOM.render((
-        <Provider store={ store }>
-            <ConnectedRouter history={ history }>
-                <Switch>
-                    <Route path='/' component={ App } />
-                </Switch>
-            </ConnectedRouter>
-        </Provider>
-    ), document.getElementById('root'));
-})
+ReactDOM.render((
+    <Provider store={ store }>
+        <ConnectedRouter history={ history }>
+            <Switch>
+                <Route path='/' component={ App } />
+            </Switch>
+        </ConnectedRouter>
+    </Provider>
+), document.getElementById('root'));

@@ -13,7 +13,7 @@ export const authenticateUser = (credentials: any) => {
     // @ts-ignore
     const firebase = getFirebase(); 
 
-    firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.password).then(() => {
+    firebase.login(credentials).then(() => {
       dispatch({ type: USER_SIGN_IN_SUCCESS });
     }).catch((err: Error) => console.log(err));
   }

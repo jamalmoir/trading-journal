@@ -1,18 +1,19 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
+import { isLoaded } from 'react-redux-firebase';
 import { Route, Switch } from 'react-router-dom';
 import { Dispatch } from 'redux';
 import Types from 'Types';
 import { NavBar } from '../../components/NavBar';
 import { ProtectedRoute } from '../../components/ProtectedRoute';
 import { APP_LOAD } from '../../redux/actions/actionTypes';
-import { fetchJournals, fetchTrades, clearTrades } from '../../redux/actions/journal';
+import { clearTrades, fetchJournals, fetchTrades } from '../../redux/actions/journal';
 import { AppAction } from '../../redux/reducers/app';
 import { Journal } from '../Journal';
 import { Journals } from '../Journals';
 import { Login } from '../login';
 import { Trade } from '../trade';
-import styles from './app.scss';
+import './app.scss';
 
 
 interface AppProps {
@@ -26,20 +27,6 @@ interface AppProps {
   onClearTrades: () => null;
 }
 
-const content = (
-  <div className='app'>
-    <NavBar />
-    <div className='content-wrapper'>
-      <Switch>
-        <Route exact path="/login" component={ Login }/>
-        <ProtectedRoute exact path="/" component={ Journals }/>
-        <ProtectedRoute exact path="/journal/:journalId" component={ Journal }/>
-        <ProtectedRoute exact path="/journal/:journalId/trade/:tradeId" component={ Trade }/>
-      </Switch>
-    </div>
-  </div>
-)
-
 class AppPage extends React.Component<AppProps> {
   componentDidMount() {
     if (!this.props.journals.length && this.props.auth.uid) {
@@ -50,6 +37,10 @@ class AppPage extends React.Component<AppProps> {
   }
 
   componentDidUpdate(prevProps: AppProps) {
+    if (!this.props.journals.length && this.props.auth.uid) {
+      this.props.onFetchJournals();
+    }
+
     if (this.props.activeJournal !== prevProps.activeJournal) {
       if (this.props.activeJournal) {
         this.props.onFetchTrades(this.props.activeJournal);
@@ -60,9 +51,23 @@ class AppPage extends React.Component<AppProps> {
   }
 
   render () {
+    if (!isLoaded(this.props.auth)) {
+      return (
+        <div>Loading...</div>
+      )
+    }
+
     return (
-      <div className={ styles.app }>
-        { this.props.appLoaded ? content: "" }
+      <div className='app'>
+        <NavBar />
+        <div className='content-wrapper'>
+          <Switch>
+            <Route exact path="/login" component={ Login }/>
+            <ProtectedRoute exact path="/" component={ Journals }/>
+            <ProtectedRoute exact path="/journal/:journalId" component={ Journal }/>
+            <ProtectedRoute exact path="/journal/:journalId/trade/:tradeId" component={ Trade }/>
+          </Switch>
+        </div>
       </div>
     )
   };

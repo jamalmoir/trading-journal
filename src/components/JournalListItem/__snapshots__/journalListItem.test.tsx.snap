@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<JournalListItem /> matches snapshot 1`] = `
+<Link
+  className="journal-list-item undefined"
+  to="journal/someId"
+>
+  Some Journal
+  <span
+    className="journal-list-item-kind badge badle-pill badge-success"
+  >
+    live
+  </span>
+  <i
+    className="journal-list-item-edit far fa-edit"
+  />
+</Link>
+`;

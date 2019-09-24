@@ -1,10 +1,9 @@
-import React from 'react';
+import * as React from 'react';
 
 import Types from 'Types';
 
 import './tradeListItem.scss';
 import { Link } from 'react-router-dom';
-//import { TradeEditModal } from '../TradeEditModal';
 
 
 interface TradeListProps {

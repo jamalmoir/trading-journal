@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NavBar /> matches snapshot 1`] = `
+<div
+  className="header"
+>
+  <nav
+    className="navbar navbar-expand-lg navbar-dark bg-dark"
+  >
+    <div
+      className="content-wrapper navbar navbar-expand-lg navbar-dark bg-dark justify-content-between"
+    >
+      <Link
+        className="navbar-brand logo"
+        to="/"
+      >
+        <img
+          alt="Stroply"
+          src="/public/stroply-logo-white.png"
+        />
+      </Link>
+      <div
+        className="collapse navbar-collapse"
+        id="navbarSupportedContent"
+      >
+        <ul
+          className="navbar-nav mr-auto"
+        />
+        <button
+          className="logout-button btn btn-outline-secondary my-2 my-lg-0"
+          onClick={[MockFunction]}
+        >
+          Logout
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div
+    className="header-breadcrumbs"
+  >
+    <div
+      className="content-wrapper"
+    >
+      <Connect(Component) />
+    </div>
+  </div>
+</div>
+`;
