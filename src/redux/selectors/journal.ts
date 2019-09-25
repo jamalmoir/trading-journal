@@ -2,22 +2,22 @@ import { createSelector } from 'reselect'
 import Types from 'Types';
 import Big from 'big.js';
 
-const getAllTrades = (state: Types.RootState) => state.journal.trades;
+const getAllTrades = (state: Types.RootState): Types.Trade[] => state.trade.trades;
 
 const getUser = (state: Types.RootState) => state.firebase.auth.uid;
 const getJournal = (state: Types.RootState) => state.journal.activeJournal;
-const getInstrument = (state: Types.RootState) => state.journal.tradeFilters.instrument;
-const getStrategy = (state: Types.RootState) => state.journal.tradeFilters.strategy;
-const getKind = (state: Types.RootState) => state.journal.tradeFilters.kind;
-const getRating = (state: Types.RootState) => state.journal.tradeFilters.rating;
-const getEntryDate = (state: Types.RootState) => state.journal.tradeFilters.entryDate;
-const getExitDate = (state: Types.RootState) => state.journal.tradeFilters.exitDate;
-const getProfit = (state: Types.RootState) => state.journal.tradeFilters.profit;
-const getHitTakeProfit = (state: Types.RootState) => state.journal.tradeFilters.hitTakeProfit;
-const getFlagged = (state: Types.RootState) => state.journal.tradeFilters.flagged;
-const getManaged = (state: Types.RootState) => state.journal.tradeFilters.managed;
-const getTags = (state: Types.RootState) => state.journal.tradeFilters.tags;
-const getEmotions = (state: Types.RootState) => state.journal.tradeFilters.emotions;
+const getInstrument = (state: Types.RootState) => state.trade.tradeFilters.instrument;
+const getStrategy = (state: Types.RootState) => state.trade.tradeFilters.strategy;
+const getKind = (state: Types.RootState) => state.trade.tradeFilters.kind;
+const getRating = (state: Types.RootState) => state.trade.tradeFilters.rating;
+const getEntryDate = (state: Types.RootState) => state.trade.tradeFilters.entryDate;
+const getExitDate = (state: Types.RootState) => state.trade.tradeFilters.exitDate;
+const getProfit = (state: Types.RootState) => state.trade.tradeFilters.profit;
+const getHitTakeProfit = (state: Types.RootState) => state.trade.tradeFilters.hitTakeProfit;
+const getFlagged = (state: Types.RootState) => state.trade.tradeFilters.flagged;
+const getManaged = (state: Types.RootState) => state.trade.tradeFilters.managed;
+const getTags = (state: Types.RootState) => state.trade.tradeFilters.tags;
+const getEmotions = (state: Types.RootState) => state.trade.tradeFilters.emotions;
 
 export const getTrades = createSelector(
   [getUser, getJournal, getAllTrades],
