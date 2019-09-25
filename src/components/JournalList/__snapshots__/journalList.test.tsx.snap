@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<JournalList /> matches snapshot 1`] = `
+<div
+  className="journal-list undefined"
+>
+  <Component
+    journal={
+      Object {
+        "created": 2019-10-19T15:00:00.000Z,
+        "currency": "JPY",
+        "id": "1",
+        "kind": "live",
+        "modified": 2019-10-19T15:00:00.000Z,
+        "name": "Test Live Journal",
+        "tradeCount": 0,
+        "userId": "1",
+      }
+    }
+    key="1"
+  />
+  <Component
+    journal={
+      Object {
+        "created": 2019-10-19T15:00:00.000Z,
+        "currency": "JPY",
+        "id": "2",
+        "kind": "demo",
+        "modified": 2019-10-19T15:00:00.000Z,
+        "name": "Test Demo Journal",
+        "tradeCount": 0,
+        "userId": "1",
+      }
+    }
+    key="2"
+  />
+  <Component
+    journal={
+      Object {
+        "created": 2019-10-19T15:00:00.000Z,
+        "currency": "JPY",
+        "id": "3",
+        "kind": "live",
+        "modified": 2019-10-19T15:00:00.000Z,
+        "name": "Other User Test Live Journal",
+        "tradeCount": 0,
+        "userId": "2",
+      }
+    }
+    key="3"
+  />
+</div>
+`;

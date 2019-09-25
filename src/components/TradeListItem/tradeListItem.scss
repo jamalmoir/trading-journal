@@ -1,0 +1,17 @@
+.trade-list-item {
+}
+
+.trade-list-item-cell {
+  padding: 0.5rem;
+
+  &:not(:last-child) {
+  }
+}
+
+.trade-list-item-edit {
+  margin-left: auto;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,18 @@
+.trade-quick-create {
+  max-width: none !important;
+
+  &.container{
+    padding: 0;
+  }
+}
+
+.trade-quick-create-date {
+  input {
+    border: none;
+    width: 100%;
+  }
+
+  .react-datepicker-popper {
+    width: max-content;
+  }
+}

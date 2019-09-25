@@ -1,0 +1,27 @@
+// @import url(https://fonts.googleapis.com/css?family=Muli:200,300,400,700);
+$headings-font-family:Muli;
+
+//$enable-grid-classes:false;
+$primary:#1180ce;
+$secondary:#999999;
+$success:#3aa176;
+$danger:#f44336;
+$info:#1a1c29;
+$warning:#b8913e;
+$light:#F6F1F2;
+$dark:#1A1C29;
+
+$accent-light:#5AB8D4;
+$accent-dark:#727579;
+$brand:#0282C9;
+
+/*! Import Bootstrap 4 variables */
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins";
+
+@import "~bootstrap/scss/bootstrap";
+
+$enable-rounded:false;
+
+// Add SASS theme customizations here..

@@ -1,0 +1,20 @@
+.trade-list {
+  width: 100%;
+
+  &> div {
+  }
+
+  &> div:first-child {
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+  }
+
+  &> div:last-child {
+    border-bottom-left-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+  }
+
+  &> div:hover {
+    background: #ebebeb;
+  }
+}

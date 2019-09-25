@@ -1,0 +1,9 @@
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";
+
+.text-input {
+  &.errors {
+    background: lighten($danger, 40);
+    border-color: $danger;
+  }
+}
