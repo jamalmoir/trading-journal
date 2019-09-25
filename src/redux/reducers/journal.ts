@@ -1,110 +1,93 @@
 import Types from 'Types';
 import { ActionType } from 'typesafe-actions';
-import { CREATE_JOURNAL, CREATE_TRADE, FETCH_JOURNALS, FETCH_TRADES, MODIFY_JOURNAL, MODIFY_TRADE, SET_ACTIVE_JOURNAL, CLEAR_TRADES, SET_TRADE_FILTERS } from '../actions/actionTypes';
+import { FETCH_JOURNALS_SUCCESS, CREATE_JOURNAL_SUCCESS, MODIFY_JOURNAL_SUCCESS, DELETE_JOURNAL_SUCCESS, SET_ACTIVE_JOURNAL, FETCH_JOURNALS_REQUEST, FETCH_JOURNALS_FAILURE, CREATE_JOURNAL_REQUEST, MODIFY_JOURNAL_REQUEST, DELETE_JOURNAL_REQUEST, CREATE_JOURNAL_FAILURE, MODIFY_JOURNAL_FAILURE, DELETE_JOURNAL_FAILURE } from '../actions/actionTypes';
 import * as actions from '../actions/journal';
+import { combineReducers } from 'redux';
 
 
 export interface JournalState {
   journals: Types.Journal[];
-  trades: Types.Trade[];
   activeJournal: Types.Journal | null;
-  tradeFilters: Types.TradeFilters;
+  isRequesting: boolean;
+  errorMessage: string;
 }
 
 export type JournalAction = ActionType<typeof actions>;
 
-const initialState: JournalState = {
-  journals: [],
-  trades: [],
-  activeJournal: null,
-  tradeFilters: {
-    instrument: null,
-    strategy: null,
-    kind: null,
-    rating: null,
-    entryDate: null,
-    exitDate: null,
-    profit: null,
-    hitTakeProfit: null,
-    flagged: null,
-    managed: null,
-    tags: null,
-    emotions: null,
-  },
-};
 
-const reducer = (state = initialState, action: JournalAction) => {
-  // @ts-ignore
-  switch (action.type) {
-    // @ts-ignore
-    case FETCH_JOURNALS:
-      return <JournalState>{
-        ...state,
-        // @ts-ignore
-        journals: action.journals,
-      }
-    case SET_ACTIVE_JOURNAL:
-      return <JournalState>{
-        ...state,
-        activeJournal: action.payload,
-      }
-    // @ts-ignore
-    case CREATE_JOURNAL:
-      return <JournalState>{
-        ...state,
-        // @ts-ignore
-        journals: state.journals.concat([action.journal]),
-      }
-    // @ts-ignore
-    case MODIFY_JOURNAL:
-      // @ts-ignore
-      let journals = state.journals.map(obj => obj.id === action.journal.id ? action.journal : obj);
-
-      return <JournalState>{
-        ...state,
-        journals: journals,
-      }
-    // @ts-ignore
-    case FETCH_TRADES:
-      return <JournalState>{
-        ...state,
-        // @ts-ignore
-        trades: action.trades,
-      }
-    // @ts-ignore
-    case CLEAR_TRADES:
-      return <JournalState>{
-        ...state,
-        // @ts-ignore
-        trades: [],
-      }
-    // @ts-ignore
-    case CREATE_TRADE:
-      return <JournalState>{
-        ...state,
-        // @ts-ignore
-        trades: state.trades.concat([action.trade]),
-      }
-    // @ts-ignore
-    case MODIFY_TRADE:
-      // @ts-ignore
-      let trades = state.trades.map(obj => obj.id === action.trade.id ? action.trade : obj);
-
-      return <JournalState>{
-        ...state,
-        trades: trades,
-      }
-    // @ts-ignore
-    case SET_TRADE_FILTERS:
-      // @ts-ignore
-      return <JournalState>{
-        ...state,
-        // @ts-ignore
-        tradeFilters: action.payload,
-      }
-    default:
-      return state;
+const reducer = () => {
+  const journals = (state: JournalState['journals'] = [], action: JournalAction) => {
+    switch (action.type) {
+      case FETCH_JOURNALS_SUCCESS:
+        return action.payload;
+      case CREATE_JOURNAL_SUCCESS:
+        return [...state, action.payload];
+      case MODIFY_JOURNAL_SUCCESS:
+        return state.map(journal => journal.id === action.payload.id ? action.payload : journal);
+      case DELETE_JOURNAL_SUCCESS:
+        return state.filter(journal => journal.id !== action.payload.id);
+      default:
+        return state;
+    }
   }
+
+  const activeJournal = (state: JournalState['activeJournal'] = null, action: JournalAction) => {
+    switch (action.type) {
+      case SET_ACTIVE_JOURNAL:
+        return action.payload;
+      default:
+        return state;
+    }
+  }
+
+  const isRequesting = (state: JournalState['isRequesting'] = false, action: JournalAction) => {
+    switch (action.type) {
+      case FETCH_JOURNALS_REQUEST:
+      case CREATE_JOURNAL_REQUEST:
+      case MODIFY_JOURNAL_REQUEST:
+      case DELETE_JOURNAL_REQUEST:
+        return true;
+      case FETCH_JOURNALS_SUCCESS:
+      case FETCH_JOURNALS_FAILURE:
+      case CREATE_JOURNAL_SUCCESS:
+      case CREATE_JOURNAL_FAILURE:
+      case MODIFY_JOURNAL_SUCCESS:
+      case MODIFY_JOURNAL_FAILURE:
+      case DELETE_JOURNAL_SUCCESS:
+      case DELETE_JOURNAL_FAILURE:
+        return false;
+      default:
+        return state;
+    }
+  }
+
+  const errorMessage = (state: JournalState['errorMessage'] = null, action: JournalAction) => {
+    switch (action.type) {
+      case FETCH_JOURNALS_REQUEST:
+      case FETCH_JOURNALS_SUCCESS:
+      case CREATE_JOURNAL_REQUEST:
+      case CREATE_JOURNAL_SUCCESS:
+      case MODIFY_JOURNAL_REQUEST:
+      case MODIFY_JOURNAL_SUCCESS:
+      case DELETE_JOURNAL_REQUEST:
+      case DELETE_JOURNAL_SUCCESS:
+        return null;
+      case FETCH_JOURNALS_FAILURE:
+      case CREATE_JOURNAL_FAILURE:
+      case MODIFY_JOURNAL_FAILURE:
+      case DELETE_JOURNAL_FAILURE:
+        return action.payload;
+      default:
+        return state;
+    }
+  }
+
+  return combineReducers ({
+    journals,
+    activeJournal,
+    isRequesting,
+    errorMessage
+  })
 }
 
 export default reducer;
