@@ -6,6 +6,7 @@ import { AuthAction, AuthState } from '../redux/reducers/auth';
 import { JournalAction, JournalState } from '../redux/reducers/journal';
 import { CurrencyCode, Money } from '../utils/moolah';
 import { Tag } from 'react-tag-autocomplete';
+import { TradeState, TradeAction } from '../redux/reducers/trade';
 
 
 declare module 'Types' {
@@ -13,10 +14,11 @@ declare module 'Types' {
     readonly app: AppState;
     readonly auth: AuthState;
     readonly journal: JournalState;
+    readonly trade: TradeState;
     readonly firebase: any;
   }
 
-  export type RootAction = AppAction | AuthAction | JournalAction | CallHistoryMethodAction;
+  export type RootAction = AppAction | AuthAction | JournalAction | TradeAction | CallHistoryMethodAction;
 
   export interface ConnectedReduxProps<A extends Action = AnyAction> {
     dispatch: Dispatch<A>

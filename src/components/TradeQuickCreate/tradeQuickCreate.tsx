@@ -4,10 +4,10 @@ import DatePicker from 'react-datepicker';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import Types from 'Types';
-import { createTrade } from '../../redux/actions/journal';
+import { createTrade } from '../../redux/actions/trade';
 import './tradeQuickCreate.scss';
 import { TextInput } from '../TextInput';
-import { buildTrade, setUpControls, controlsValid } from '../../utils/utils';
+import { buildTrade, setUpControls } from '../../utils/utils';
 import { inputControls } from './inputControls';
 
 

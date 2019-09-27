@@ -7,13 +7,14 @@ import { Dispatch } from 'redux';
 import Types from 'Types';
 import { Heading } from '../../components/Heading';
 import { routeChange } from '../../redux/actions/app';
-import { modifyTrade, setActiveJournal } from '../../redux/actions/journal';
+import { setActiveJournal } from '../../redux/actions/journal';
 import { JournalAction } from '../../redux/reducers/journal';
 import './trade.scss';
 import { TextInput } from '../../components/TextInput';
 import { TristateCheckbox } from '../../components/TristateCheckbox';
-import { setUpControls, buildTrade, controlsValid } from '../../utils/utils';
+import { setUpControls, buildTrade } from '../../utils/utils';
 import { inputControls } from './inputControls';
+import { modifyTrade } from '../../redux/actions/trade';
 
 
 interface TradePageProps {
@@ -365,7 +366,7 @@ const TradePage = (props: TradePageProps) => {
 
 const mapStateToProps = (state: Types.RootState) => {
 	return {
-		trades: state.journal.trades,
+		trades: state.trade.trades,
 		journals: state.journal.journals,
 		activeJournal: state.journal.activeJournal,
 		auth: state.auth,

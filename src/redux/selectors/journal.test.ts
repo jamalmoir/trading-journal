@@ -37,6 +37,12 @@ describe('journal actions', () => {
     let state: Types.RootState = {
         journal: {
             journals: testJournals(),
+            activeJournal: testJournals()[0],
+            isRequesting: false,
+            errorMessage: null,
+        },
+        trade: {
+            trades: testTrades(),
             tradeFilters: {
                 instrument: null,
                 strategy: null,
@@ -51,8 +57,8 @@ describe('journal actions', () => {
                 tags: null,
                 emotions: null,
             },
-            trades: testTrades(),
-            activeJournal: testJournals()[0],
+            isRequesting: false,
+            errorMessage: null,
         },
         app: {appLoaded: true, route: ''},
         auth: {},
@@ -60,87 +66,87 @@ describe('journal actions', () => {
     }
 
     it('shows all trades belonging to a journal belonging to a user with no filters', () => {
-        state = {...state, journal: {...state.journal, tradeFilters: getFilters({})}};
+        state = {...state, trade: {...state.trade, tradeFilters: getFilters({})}};
         expect(checkTrades(getFilteredTrades(state), ['1', '2', '3'])).toBeTruthy();
         expect(checkTrades(getFilteredTrades(state), ['4', '5'])).toBeFalsy();
     });
 
     it('filters by intrument correctly', () => {
-        state = {...state, journal: {...state.journal, tradeFilters: getFilters({instrument: 'GBPJPY'})}};
+        state = {...state, trade: {...state.trade, tradeFilters: getFilters({instrument: 'GBPJPY'})}};
         expect(checkTrades(getFilteredTrades(state), ['1'])).toBeTruthy();
     });
 
     it('it filters by strategy correctly', () => {
         // Strategy
-        state = {...state, journal: {...state.journal, tradeFilters: getFilters({strategy: 'Strategy 2'})}};
+        state = {...state, trade: {...state.trade, tradeFilters: getFilters({strategy: 'Strategy 2'})}};
         expect(checkTrades(getFilteredTrades(state), ['2'])).toBeTruthy();
     });
 
     it('it filters by kind correctly', () => {
         // Kind
-        state = {...state, journal: {...state.journal, tradeFilters: getFilters({kind: 'long'})}};
+        state = {...state, trade: {...state.trade, tradeFilters: getFilters({kind: 'long'})}};
         expect(checkTrades(getFilteredTrades(state), ['1'])).toBeTruthy();
     });
 
     it('it filters by rating correctly', () => {
         // Rating
-        state = {...state, journal: {...state.journal, tradeFilters: getFilters({rating: -1})}};
+        state = {...state, trade: {...state.trade, tradeFilters: getFilters({rating: -1})}};
         expect(checkTrades(getFilteredTrades(state), ['2'])).toBeTruthy();
     });
 
     it('it filters by entry date correctly', () => {
         // Entry Date
-        state = {...state, journal: {...state.journal, tradeFilters: getFilters({entryDate: new Date('2019/10/31')})}};
+        state = {...state, trade: {...state.trade, tradeFilters: getFilters({entryDate: new Date('2019/10/31')})}};
         expect(checkTrades(getFilteredTrades(state), ['2', '3'])).toBeTruthy();
     });
 
     it('it filters by exit date correctly', () => {
         // Exit Date
-        state = {...state, journal: {...state.journal, tradeFilters: getFilters({exitDate: new Date('2019/10/31')})}};
+        state = {...state, trade: {...state.trade, tradeFilters: getFilters({exitDate: new Date('2019/10/31')})}};
         expect(checkTrades(getFilteredTrades(state), ['2'])).toBeTruthy();
     });
 
     it('it filters by profit correctly', () => {
         // Profit
-        state = {...state, journal: {...state.journal, tradeFilters: getFilters({profit: true})}};
+        state = {...state, trade: {...state.trade, tradeFilters: getFilters({profit: true})}};
         expect(checkTrades(getFilteredTrades(state), ['1'])).toBeTruthy();
-        state = {...state, journal: {...state.journal, tradeFilters: getFilters({profit: false})}};
+        state = {...state, trade: {...state.trade, tradeFilters: getFilters({profit: false})}};
         expect(checkTrades(getFilteredTrades(state), ['2'])).toBeTruthy();
     });
 
     it('it filters by hit take profit correctly', () => {
         // Hit Take Profit
-        state = {...state, journal: {...state.journal, tradeFilters: getFilters({hitTakeProfit: true})}};
+        state = {...state, trade: {...state.trade, tradeFilters: getFilters({hitTakeProfit: true})}};
         expect(checkTrades(getFilteredTrades(state), ['1'])).toBeTruthy();
-        state = {...state, journal: {...state.journal, tradeFilters: getFilters({hitTakeProfit: false})}};
+        state = {...state, trade: {...state.trade, tradeFilters: getFilters({hitTakeProfit: false})}};
         expect(checkTrades(getFilteredTrades(state), ['2'])).toBeTruthy();
     });
 
     it('it filters by flagged correctly', () => {
         // Flagged
-        state = {...state, journal: {...state.journal, tradeFilters: getFilters({flagged: true})}};
+        state = {...state, trade: {...state.trade, tradeFilters: getFilters({flagged: true})}};
         expect(checkTrades(getFilteredTrades(state), ['2'])).toBeTruthy();
-        state = {...state, journal: {...state.journal, tradeFilters: getFilters({flagged: false})}};
+        state = {...state, trade: {...state.trade, tradeFilters: getFilters({flagged: false})}};
         expect(checkTrades(getFilteredTrades(state), ['1', '3'])).toBeTruthy();
     });
 
     it('it filters by managed correctly', () => {
         // Managed
-        state = {...state, journal: {...state.journal, tradeFilters: getFilters({managed: true})}};
+        state = {...state, trade: {...state.trade, tradeFilters: getFilters({managed: true})}};
         expect(checkTrades(getFilteredTrades(state), [])).toBeTruthy();
-        state = {...state, journal: {...state.journal, tradeFilters: getFilters({managed: false})}};
+        state = {...state, trade: {...state.trade, tradeFilters: getFilters({managed: false})}};
         expect(checkTrades(getFilteredTrades(state), [])).toBeTruthy();
     });
 
     it('it filters by tags correctly', () => {
         // Tags
-        state = {...state, journal: {...state.journal, tradeFilters: getFilters({tags: ['monday']})}};
+        state = {...state, trade: {...state.trade, tradeFilters: getFilters({tags: ['monday']})}};
         expect(checkTrades(getFilteredTrades(state), ['1'])).toBeTruthy();
     });
 
     it('it filters by emotions correctly', () => {
         // Emptions
-        state = {...state, journal: {...state.journal, tradeFilters: getFilters({emotions: ['rushed']})}};
+        state = {...state, trade: {...state.trade, tradeFilters: getFilters({emotions: ['rushed']})}};
         expect(checkTrades(getFilteredTrades(state), ['2', '3'])).toBeTruthy();
     });
 });

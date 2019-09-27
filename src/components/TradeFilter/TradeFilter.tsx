@@ -8,7 +8,7 @@ import ReactDatePicker from 'react-datepicker';
 import { TristateCheckbox } from '../TristateCheckbox';
 import ReactTags, { Tag } from 'react-tag-autocomplete';
 import './tradeFilter.scss';
-import { setTradeFilters } from '../../redux/actions/journal';
+import { setTradeFilters } from '../../redux/actions/trade';
 
 
 interface TradeFilterProps {
