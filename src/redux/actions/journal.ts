@@ -55,58 +55,58 @@ export const setActiveJournal = (journal: Types.Journal) => action(SET_ACTIVE_JO
 
 export const fetchJournals = () => {
   return (dispatch: Dispatch, getState: () => Types.RootState, { getFirebase, getFirestore }: Extras) => {
-    // @ts-ignore
-    const firestore = getFirestore(); 
+    const firebase = getFirebase()
+    const firestore: firestore.Firestore = getFirestore(firebase); 
     const auth = getState().firebase.auth;
 
-    fetchJournalsRequest();
+    dispatch(fetchJournalsRequest());
 
     firestore.collection('journals').where("userId", "==", auth.uid).get()
-    .then((snapshot: firestore.QuerySnapshot) => fetchJournalsSuccess(extractJournals(snapshot)))
-    .catch((err: Error) => fetchJournalsFailure(err.message || "Something went wrong."));
+    .then((snapshot: firestore.QuerySnapshot) => dispatch(fetchJournalsSuccess(extractJournals(snapshot))))
+    .catch((err: Error) => dispatch(fetchJournalsFailure(err.message || "Something went wrong.")));
   }
 } 
 
 
 export const createJournal = (journal: Types.Journal) => {
   return (dispatch: Dispatch, getState: () => Types.RootState, { getFirebase, getFirestore }: Extras) => {
-    // @ts-ignore
-    const firestore = getFirestore(); 
+    const firebase = getFirebase()
+    const firestore: firestore.Firestore = getFirestore(firebase); 
     const auth = getState().firebase.auth;
 
     delete journal.id;
     journal.userId = auth.uid;
 
-    createJournalRequest();
+    dispatch(createJournalRequest());
 
     firestore.collection('journals').add(journal)
-    .then((doc: any) => createJournalSuccess(doc))
-    .catch((err: Error) => createJournalFailure(err.message || "Something went wrong."));
+    .then((doc: any) => dispatch(createJournalSuccess(journal)))
+    .catch((err: Error) => dispatch(createJournalFailure(err.message || "Something went wrong.")));
   }
 }
 
 export const modifyJournal = (journal: Types.Journal) => {
   return (dispatch: Dispatch, getState: () => JournalState, { getFirebase, getFirestore }: Extras) => {
-    // @ts-ignore
-    const firestore = getFirestore(); 
+    const firebase = getFirebase()
+    const firestore: firestore.Firestore = getFirestore(firebase); 
 
-    modifyJournalRequest();
+    dispatch(modifyJournalRequest());
 
     firestore.collection('journals').doc(journal.id).update(journal)
-    .then((doc: any) => modifyJournalSuccess(doc))
-    .catch((err: Error) => modifyTradeFailure(err.message || "Something went wrong."));
+    .then((doc: any) => dispatch(modifyJournalSuccess(journal)))
+    .catch((err: Error) => dispatch(modifyTradeFailure(err.message || "Something went wrong.")));
   }
 }
 
 export const deleteJournal = (journal: Types.Journal) => {
   return (dispatch: Dispatch, getState: () => JournalState, { getFirebase, getFirestore }: Extras) => {
-    // @ts-ignore
-    const firestore = getFirestore(); 
+    const firebase = getFirebase()
+    const firestore: firestore.Firestore = getFirestore(firebase); 
 
-    deleteJournalRequest();
+    dispatch(deleteJournalRequest());
 
     firestore.collection('journals').doc(journal.id).delete()
-    .then(() => deleteJournalSuccess(journal))
-    .catch((err: Error) => deleteJournalFailure(err.message || "Something went wrong."));
+    .then(() => dispatch(deleteJournalSuccess(journal)))
+    .catch((err: Error) => dispatch(deleteJournalFailure(err.message || "Something went wrong.")));
   }
 }

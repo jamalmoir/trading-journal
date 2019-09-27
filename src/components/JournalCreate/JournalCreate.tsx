@@ -28,7 +28,7 @@ export const JournalCreateComponent = (props: JournalCreateProps) => {
 			}
 		},
 		kind: {
-			value: 'long',
+			value: 'live',
 			errors: [],
 			touched: false,
 			validationRules: {
