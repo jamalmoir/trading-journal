@@ -102,7 +102,7 @@ const TradePage = (props: TradePageProps) => {
 								<label htmlFor="trade-instrument">Instrument</label>
 								<TextInput id="trade-instrument"
 											type="text"
-											placeholder="Instrument"
+											label="Instrument"
 											value={ controls.instrument.value }
 											onChange={ (e: ChangeEvent<HTMLInputElement>) => updateInputState('instrument', e.target.value) }
 											errors={ controls.instrument.errors }
@@ -113,7 +113,7 @@ const TradePage = (props: TradePageProps) => {
 								<label htmlFor="trade-strategy">Strategy</label>
 								<TextInput id="trade-strategy"
 											type="text"
-											placeholder="Strategy"
+											label="Strategy"
 											value={ controls.strategy.value }
 											onChange={ (e: ChangeEvent<HTMLInputElement>) => updateInputState('strategy', e.target.value) }
 											errors={ controls.strategy.errors }
@@ -174,7 +174,7 @@ const TradePage = (props: TradePageProps) => {
 								<label htmlFor="trade-entry-price">Entry Price</label>
 								<TextInput id="trade-entry-price"
 											type="text"
-											placeholder="Entry Price"
+											label="Entry Price"
 											value={ controls.entryPrice.value }
 											onChange={ (e: ChangeEvent<HTMLInputElement>) => updateInputState('entryPrice', e.target.value) }
 											errors={ controls.entryPrice.errors }
@@ -185,7 +185,7 @@ const TradePage = (props: TradePageProps) => {
 								<label htmlFor="trade-position-size">Position Size</label>
 								<TextInput id="trade-position-size"
 											type="text"
-											placeholder="Position Size"
+											label="Position Size"
 											value={ controls.positionSize.value }
 											onChange={ (e: ChangeEvent<HTMLInputElement>) => updateInputState('positionSize', e.target.value) }
 											errors={ controls.positionSize.errors }
@@ -196,7 +196,7 @@ const TradePage = (props: TradePageProps) => {
 								<label htmlFor="trade-stop-loss">Stop Loss</label>
 								<TextInput id="trade-stop-loss"
 											type="text"
-											placeholder="Stop Loss"
+											label="Stop Loss"
 											value={ controls.stopLoss.value }
 											onChange={ (e: ChangeEvent<HTMLInputElement>) => updateInputState('stopLoss', e.target.value) }
 											errors={ controls.stopLoss.errors }
@@ -207,7 +207,7 @@ const TradePage = (props: TradePageProps) => {
 								<label htmlFor="trade-take-profit">Take Profit</label>
 								<TextInput id="trade-take-profit"
 											type="text"
-											placeholder="Take Profit"
+											label="Take Profit"
 											value={ controls.takeProfit.value }
 											onChange={ (e: ChangeEvent<HTMLInputElement>) => updateInputState('takeProfit', e.target.value) }
 											errors={ controls.takeProfit.errors }
@@ -249,7 +249,7 @@ const TradePage = (props: TradePageProps) => {
 								<label htmlFor="trade-exit-price">Exit Price</label>
 								<TextInput id="trade-exit-price"
 											type="text"
-											placeholder="Exit Price"
+											label="Exit Price"
 											value={ controls.exitPrice.value }
 											onChange={ (e: ChangeEvent<HTMLInputElement>) => updateInputState('exitPrice', e.target.value) }
 											errors={ controls.exitPrice.errors }
@@ -260,7 +260,7 @@ const TradePage = (props: TradePageProps) => {
 								<label htmlFor="trade-fees">Fees</label>
 								<TextInput id="trade-fees"
 											type="text"
-											placeholder="Fees"
+											label="Fees"
 											value={ controls.fees.value }
 											onChange={ (e: ChangeEvent<HTMLInputElement>) => updateInputState('fees', e.target.value) }
 											errors={ controls.fees.errors }
@@ -271,7 +271,7 @@ const TradePage = (props: TradePageProps) => {
 								<label htmlFor="trade-pl">P/L</label>
 								<TextInput id="trade-pl"
 											type="text"
-											placeholder="P/L"
+											label="P/L"
 											value={ controls.pl.value }
 											onChange={ (e: ChangeEvent<HTMLInputElement>) => updateInputState('pl', e.target.value) }
 											errors={ controls.pl.errors }
@@ -338,7 +338,7 @@ const TradePage = (props: TradePageProps) => {
 								<label htmlFor="trade-exit-mfe">MFE</label>
 								<TextInput id="trade-exit-mfe"
 											type="text"
-											placeholder="MFE"
+											label="MFE"
 											value={ controls.mfe.value }
 											onChange={ (e: ChangeEvent<HTMLInputElement>) => updateInputState('mfe', e.target.value) }
 											errors={ controls.mfe.errors }
@@ -349,7 +349,7 @@ const TradePage = (props: TradePageProps) => {
 								<label htmlFor="trade-mae">MAE</label>
 								<TextInput id="trade-mae"
 											type="text"
-											placeholder="MAE"
+											label="MAE"
 											value={ controls.mae.value }
 											onChange={ (e: ChangeEvent<HTMLInputElement>) => updateInputState('mae', e.target.value) }
 											errors={ controls.mae.errors }

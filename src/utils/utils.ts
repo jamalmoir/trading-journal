@@ -79,3 +79,7 @@ export const buildTrade = (args: any): Types.Trade => ({
 	rating: args.rating || null,
 	charts: args.charts || [],
 });
+
+export const uniqueId = (): string => {
+  return '_' + Math.random().toString(36).substr(2, 9);
+};

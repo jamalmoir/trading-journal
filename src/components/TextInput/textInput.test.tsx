@@ -5,13 +5,13 @@ import { shallow } from 'enzyme';
 
 describe("<TextInput />", () => {
   it('matches snapshot', () => {
-    const component = shallow(<TextInput type='text' placeholder='test' value='test' />);
+    const component = shallow(<TextInput type='text' label='test' value='test' />);
     expect(component).toMatchSnapshot();
   });
 
   it('handles input change', () => {
     const onChange = jest.fn();
-    const component = shallow(<TextInput type='text' placeholder='test' value='test' onChange={ onChange } />);
+    const component = shallow(<TextInput type='text' label='test' value='test' onChange={ onChange } />);
 
     expect(onChange).not.toBeCalled();
 
@@ -21,7 +21,7 @@ describe("<TextInput />", () => {
   });
 
   it('has an errors class if conditions are met', () => {
-    const component = shallow(<TextInput type='text' placeholder='test' value='test' />);
+    const component = shallow(<TextInput type='text' label='test' value='test' />);
 
     // not touched, no errors
     component.setProps({touched: false, errors: []})

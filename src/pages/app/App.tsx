@@ -14,6 +14,7 @@ import { Journal } from '../Journal';
 import { Journals } from '../Journals';
 import { Login } from '../login';
 import { Trade } from '../trade';
+import { Playground } from '../playground';
 import './app.scss';
 
 
@@ -67,6 +68,7 @@ class AppPage extends React.Component<AppProps> {
             <ProtectedRoute exact path="/" component={ Journals }/>
             <ProtectedRoute exact path="/journal/:journalId" component={ Journal }/>
             <ProtectedRoute exact path="/journal/:journalId/trade/:tradeId" component={ Trade }/>
+            { process.env.NODE_ENV === "development" ? <ProtectedRoute exact path="/playground" component={ Playground }/> : null }
           </Switch>
         </div>
       </div>

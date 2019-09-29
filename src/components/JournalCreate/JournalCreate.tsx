@@ -74,7 +74,7 @@ export const JournalCreateComponent = (props: JournalCreateProps) => {
 		<div className={ props.className + ' input-group mb-3'}>
 			<TextInput type="text"
 							className="journal-create-name form-control col-8"
-							placeholder="Journal name"
+							label="Journal name"
 							value={ controls.name.value || '' }
 							onChange={ (e) => updateControls('name', e.target.value) }
 							errors={ controls.name.errors }
@@ -90,7 +90,7 @@ export const JournalCreateComponent = (props: JournalCreateProps) => {
 			</select>
 			<TextInput type="text"
 							className="journal-create-currency form-control col-8"
-							placeholder="Currency"
+							label="Currency"
 							value={ controls.currency.value || '' }
 							onChange={ (e) => updateControls('currency', e.target.value) }
 							errors={ controls.currency.errors }

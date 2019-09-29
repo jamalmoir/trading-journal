@@ -10,8 +10,8 @@ exports[`<TradeQuickCreate /> matches snapshot 1`] = `
     <Component
       className="form-control col-sm-2 tqc-instrument"
       errors={Array []}
+      label="Instrument"
       onChange={[Function]}
-      placeholder="Instrument"
       touched={false}
       type="text"
       value={null}
@@ -19,8 +19,8 @@ exports[`<TradeQuickCreate /> matches snapshot 1`] = `
     <Component
       className="form-control col-sm-2 tqc-strategy"
       errors={Array []}
+      label="Strategy"
       onChange={[Function]}
-      placeholder="Strategy"
       touched={false}
       type="text"
       value={null}
@@ -28,7 +28,7 @@ exports[`<TradeQuickCreate /> matches snapshot 1`] = `
     <select
       className="custom-select col-sm-1 tqc-kind"
       onChange={[Function]}
-      value={null}
+      value="long"
     >
       <option
         value="long"
@@ -86,32 +86,32 @@ exports[`<TradeQuickCreate /> matches snapshot 1`] = `
     <Component
       className="form-control col-sm-1 tqc-entry-price"
       errors={Array []}
+      label="Entry Price"
       onChange={[Function]}
-      placeholder="Entry Price"
       touched={false}
       type="text"
     />
     <Component
       className="form-control col-sm-1 tqc-size"
       errors={Array []}
+      label="Size"
       onChange={[Function]}
-      placeholder="Size"
       touched={false}
       type="text"
     />
     <Component
       className="form-control col-sm-1 tqc-stop-loss"
       errors={Array []}
+      label="Stop Loss"
       onChange={[Function]}
-      placeholder="Stop Loss"
       touched={false}
       type="text"
     />
     <Component
       className="form-control col-sm-1 tqc-take-profit"
       errors={Array []}
+      label="Take Profit"
       onChange={[Function]}
-      placeholder="Take Profit"
       touched={false}
       type="text"
     />

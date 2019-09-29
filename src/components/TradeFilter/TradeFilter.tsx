@@ -118,12 +118,12 @@ export const TradeFilterComponent = (props: TradeFilterProps) => {
       <div className="trade-filter-group col-sm-3">
         <TextInput type="text"
               className="trade-filter trade-filter-instrument form-control"
-              placeholder="Instrument"
+              label="Instrument"
               value={ filters.instrument }
               onChange={ (e) => updateFilter('instrument', e.target.value) }/>
         <TextInput type="text"
               className="trade-filter trade-filter-strategy form-control"
-              placeholder="Strategy"
+              label="Strategy"
               value={ filters.strategy }
               onChange={ (e) => updateFilter('strategy', e.target.value) }/>
         <select className="trade-filter trade-filter-kind custom-select"

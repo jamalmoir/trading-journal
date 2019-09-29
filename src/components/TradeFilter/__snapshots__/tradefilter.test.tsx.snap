@@ -14,15 +14,15 @@ exports[`<TradeFilter /> matches snapshot 1`] = `
   >
     <Component
       className="trade-filter trade-filter-instrument form-control"
+      label="Instrument"
       onChange={[Function]}
-      placeholder="Instrument"
       type="text"
       value={null}
     />
     <Component
       className="trade-filter trade-filter-strategy form-control"
+      label="Strategy"
       onChange={[Function]}
-      placeholder="Strategy"
       type="text"
       value={null}
     />

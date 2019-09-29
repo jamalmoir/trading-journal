@@ -39,7 +39,7 @@ export const TradeQuickCreateComponent = (props: TradeQuickCreateProps) => {
 			<div className='input-group mb-3'>
 				<TextInput type='text'
 							className="form-control col-sm-2 tqc-instrument"
-							placeholder="Instrument"
+							label="Instrument"
 							value={ controls.instrument.value }
 							onChange={ (e) => updateInputState('instrument', e.target.value) }
 							errors={ controls.instrument.errors }
@@ -47,7 +47,7 @@ export const TradeQuickCreateComponent = (props: TradeQuickCreateProps) => {
 				/>
 				<TextInput type="text"
 							className="form-control col-sm-2 tqc-strategy"
-							placeholder="Strategy"
+							label="Strategy"
 							value={ controls.strategy.value }
 							onChange={ (e) => updateInputState('strategy', e.target.value) }
 							errors={ controls.strategy.errors }
@@ -77,7 +77,7 @@ export const TradeQuickCreateComponent = (props: TradeQuickCreateProps) => {
 				</div>
 				<TextInput type="text"
 							className="form-control col-sm-1 tqc-entry-price"
-							placeholder="Entry Price"
+							label="Entry Price"
 							value={ controls.entryPrice.value ? controls.entryPrice.value.toString() : undefined }
 							onChange={ (e) => updateInputState('entryPrice', e.target.value) }
 							errors={ controls.entryPrice.errors }
@@ -85,7 +85,7 @@ export const TradeQuickCreateComponent = (props: TradeQuickCreateProps) => {
 				/>
 				<TextInput type="text"
 							className="form-control col-sm-1 tqc-size"
-							placeholder="Size"
+							label="Size"
 							value={ controls.positionSize.value ? controls.positionSize.value.toString() : undefined }
 							onChange={ (e) => updateInputState('positionSize', e.target.value) }
 							errors={ controls.positionSize.errors }
@@ -93,7 +93,7 @@ export const TradeQuickCreateComponent = (props: TradeQuickCreateProps) => {
 				/>
 				<TextInput type="text"
 							className="form-control col-sm-1 tqc-stop-loss"
-							placeholder="Stop Loss"
+							label="Stop Loss"
 							value={ controls.stopLoss.value ? controls.stopLoss.value.toString() : undefined }
 							onChange={ (e) => updateInputState('stopLoss', e.target.value) }
 							errors={ controls.stopLoss.errors }
@@ -101,7 +101,7 @@ export const TradeQuickCreateComponent = (props: TradeQuickCreateProps) => {
 				/>
 				<TextInput type="text"
 							className="form-control col-sm-1 tqc-take-profit"
-							placeholder="Take Profit"
+							label="Take Profit"
 							value={ controls.takeProfit.value ? controls.takeProfit.value.toString() : undefined }
 							onChange={ (e) => updateInputState('takeProfit', e.target.value) }
 							errors={ controls.takeProfit.errors }
