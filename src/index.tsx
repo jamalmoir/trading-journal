@@ -9,7 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
-import './custom-theme.scss';
+import './custom.scss';
 import { App } from './pages/app';
 import './react-tags.scss';
 import { history, store } from './redux/store';

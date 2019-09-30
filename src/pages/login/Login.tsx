@@ -8,6 +8,7 @@ import { TextInput } from '../../components/TextInput';
 import { authenticateUser } from '../../redux/actions/auth';
 import { validate } from '../../utils/validation';
 import './login.scss';
+import { Button } from '../../components/Button';
 
 
 interface LoginState {
@@ -109,19 +110,21 @@ class LoginPage extends Component<LoginProps> {
 					<Heading text='Login' />
 					<form className='inputs'>
 						<TextInput type="email"
-											 label="email"
+											 className="email"
+											 label="Email"
 											 value={ this.state.controls.email.value }
 											 errors={ this.state.controls.email.errors }
 											 touched={ this.state.controls.email.touched }
 											 onChange={ (event: ChangeEvent<HTMLInputElement>) => this.updateInputState('email', event) } />
 						<TextInput type="password"
-											 label="password"
+											 className="password"
+											 label="Password"
 											 value={ this.state.controls.password.value }
 											 errors={ this.state.controls.password.errors }
 											 touched={ this.state.controls.password.touched }
 											 onChange ={(event: ChangeEvent<HTMLInputElement>) => this.updateInputState('password', event) } />
 						<Link to="/">
-							<button className="btn btn-primary" onClick={ this.loginHandler }>Login</button>
+							<Button text="Login" onClick={ this.loginHandler } />
 						</Link>
 						<span className='failure-text'>{ this.props.firebase.authError ? this.props.firebase.authError.message : '' } </span>
 					</form>

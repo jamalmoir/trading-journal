@@ -12,6 +12,7 @@ interface TristateCheckboxProps {
 
 const stateMap = new Map([[null, true], [true, false], [false, null]]);
 const stateClassMap = new Map([[null, 'unchecked'], [true, 'checked-true'], [false, 'checked-false']]);
+const iconClassMap = new Map([[null, ''], [true, 'fas fa-check'], [false, 'fas fa-times']]);
 
 
 export const TristateCheckbox = (props: TristateCheckboxProps) => {
@@ -28,8 +29,9 @@ export const TristateCheckbox = (props: TristateCheckboxProps) => {
 
 	return (
 		<div id={ props.id }
-				 className={ props.className + ' tristate-checkbox ' + checkedClass }
+				 className={ props.className + ' tristate-checkbox ' + stateClassMap.get(checked) }
 				 onClick={ handleClick }>
+			<i className={ iconClassMap.get(checked) }></i>
 		</div>
 	)
 }

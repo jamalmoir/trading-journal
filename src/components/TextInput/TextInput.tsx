@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { useState } from 'react';
 import { ChangeEvent } from 'react';
-import './textInput.scss';
 import { uniqueId } from '../../utils/utils';
+import './textInput.scss';
 
 
 interface TextInputProps {
@@ -22,8 +21,8 @@ export const TextInput = (props: TextInputProps) => {
   const getClasses = () => {
     let classes = props.className || '';
 
-    classes = props.value ? classes + ' has-value' : classes;
     classes = props.errors && props.errors.length && props.touched ? classes + ' errors' : classes;
+    classes = props.value ? classes + ' has-value' : classes;
 
     return classes
   }

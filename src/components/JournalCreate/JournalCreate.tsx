@@ -7,6 +7,8 @@ import { createJournal } from '../../redux/actions/journal';
 import { JournalAction } from '../../redux/reducers/journal';
 import { TextInput } from '../TextInput';
 import { setUpControls } from '../../utils/utils';
+import './journalCreate.scss';
+import { Button } from '../Button';
 
 
 interface JournalCreateProps {
@@ -71,16 +73,16 @@ export const JournalCreateComponent = (props: JournalCreateProps) => {
 	}
 
 	return (
-		<div className={ props.className + ' input-group mb-3'}>
+		<div className={ props.className + ' journal-create row mb-3'}>
 			<TextInput type="text"
-							className="journal-create-name form-control col-8"
+							className="journal-create-name col-4"
 							label="Journal name"
 							value={ controls.name.value || '' }
 							onChange={ (e) => updateControls('name', e.target.value) }
 							errors={ controls.name.errors }
 							touched={ controls.name.touched }
 			/>
-			<select className="journal-create-kind form-control custom-select col-4"
+			<select className="journal-create-kind custom-select col-3"
 							value={ controls.kind.value || 'live' }
 							onChange={ (e) => updateControls('kind', e.target.value as 'live' | 'demo' | 'backtest') }
 			>
@@ -89,7 +91,7 @@ export const JournalCreateComponent = (props: JournalCreateProps) => {
 				<option value="backtest">Backtest</option>
 			</select>
 			<TextInput type="text"
-							className="journal-create-currency form-control col-8"
+							className="journal-create-currency col-4"
 							label="Currency"
 							value={ controls.currency.value || '' }
 							onChange={ (e) => updateControls('currency', e.target.value) }
@@ -97,10 +99,9 @@ export const JournalCreateComponent = (props: JournalCreateProps) => {
 							touched={ controls.currency.touched }
 			/>
 			<div className="input-group-append">
-				<button className="btn btn-outline-primary"
-								type="button"
+				<Button text="Create"
 								onClick={ createJournal }
-								disabled={ !controlsValid }>Create</button>
+								disabled={ !controlsValid } />
 			</div>
 		</div>
 	)

@@ -1,5 +1,6 @@
 @import "~bootstrap/scss/bootstrap";
 @import "node_modules/bootstrap/scss/variables";
+@import"./custom.scss";
 
 html, body, [id="root"] {
   width: 100%;
@@ -7,10 +8,49 @@ html, body, [id="root"] {
   margin: 0;
   padding: 0;
   font-family: "Open Sans", sans-serif;
+  background-color: $accent-light;
 }
 
 .failure-text {
   color: $danger;
   font-size: 0.7em;
   margin-top: 1em;
+}
+
+// Loading animation
+.lds-facebook {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.lds-facebook div {
+  display: inline-block;
+  position: absolute;
+  left: 0.93%;
+  width: 20%;
+  background: #fff;
+  animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.lds-facebook div:nth-child(1) {
+  left: 9.3%;
+  animation-delay: -0.24s;
+}
+.lds-facebook div:nth-child(2) {
+  left: 40%;
+  animation-delay: -0.12s;
+}
+.lds-facebook div:nth-child(3) {
+  left: 70.3%;
+  animation-delay: 0;
+}
+@keyframes lds-facebook {
+  0% {
+    top: 9.3%;
+    height: 80%;
+  }
+  50%, 100% {
+    top: 30%;
+    height: 40%;
+  }
 }

@@ -6,6 +6,7 @@ import Types from 'Types';
 import { unauthenticateUser } from '../../redux/actions/auth';
 import { Breadcrumbs } from '../Breadcrumbs';
 import './navBar.scss';
+import { Button } from '../Button';
 
 interface NavBarProps {
 	auth: any,
@@ -37,8 +38,9 @@ export const NavBarComponent = (props: NavBarProps) => {
 							</li>*/}
 						</ul>
 						
-						<button className="logout-button btn btn-outline-secondary my-2 my-lg-0"
-										onClick={ props.onUnauthenticateUser }>Logout</button>
+						{props.auth.uid ? <Button className="logout-button my-2 my-lg-0"
+										text="Logout"
+										onClick={ props.onUnauthenticateUser } /> : null }
 						
 					</div>
 				</div>

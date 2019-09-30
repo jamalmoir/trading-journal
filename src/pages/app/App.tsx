@@ -14,7 +14,7 @@ import { Journal } from '../Journal';
 import { Journals } from '../Journals';
 import { Login } from '../login';
 import { Trade } from '../trade';
-import { Playground } from '../playground';
+import { Playground } from '../Playground';
 import './app.scss';
 
 
