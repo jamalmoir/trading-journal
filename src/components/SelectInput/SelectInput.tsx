@@ -4,7 +4,7 @@ import { uniqueId } from '../../utils/utils';
 import './selectInput.scss';
 
 
-interface TextInputProps {
+interface SelectInputProps {
   label: string;
   value: string;
   choices: {id: string, name: string}[];
@@ -12,10 +12,10 @@ interface TextInputProps {
   touched?: boolean;
   className?: string;
   id?: string;
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: ChangeEvent<HTMLSelectElement>) => void;
 }
 
-export const TextInput = (props: TextInputProps) => {
+export const SelectInput = (props: SelectInputProps) => {
   const ID = uniqueId();
 
   const getClasses = () => {
@@ -27,16 +27,19 @@ export const TextInput = (props: TextInputProps) => {
     return classes
   }
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => props.onChange(event);
+  const getOptions = () => props.choices.map(choice => <option value={ choice.id }>{ choice.name }</option>);
+
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => props.onChange(event);
 
   return (
-    <div id={ props.id } className={ 'text-input ' + getClasses() }>
+    <div id={ props.id } className={ 'select-input ' + getClasses() }>
       <label htmlFor={ ID }>{ props.label }</label>
-      <input id={ ID }
-             type={ props.type }
+      <select id={ ID }
              value={ props.value }
              onChange={ handleChange }>
-      </input>
+        <option hidden disabled selected></option>
+        { getOptions() }
+      </select>
     </div>
   )
 }

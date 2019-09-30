@@ -1,4 +1,9 @@
+@import '../../custom.scss';
+
 .playground {
+	padding: 5em;
+	background-color: $light;
+
 	&>div, &>button {
 		margin: 2em;
 	}

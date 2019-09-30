@@ -1,28 +1,28 @@
 @import "../../custom.scss";
 
-.text-input { 
+.select-input { 
   position: relative;
   padding-top: 1.2em;
 
   label {
-    cursor: text;
     position: absolute;
     transform-origin: top left;
     transform: translate(0, 0) scale(1); 
     transition: transform .1s ease-in-out, color .1s ease-in-out;
     color: lighten($accent-dark, 20%);
+    pointer-events: none;
   }
 
-  input {
+  select {
     border: none;
     border-bottom: solid 2px $accent-dark;
     transition: border-bottom .1s ease-in-out;
     background-color: rgba(0,0,0,0);
+    width: 100%;
   }
 
   &:focus-within, &.has-value {
     label {
-      cursor: default;
       transform: translate(0, -1.2em) scale(.75);
       color: $accent-dark;
     }
@@ -33,7 +33,7 @@
       color: $primary;
     }
 
-    input {
+    select {
       outline: none;
       border-bottom: solid 2px $primary;
     }
@@ -45,7 +45,7 @@
       color: $danger;
     }
 
-    input {
+    select {
       border-bottom: solid 2px $danger;
     }
   }

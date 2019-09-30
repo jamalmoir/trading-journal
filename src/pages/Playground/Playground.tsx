@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import Types from 'Types';
 import { Heading } from '../../components/Heading';
 import { TextInput } from '../../components/TextInput';
 import { Button } from '../../components/Button';
 import './playground.scss';
 import { TristateCheckbox } from '../../components/TristateCheckbox';
+import { SelectInput } from '../../components/SelectInput';
 
 
 interface PlaygroundProps {
@@ -31,6 +31,16 @@ export const Playground = (props: PlaygroundProps) => {
   const onClick1 = () => setLoading({...loading, one: !loading.one});
   const onClick2 = () => setLoading({...loading, two: !loading.two});
 
+  const [selectInputs, setSelectInputs] = useState({
+    one: '',
+  });
+  const onSelect = (event: React.ChangeEvent<HTMLSelectElement>) => setSelectInputs({...selectInputs, one: event.target.value});
+  const choices = [
+    {id: 'one', name: 'One'},
+    {id: 'two', name: 'Two'},
+    {id: 'three', name: 'Three'},
+  ]
+
   return (
     <div className="playground">
       <Heading text="The Component Playground" />
@@ -39,6 +49,7 @@ export const Playground = (props: PlaygroundProps) => {
       <Button text="Click me for Loading" onClick={ onClick1 } loading={ loading.one }/>
       <Button text="Disabled Button" onClick={ onClick2 } loading={ loading.two } disabled={ true }/>
       <TristateCheckbox />
+      <SelectInput label="Select Something" value={ selectInputs.one } choices={ choices } onChange={ onSelect }/>
     </div>
   )
 }
