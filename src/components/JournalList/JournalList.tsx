@@ -2,6 +2,7 @@ import * as React from 'react';
 import Types from 'Types';
 import { JournalListItem } from '../JournalListItem';
 import './journalList.scss';
+import { JournalCard } from '../JournalCard';
 
 
 interface JournalListProps {
@@ -13,7 +14,7 @@ const buildRows = (journals: Types.Journal[]) => {
   let rows = [];
 
   for (let journal of journals) {
-    rows.push(<JournalListItem key={ journal.id } journal={ journal } />)
+    rows.push(<JournalCard key={ journal.id } journal={ journal } />)
   }
 
   return rows;

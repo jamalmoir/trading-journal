@@ -3,6 +3,7 @@
 .select-input { 
   position: relative;
   padding-top: 1.2em;
+  width: 100%;
 
   label {
     position: absolute;
@@ -19,6 +20,7 @@
     transition: border-bottom .1s ease-in-out;
     background-color: rgba(0,0,0,0);
     width: 100%;
+    height: 1.8em;
   }
 
   &:focus-within, &.has-value {

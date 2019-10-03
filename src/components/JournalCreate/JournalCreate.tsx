@@ -9,6 +9,7 @@ import { TextInput } from '../TextInput';
 import { setUpControls } from '../../utils/utils';
 import './journalCreate.scss';
 import { Button } from '../Button';
+import { SelectInput } from '../SelectInput';
 
 
 interface JournalCreateProps {
@@ -30,7 +31,7 @@ export const JournalCreateComponent = (props: JournalCreateProps) => {
 			}
 		},
 		kind: {
-			value: 'live',
+			value: '',
 			errors: [],
 			touched: false,
 			validationRules: {
@@ -51,6 +52,12 @@ export const JournalCreateComponent = (props: JournalCreateProps) => {
 		},
 	});
 
+	const kindChoices = [
+		{id: 'live', name: 'Live'},
+		{id: 'demo', name: 'Demo'},
+		{id: 'backtest', name: 'Backtest'},
+	]
+
 	const updateControls = (kind: string, value: any) => {
 		setControlsValid(setControls(kind, value));
 	}
@@ -68,7 +75,7 @@ export const JournalCreateComponent = (props: JournalCreateProps) => {
 		}
 		props.onCreateJournal(journal);
 		setControls('name', '');
-		setControls('kind', 'live');
+		setControls('kind', '');
 		setControls('currency', '');
 	}
 
@@ -82,27 +89,25 @@ export const JournalCreateComponent = (props: JournalCreateProps) => {
 							errors={ controls.name.errors }
 							touched={ controls.name.touched }
 			/>
-			<select className="journal-create-kind custom-select col-3"
-							value={ controls.kind.value || 'live' }
-							onChange={ (e) => updateControls('kind', e.target.value as 'live' | 'demo' | 'backtest') }
-			>
-				<option value="live">Live</option>
-				<option value="demo">Demo</option>
-				<option value="backtest">Backtest</option>
-			</select>
+			<SelectInput 	label="Kind"
+										className="journal-create-kind col-3"
+										value={ controls.kind.value }
+										onChange={ (e) => updateControls('kind', e.target.value as 'live' | 'demo' | 'backtest') }
+										errors={ controls.kind.errors }
+										touched={ controls.kind.touched }
+										choices={ kindChoices } />
 			<TextInput type="text"
-							className="journal-create-currency col-4"
+							className="journal-create-currency col-3"
 							label="Currency"
 							value={ controls.currency.value || '' }
 							onChange={ (e) => updateControls('currency', e.target.value) }
 							errors={ controls.currency.errors }
 							touched={ controls.currency.touched }
 			/>
-			<div className="input-group-append">
-				<Button text="Create"
-								onClick={ createJournal }
-								disabled={ !controlsValid } />
-			</div>
+			<Button text="Create"
+							className="journal-create-button float-right"
+							onClick={ createJournal }
+							disabled={ !controlsValid || !controls.name.value || !controls.kind.value || !controls.currency.value } />
 		</div>
 	)
 };
