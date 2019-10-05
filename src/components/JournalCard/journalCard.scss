@@ -11,12 +11,11 @@
     background-color: lighten($accent-dark, 50%);
     border: solid 1px lighten($secondary, 20%);
     width: 100%;
-    height: 20vh;
-    margin-top: -5vh;
+    height: 10em;
+    margin-top: -3em;
     margin-bottom: 2em;
     color: $secondary;
-    display: flex;
-    flex-direction: column;
+    display: flex; flex-direction: column;
     justify-content: center;
     text-align: center;
   }
@@ -70,6 +69,16 @@
       align-items: baseline;
 
       .journal-card-edit {
+        margin-right: 0.5em;
+        background-color: $primary;
+      }
+
+      .journal-card-save {
+        margin-left: 0.5em;
+        background-color: $success;
+      }
+
+      .journal-card-cancel {
         margin-right: 0.5em;
         background-color: $secondary;
       }

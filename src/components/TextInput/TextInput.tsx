@@ -6,7 +6,8 @@ import './textInput.scss';
 
 interface TextInputProps {
   type: 'text' | 'email' | 'password' | 'number';
-  label: string;
+  label?: string;
+  placeholder?: string;
   value: string;
   errors?: string[];
   touched?: boolean;
@@ -23,6 +24,7 @@ export const TextInput = (props: TextInputProps) => {
 
     classes = props.errors && props.errors.length && props.touched ? classes + ' errors' : classes;
     classes = props.value ? classes + ' has-value' : classes;
+    classes = props.label ? classes + ' has-label' : classes;
 
     return classes
   }
@@ -35,6 +37,7 @@ export const TextInput = (props: TextInputProps) => {
       <input id={ ID }
              type={ props.type }
              value={ props.value }
+             placeholder={ props.placeholder }
              onChange={ handleChange }>
       </input>
     </div>

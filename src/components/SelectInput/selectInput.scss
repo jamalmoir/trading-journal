@@ -12,6 +12,10 @@
     transition: transform .1s ease-in-out, color .1s ease-in-out;
     color: lighten($accent-dark, 20%);
     pointer-events: none;
+
+    .has-label::placeholder {
+      opacity: 0;
+    }
   }
 
   select {
@@ -27,6 +31,10 @@
     label {
       transform: translate(0, -1.2em) scale(.75);
       color: $accent-dark;
+    }
+
+    &::placeholder {
+      opacity: 1;
     }
   }
 

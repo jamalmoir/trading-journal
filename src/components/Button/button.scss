@@ -25,6 +25,7 @@ button {
 
   &:disabled {
     background-color: $secondary;
+    opacity: 0.5;
   }
 
   .lds-facebook {

@@ -5,9 +5,10 @@ import './selectInput.scss';
 
 
 interface SelectInputProps {
-  label: string;
+  label?: string;
   value: string;
-  choices: {id: string, name: string}[];
+	choices: {id: string, name: string}[];
+	placeholder?: string;
   errors?: string[];
   touched?: boolean;
   className?: string;
@@ -35,8 +36,9 @@ export const SelectInput = (props: SelectInputProps) => {
     <div id={ props.id } className={ 'select-input ' + getClasses() }>
       <label htmlFor={ ID }>{ props.label }</label>
       <select id={ ID }
-             value={ props.value }
-             onChange={ handleChange }>
+							placeholder={ props.placeholder }
+            	value={ props.value }
+            	onChange={ handleChange }>
         <option hidden disabled selected></option>
         { getOptions() }
       </select>

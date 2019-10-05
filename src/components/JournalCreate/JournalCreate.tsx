@@ -81,24 +81,27 @@ export const JournalCreateComponent = (props: JournalCreateProps) => {
 
 	return (
 		<div className={ props.className + ' journal-create row mb-3'}>
-			<TextInput type="text"
-							className="journal-create-name col-4"
-							label="Journal name"
-							value={ controls.name.value || '' }
-							onChange={ (e) => updateControls('name', e.target.value) }
-							errors={ controls.name.errors }
-							touched={ controls.name.touched }
+			<TextInput 	type="text"
+						className="journal-create-name col-4"
+						label="Journal name"
+						placeholder="My Journal"
+						value={ controls.name.value || '' }
+						onChange={ (e) => updateControls('name', e.target.value) }
+						errors={ controls.name.errors }
+						touched={ controls.name.touched }
 			/>
 			<SelectInput 	label="Kind"
-										className="journal-create-kind col-3"
-										value={ controls.kind.value }
-										onChange={ (e) => updateControls('kind', e.target.value as 'live' | 'demo' | 'backtest') }
-										errors={ controls.kind.errors }
-										touched={ controls.kind.touched }
-										choices={ kindChoices } />
+							className="journal-create-kind col-3"
+							placeholder="live"
+							value={ controls.kind.value }
+							onChange={ (e) => updateControls('kind', e.target.value as 'live' | 'demo' | 'backtest') }
+							errors={ controls.kind.errors }
+							touched={ controls.kind.touched }
+							choices={ kindChoices } />
 			<TextInput type="text"
 							className="journal-create-currency col-3"
 							label="Currency"
+							placeholder="USD"
 							value={ controls.currency.value || '' }
 							onChange={ (e) => updateControls('currency', e.target.value) }
 							errors={ controls.currency.errors }
