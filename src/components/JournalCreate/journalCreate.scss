@@ -1,6 +1,9 @@
 @import '../../custom.scss';
 
 .journal-create {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 	align-items: baseline;
 
 	.journal-create-button {

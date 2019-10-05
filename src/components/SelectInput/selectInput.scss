@@ -19,6 +19,7 @@
   }
 
   select {
+		box-sizing: content-box;
     border: none;
     border-bottom: solid 2px $accent-dark;
     transition: border-bottom .1s ease-in-out;

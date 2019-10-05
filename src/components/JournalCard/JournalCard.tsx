@@ -6,16 +6,20 @@ import { Button } from '../Button';
 import { setUpControls } from '../../utils/utils';
 import { TextInput } from '../TextInput';
 import { SelectInput } from '../SelectInput';
+import { Line } from 'react-chartjs-2';
 import { connect } from 'react-redux';
 import { JournalAction } from '../../redux/reducers/journal';
 import { modifyJournal } from '../../redux/actions/journal';
 import { deleteJournal } from '../../redux/actions/journal';
 import { Dispatch } from 'redux';
+import { Link } from 'react-router-dom';
 
 
 interface JournalCardProps {
   className?: string;
-  journal: Types.Journal;
+	journal: Types.Journal;
+	onModifyJournal: (journal: Types.Journal) => void;
+	onDeleteJournal: (journal: Types.Journal) => void;
 }
 
 export const JournalCardComponent = (props: JournalCardProps) => {
@@ -48,6 +52,27 @@ export const JournalCardComponent = (props: JournalCardProps) => {
 		{id: 'backtest', name: 'Backtest'},
 	]
 
+	const chartData = {
+		labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December'],
+		datasets: [
+			{
+				label: 'P&L',
+				fill: true,
+				data: [0, 100, 200, 400, 600, 500, 900, 1000, 800, 1100, 1300, 1200],
+				pointBackgroundColor: '#5AB8D4'
+			}
+		]
+	}
+
+	const chartOptions = {
+		responsive: true,
+		maintainAspectRatio: false,
+		scales: {
+			xAxes: [{display: false}],
+			yAxes: [{display: false}],
+		}
+	}
+
   const getBadgeType = () => {
     if (props.journal.kind === 'live') return 'badge-success';
     if (props.journal.kind === 'demo') return 'badge-primary';
@@ -59,7 +84,7 @@ export const JournalCardComponent = (props: JournalCardProps) => {
     return editMode
     ? <div className="journal-card-footer-buttons row">
         <Button className="col-md-5 journal-card-cancel" text="Cancel" onClick={ handleEditClick } />
-        <Button className="col-md-5 journal-card-save" text="Save" onClick={ handleEditSaveClick } />
+        <Button className="col-md-5 journal-card-save" text="Save" onClick={ handleEditSaveClick } disabled={ controlsValid } />
       </div>
     : <div className="journal-card-footer-buttons row">
         <Button className="col-md-5 journal-card-edit" text="Edit" onClick={ handleEditClick } />
@@ -76,63 +101,76 @@ export const JournalCardComponent = (props: JournalCardProps) => {
   }
 
   const handleEditSaveClick = () => {
-    // Edit
-    setEditMode(!editMode);
+		if (controlsValid) {
+			const newJournal: Types.Journal = {
+				...props.journal,
+				name: controls.name.value,
+				kind: controls.kind.value,
+			};
+
+			props.onModifyJournal(newJournal);
+    	setEditMode(!editMode);
+		}
   }
 
   const handleDeleteClick = () => {
-    // Delete
-    setEditMode(!editMode);
+		// TODO: confirmation
+		props.onDeleteJournal(props.journal);
   }
 
   return (
     <div className={ props.className + ' journal-card card'}>
 
       <div className="card-body">
-        <div className="journal-card-chart">P&L Chart</div>
-        <div className="journal-card-header">
-          { editMode
-            ? <TextInput type="text"
-                    className="journal-card-name"
-                    label="Journal name"
-                    value={ controls.name.value || '' }
-                    onChange={ (e) => updateControls('name', e.target.value) }
-                    errors={ controls.name.errors }
-                    touched={ controls.name.touched }
-              />
-            : props.journal.name
-          }
-        </div>
-
-        <div className="journal-card-body">
-          <div className="journal-card-details">
+    		<Link to={ 'journal/' + props.journal.id }>
+					<div className="journal-card-chart">
+						<Line data={ chartData } options={ chartOptions }/>
+					</div>
+				
+					<div className="journal-card-header">
 						{ editMode
-							? <SelectInput 	label="Kind"
-															className="journal-card-kind"
-															placeholder="live"
-															value={ controls.kind.value }
-															onChange={ (e) => updateControls('kind', e.target.value as 'live' | 'demo' | 'backtest') }
-															errors={ controls.kind.errors }
-															touched={ controls.kind.touched }
-															choices={ kindChoices }
+							? <TextInput type="text"
+											className="journal-card-name-edit"
+											label="Journal name"
+											value={ controls.name.value || '' }
+											onChange={ (e) => updateControls('name', e.target.value) }
+											errors={ controls.name.errors }
+											touched={ controls.name.touched }
 								/>
-							: <div className={ "journal-card-kind badge badle-pill " + getBadgeType() }>{ props.journal.kind }</div>
+							: props.journal.name
 						}
-            <div className="journal-card-currency">{ props.journal.currency } Journal</div>
-          </div>
+					</div>
 
-          <div className="journal-card-stats">
-            <div className="stat">
-              <div className="stat-name">Win Rate:</div>
-              <div className="stat-val">---</div>
-            </div>
-            <div className="stat">
-              <div className="stat-name">Avg. Reward/Risk:</div>
-              <div className="stat-val">---</div>
-            </div>
-          </div>
-        </div>
-      </div>
+					<div className="journal-card-body">
+						<div className="journal-card-details">
+							{ editMode
+								? <SelectInput 	label="Kind"
+																className="journal-card-kind-edit"
+																placeholder="live"
+																value={ controls.kind.value }
+																onChange={ (e) => updateControls('kind', e.target.value as 'live' | 'demo' | 'backtest') }
+																errors={ controls.kind.errors }
+																touched={ controls.kind.touched }
+																choices={ kindChoices }
+									/>
+								: <div className={ "journal-card-kind badge badle-pill " + getBadgeType() }>{ props.journal.kind }</div>
+							}
+							<div className="journal-card-currency">{ props.journal.currency } Journal</div>
+						</div>
+
+						<div className="journal-card-stats">
+							<div className="stat">
+								<div className="stat-name">Win Rate:</div>
+								<div className="stat-val">---</div>
+							</div>
+							<div className="stat">
+								<div className="stat-name">Avg. Reward/Risk:</div>
+								<div className="stat-val">---</div>
+							</div>
+						</div>
+					</div>
+				</Link>
+				</div>
 
       <div className="journal-card-footer card-footer">
         { getButtonGroup() }

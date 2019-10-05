@@ -30,7 +30,7 @@ service cloud.firestore {
 			allow create: if creatingJournalBelongsToUser();// && isJournal();
 			allow update: if journalBelongsToUser() && creatingJournalBelongsToUser() &&// isJournal() &&
 												request.resource.data.kind == resource.data.kind;
-			allow delete: if false;
+			allow delete: if journalBelongstoUser();
 		}
 
 		match /trades/{tradeId} {
@@ -90,7 +90,7 @@ service cloud.firestore {
 			allow create: if creatingTradeBelongsToUser() && isTrade();
 			allow update: if	tradeBelongsToUser() && creatingTradeBelongsToUser() && isTrade() &&
 												resource.data.journalId == request.resource.data.journalId;
-			allow delete: if false;
+			allow delete: if tradeBelongsToUser();
 		}
 	}
 }
