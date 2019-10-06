@@ -20,12 +20,14 @@
 
   select {
 		box-sizing: content-box;
+		display: block;
     border: none;
-    border-bottom: solid 2px $accent-dark;
+    border-bottom: solid 1px $accent-dark;
     transition: border-bottom .1s ease-in-out;
     background-color: rgba(0,0,0,0);
-    width: 100%;
-    height: 1.8em;
+		width: 100%;
+		height: 1.4em;
+		margin-bottom: 0;
   }
 
   &:focus-within, &.has-value {
@@ -45,8 +47,11 @@
     }
 
     select {
-      outline: none;
-      border-bottom: solid 2px $primary;
+			outline: none;
+			border: none;
+			box-shadow: none;
+			border-bottom: solid 2px $primary;
+			background-color: rgba(0,0,0,0);
     }
   }
 

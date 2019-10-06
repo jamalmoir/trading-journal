@@ -1,20 +1,34 @@
-import { combineReducers } from 'redux';
-import Types from 'Types';
-import { ActionType } from 'typesafe-actions';
-import { CLEAR_TRADES, CREATE_TRADE_FAILURE, CREATE_TRADE_REQUEST, CREATE_TRADE_SUCCESS, DELETE_TRADE_FAILURE, DELETE_TRADE_REQUEST, DELETE_TRADE_SUCCESS, FETCH_TRADES_FAILURE, FETCH_TRADES_REQUEST, FETCH_TRADES_SUCCESS, MODIFY_TRADE_FAILURE, MODIFY_TRADE_REQUEST, MODIFY_TRADE_SUCCESS, SET_TRADE_FILTERS } from '../actions/actionTypes';
-import * as actions from '../actions/trade';
-
+import { combineReducers } from 'redux'
+import Types from 'Types'
+import { ActionType } from 'typesafe-actions'
+import {
+  CLEAR_TRADES,
+  CREATE_TRADE_FAILURE,
+  CREATE_TRADE_REQUEST,
+  CREATE_TRADE_SUCCESS,
+  DELETE_TRADE_FAILURE,
+  DELETE_TRADE_REQUEST,
+  DELETE_TRADE_SUCCESS,
+  FETCH_TRADES_FAILURE,
+  FETCH_TRADES_REQUEST,
+  FETCH_TRADES_SUCCESS,
+  MODIFY_TRADE_FAILURE,
+  MODIFY_TRADE_REQUEST,
+  MODIFY_TRADE_SUCCESS,
+  SET_TRADE_FILTERS,
+} from '../actions/actionTypes'
+import * as actions from '../actions/trade'
 
 export interface TradeState {
-  trades: Types.Trade[];
-  tradeFilters: Types.TradeFilters;
-  isRequesting: boolean;
-  errorMessage: string;
+  trades: Types.Trade[]
+  tradeFilters: Types.TradeFilters
+  isRequesting: boolean
+  errorMessage: string
 }
 
-export type TradeAction = ActionType<typeof actions>;
+export type TradeAction = ActionType<typeof actions>
 
-const emptyFilters: Types.TradeFilters =  {
+const emptyFilters: Types.TradeFilters = {
   instrument: null,
   strategy: null,
   kind: null,
@@ -27,43 +41,50 @@ const emptyFilters: Types.TradeFilters =  {
   managed: null,
   tags: null,
   emotions: null,
-};
-
+}
 
 const reducer = () => {
   const trades = (state: TradeState['trades'] = [], action: TradeAction) => {
     switch (action.type) {
       case FETCH_TRADES_SUCCESS:
-        return action.payload;
+        return action.payload
       case CREATE_TRADE_SUCCESS:
-        return [...state, action.payload];
+        return [...state, action.payload]
       case MODIFY_TRADE_SUCCESS:
-        return state.map(trade => trade.id === action.payload.id ? action.payload : trade);
+        return state.map(trade =>
+          trade.id === action.payload.id ? action.payload : trade
+        )
       case DELETE_TRADE_SUCCESS:
-        return state.filter(trade => trade.id !== action.payload.id);
+        return state.filter(trade => trade.id !== action.payload.id)
       case CLEAR_TRADES:
-        return [];
+        return []
       default:
-        return state;
+        return state
     }
   }
 
-  const tradeFilters = (state: TradeState['tradeFilters'] = emptyFilters, action: TradeAction) => {
+  const tradeFilters = (
+    state: TradeState['tradeFilters'] = emptyFilters,
+    action: TradeAction
+  ) => {
     switch (action.type) {
       case SET_TRADE_FILTERS:
-        return action.payload;
+        return action.payload
       default:
-        return state;
+        return state
     }
   }
 
-  const isRequesting = (state: TradeState['isRequesting'] = false, action: TradeAction) => {
+  const isRequesting = (
+    state: TradeState['isRequesting'] = false,
+    action: TradeAction
+  ) => {
     switch (action.type) {
       case FETCH_TRADES_REQUEST:
       case CREATE_TRADE_REQUEST:
       case MODIFY_TRADE_REQUEST:
       case DELETE_TRADE_REQUEST:
-        return true;
+        return true
       case FETCH_TRADES_SUCCESS:
       case FETCH_TRADES_FAILURE:
       case CREATE_TRADE_SUCCESS:
@@ -72,13 +93,16 @@ const reducer = () => {
       case MODIFY_TRADE_FAILURE:
       case DELETE_TRADE_SUCCESS:
       case DELETE_TRADE_FAILURE:
-        return false;
+        return false
       default:
-        return state;
+        return state
     }
   }
 
-  const errorMessage = (state: TradeState['errorMessage'] = null, action: TradeAction) => {
+  const errorMessage = (
+    state: TradeState['errorMessage'] = null,
+    action: TradeAction
+  ) => {
     switch (action.type) {
       case FETCH_TRADES_REQUEST:
       case FETCH_TRADES_SUCCESS:
@@ -88,18 +112,18 @@ const reducer = () => {
       case MODIFY_TRADE_SUCCESS:
       case DELETE_TRADE_REQUEST:
       case DELETE_TRADE_SUCCESS:
-        return null;
+        return null
       case FETCH_TRADES_FAILURE:
       case CREATE_TRADE_FAILURE:
       case MODIFY_TRADE_FAILURE:
       case DELETE_TRADE_FAILURE:
-        return action.payload;
+        return action.payload
       default:
-        return state;
+        return state
     }
   }
 
-  return combineReducers ({
+  return combineReducers({
     trades,
     tradeFilters,
     isRequesting,
@@ -107,4 +131,4 @@ const reducer = () => {
   })
 }
 
-export default reducer;
+export default reducer

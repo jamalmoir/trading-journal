@@ -1,9 +1,6 @@
 .journal-list {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: auto;
-  grid-gap: 1em;
 
   &> * {
     border: solid 1px #ced4da;

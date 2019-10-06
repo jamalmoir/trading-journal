@@ -1,13 +1,11 @@
+import * as React from 'react'
+import { JournalList } from './JournalList'
+import { shallow } from 'enzyme'
+import { testJournals } from '../../utils/testHelpers'
 
-import * as React from 'react';
-import { JournalList } from './JournalList';
-import { shallow } from 'enzyme';
-import { testJournals } from '../../utils/testHelpers';
-
-
-describe("<JournalList />", () => {
+describe('<JournalList />', () => {
   it('matches snapshot', () => {
-    const component = shallow(<JournalList journals={ testJournals() }/>);
-    expect(component).toMatchSnapshot();
-  });
-});
+    const component = shallow(<JournalList journals={testJournals()} />)
+    expect(component).toMatchSnapshot()
+  })
+})

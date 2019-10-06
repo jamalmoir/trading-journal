@@ -1,111 +1,87 @@
-@import '../../custom.scss';
+@import '../../_settings.scss';
 
 .journal-card {
 	border: none;
-  border-radius: 0 !important;
-  margin: 2em 1em;
   box-shadow: 0 1px 1px rgba(0,0,0,0.12),
               0 2px 2px rgba(0,0,0,0.12),
-              0 3px 3px rgba(0,0,0,0.12);
+							0 4px 4px rgba(0,0,0,0.12);
 
   .journal-card-chart {
-    // background-color: lighten($accent-dark, 50%);
-    // border: solid 1px lighten($secondary, 20%);
-  	box-shadow: 0 1px 1px rgba(0,0,0,0.12),
-								0 2px 2px rgba(0,0,0,0.12);
-								// 0 3px 3px rgba(0,0,0,0.12);
     width: 100%;
-    height: 10em;
-    margin-top: -2em;
-    margin-bottom: 2em;
-    color: $secondary;
-    display: flex; flex-direction: column;
+    color: map-get($foundation-palette, 'secondary');
+		display: flex;
+		flex-direction: column;
     justify-content: center;
 		text-align: center;
 		
 		canvas {
-			background-color: lighten($secondary, 38%);
+			background-color: lighten($medium-gray, 16%);
 		}
-  }
+	}
 
-  .journal-card-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    font-size: 1em;
-    font-weight: 600;
-    color: $brand;
-  }
+	.journal-card-content {
+		padding: 2em;
 
-  .journal-card-body {
-    margin: 1em 0;
+		.journal-card-header {
+			font-size: 1em;
+			font-weight: 600;
+			color: map-get($foundation-palette, 'primary');
 
-    .journal-card-details {
-      display: flex;
-      flex-direction: column;
-
-      .journal-card-kind, .journal-card-kind-edit {
-				width: 5.5em;
-        margin-bottom: 1em;
-			}
-
-      .journal-card-name-edit {
+			.journal-card-name-edit {
+				margin: 0;
 				input {
-					font-size: 0.5em;
+					height: 1.1em;
+					font-size: 0.8em;
+				}
+			}
+		}
+
+		.journal-card-body {
+			width: 100%;
+			margin: 0;
+			margin-bottom: 1em;
+
+			.journal-card-details {
+				margin-top: 1em;
+
+				.journal-card-currency {
+					font-size: 0.75em;
+				}
+
+				.journal-card-kind-edit {
+					select {
+						height: 1.1em;
+						font-size: 0.8em;
+					}
 				}
 			}
 
-      .journal-card-kind-edit {
-				margin-top: -0.1em
-      }
+			.journal-card-details {
+				color: $dark-gray;
+			}
+		}
 
-      .journal-card-currency {
-        font-size: 0.75em;
-      }
-    }
+		.journal-card-footer {
+			width: 100%;
 
-    .journal-card-stats {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      margin-top: 1em;
-      color: $accent-dark;
+			.journal-card-footer-buttons {
 
-      .stat {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-      }
-    }
-  }
+				.journal-card-edit {
+					background-color: map-get($foundation-palette, 'primary');
+				}
 
-  .journal-card-footer {
-    .journal-card-footer-buttons {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-evenly;
-      align-items: baseline;
+				.journal-card-save {
+					background-color: map-get($foundation-palette, 'success');
+				}
 
-      .journal-card-edit {
-        margin-right: 0.5em;
-        background-color: $primary;
-      }
+				.journal-card-cancel {
+					background-color: map-get($foundation-palette, 'secondary');
+				}
 
-      .journal-card-save {
-        margin-left: 0.5em;
-        background-color: $success;
-      }
-
-      .journal-card-cancel {
-        margin-right: 0.5em;
-        background-color: $secondary;
-      }
-
-      .journal-card-delete {
-        margin-left: 0.5em;
-        background-color: $danger;
-      }
-    }
-  }
+				.journal-card-delete {
+					background-color: map-get($foundation-palette, 'alert');
+				}
+			}
+		}
+	}
 }

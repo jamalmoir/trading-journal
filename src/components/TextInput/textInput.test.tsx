@@ -1,42 +1,49 @@
-import * as React from 'react';
-import { TextInput } from './TextInput';
-import { shallow } from 'enzyme';
+import * as React from 'react'
+import { TextInput } from './TextInput'
+import { shallow } from 'enzyme'
 
-
-describe("<TextInput />", () => {
+describe('<TextInput />', () => {
   it('matches snapshot', () => {
-    const component = shallow(<TextInput type='text' label='test' value='test' />);
-    expect(component).toMatchSnapshot();
-  });
+    const component = shallow(
+      <TextInput type="text" label="test" value="test" />
+    )
+    expect(component).toMatchSnapshot()
+  })
 
   it('handles input change', () => {
-    const onChange = jest.fn();
-    const component = shallow(<TextInput type='text' label='test' value='test' onChange={ onChange } />);
+    const onChange = jest.fn()
+    const component = shallow(
+      <TextInput type="text" label="test" value="test" onChange={onChange} />
+    )
 
-    expect(onChange).not.toBeCalled();
+    expect(onChange).not.toBeCalled()
 
     // enter text
-    component.find('input[type="text"]').simulate('change', { target: { value: 'Hello' } })
-    expect(onChange).toBeCalled();
-  });
+    component
+      .find('input[type="text"]')
+      .simulate('change', { target: { value: 'Hello' } })
+    expect(onChange).toBeCalled()
+  })
 
   it('has an errors class if conditions are met', () => {
-    const component = shallow(<TextInput type='text' label='test' value='test' />);
+    const component = shallow(
+      <TextInput type="text" label="test" value="test" />
+    )
 
     // not touched, no errors
-    component.setProps({touched: false, errors: []})
-    expect(component.hasClass('errors')).toEqual(false);
+    component.setProps({ touched: false, errors: [] })
+    expect(component.hasClass('errors')).toEqual(false)
 
     // not touched, errors
-    component.setProps({touched: false, errors: ['an error']})
-    expect(component.hasClass('errors')).toEqual(false);
+    component.setProps({ touched: false, errors: ['an error'] })
+    expect(component.hasClass('errors')).toEqual(false)
 
     // touched, no errors
-    component.setProps({touched: true, errors: []})
-    expect(component.hasClass('errors')).toEqual(false);
+    component.setProps({ touched: true, errors: [] })
+    expect(component.hasClass('errors')).toEqual(false)
 
     // touched, errors
-    component.setProps({touched: true, errors: ['an error']})
-    expect(component.hasClass('errors')).toEqual(true);
-  });
-});
+    component.setProps({ touched: true, errors: ['an error'] })
+    expect(component.hasClass('errors')).toEqual(true)
+  })
+})

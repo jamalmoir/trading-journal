@@ -1,1 +1,1 @@
-export * from './JournalCreate';
+export * from './JournalCreate'

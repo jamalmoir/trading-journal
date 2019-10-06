@@ -1,52 +1,75 @@
-import Types from 'Types';
-import { ActionType } from 'typesafe-actions';
-import { FETCH_JOURNALS_SUCCESS, CREATE_JOURNAL_SUCCESS, MODIFY_JOURNAL_SUCCESS, DELETE_JOURNAL_SUCCESS, SET_ACTIVE_JOURNAL, FETCH_JOURNALS_REQUEST, FETCH_JOURNALS_FAILURE, CREATE_JOURNAL_REQUEST, MODIFY_JOURNAL_REQUEST, DELETE_JOURNAL_REQUEST, CREATE_JOURNAL_FAILURE, MODIFY_JOURNAL_FAILURE, DELETE_JOURNAL_FAILURE } from '../actions/actionTypes';
-import * as actions from '../actions/journal';
-import { combineReducers } from 'redux';
-
+import Types from 'Types'
+import { ActionType } from 'typesafe-actions'
+import {
+  FETCH_JOURNALS_SUCCESS,
+  CREATE_JOURNAL_SUCCESS,
+  MODIFY_JOURNAL_SUCCESS,
+  DELETE_JOURNAL_SUCCESS,
+  SET_ACTIVE_JOURNAL,
+  FETCH_JOURNALS_REQUEST,
+  FETCH_JOURNALS_FAILURE,
+  CREATE_JOURNAL_REQUEST,
+  MODIFY_JOURNAL_REQUEST,
+  DELETE_JOURNAL_REQUEST,
+  CREATE_JOURNAL_FAILURE,
+  MODIFY_JOURNAL_FAILURE,
+  DELETE_JOURNAL_FAILURE,
+} from '../actions/actionTypes'
+import * as actions from '../actions/journal'
+import { combineReducers } from 'redux'
 
 export interface JournalState {
-  journals: Types.Journal[];
-  activeJournal: Types.Journal | null;
-  isRequesting: boolean;
-  errorMessage: string;
+  journals: Types.Journal[]
+  activeJournal: Types.Journal | null
+  isRequesting: boolean
+  errorMessage: string
 }
 
-export type JournalAction = ActionType<typeof actions>;
-
+export type JournalAction = ActionType<typeof actions>
 
 const reducer = () => {
-  const journals = (state: JournalState['journals'] = [], action: JournalAction) => {
+  const journals = (
+    state: JournalState['journals'] = [],
+    action: JournalAction
+  ) => {
     switch (action.type) {
       case FETCH_JOURNALS_SUCCESS:
-        return action.payload;
+        return action.payload
       case CREATE_JOURNAL_SUCCESS:
-        return [...state, action.payload];
+        return [...state, action.payload]
       case MODIFY_JOURNAL_SUCCESS:
-        return state.map(journal => journal.id === action.payload.id ? action.payload : journal);
+        return state.map(journal =>
+          journal.id === action.payload.id ? action.payload : journal
+        )
       case DELETE_JOURNAL_SUCCESS:
-        return state.filter(journal => journal.id !== action.payload.id);
+        return state.filter(journal => journal.id !== action.payload.id)
       default:
-        return state;
+        return state
     }
   }
 
-  const activeJournal = (state: JournalState['activeJournal'] = null, action: JournalAction) => {
+  const activeJournal = (
+    state: JournalState['activeJournal'] = null,
+    action: JournalAction
+  ) => {
     switch (action.type) {
       case SET_ACTIVE_JOURNAL:
-        return action.payload;
+        return action.payload
       default:
-        return state;
+        return state
     }
   }
 
-  const isRequesting = (state: JournalState['isRequesting'] = false, action: JournalAction) => {
+  const isRequesting = (
+    state: JournalState['isRequesting'] = false,
+    action: JournalAction
+  ) => {
     switch (action.type) {
       case FETCH_JOURNALS_REQUEST:
       case CREATE_JOURNAL_REQUEST:
       case MODIFY_JOURNAL_REQUEST:
       case DELETE_JOURNAL_REQUEST:
-        return true;
+        return true
       case FETCH_JOURNALS_SUCCESS:
       case FETCH_JOURNALS_FAILURE:
       case CREATE_JOURNAL_SUCCESS:
@@ -55,13 +78,16 @@ const reducer = () => {
       case MODIFY_JOURNAL_FAILURE:
       case DELETE_JOURNAL_SUCCESS:
       case DELETE_JOURNAL_FAILURE:
-        return false;
+        return false
       default:
-        return state;
+        return state
     }
   }
 
-  const errorMessage = (state: JournalState['errorMessage'] = null, action: JournalAction) => {
+  const errorMessage = (
+    state: JournalState['errorMessage'] = null,
+    action: JournalAction
+  ) => {
     switch (action.type) {
       case FETCH_JOURNALS_REQUEST:
       case FETCH_JOURNALS_SUCCESS:
@@ -71,23 +97,23 @@ const reducer = () => {
       case MODIFY_JOURNAL_SUCCESS:
       case DELETE_JOURNAL_REQUEST:
       case DELETE_JOURNAL_SUCCESS:
-        return null;
+        return null
       case FETCH_JOURNALS_FAILURE:
       case CREATE_JOURNAL_FAILURE:
       case MODIFY_JOURNAL_FAILURE:
       case DELETE_JOURNAL_FAILURE:
-        return action.payload;
+        return action.payload
       default:
-        return state;
+        return state
     }
   }
 
-  return combineReducers ({
+  return combineReducers({
     journals,
     activeJournal,
     isRequesting,
-    errorMessage
+    errorMessage,
   })
 }
 
-export default reducer;
+export default reducer

@@ -1,11 +1,10 @@
-import Types from 'Types';
-import { Money } from './moolah';
-import Big from 'big.js';
+import Types from 'Types'
+import { Money } from './moolah'
+import Big from 'big.js'
 
-
-export const testTrades: () => Types.Trade[] = () => ([
-    // Winner, Long
-	{
+export const testTrades: () => Types.Trade[] = () => [
+  // Winner, Long
+  {
     id: '1',
     journalId: '1',
     created: new Date('2019/10/30'),
@@ -25,18 +24,18 @@ export const testTrades: () => Types.Trade[] = () => ([
     hitTakeProfit: true,
     mfe: new Big(102),
     mae: new Big(100),
-    tags: [{id: 'monday', name: 'monday'}],
+    tags: [{ id: 'monday', name: 'monday' }],
     entryComment: '',
     duringComment: '',
     exitComment: '',
     flag: false,
-    entryEmotion: [{id: 'calm', name: 'calm'}],
-    exitEmotion: [{id: 'collected', name: 'collected'}],
+    entryEmotion: [{ id: 'calm', name: 'calm' }],
+    exitEmotion: [{ id: 'collected', name: 'collected' }],
     rating: 1,
     charts: [],
-    },
-    // Loser, Short
-	{
+  },
+  // Loser, Short
+  {
     id: '2',
     journalId: '1',
     created: new Date('2019/10/31'),
@@ -61,13 +60,13 @@ export const testTrades: () => Types.Trade[] = () => ([
     duringComment: '',
     exitComment: '',
     flag: true,
-    entryEmotion: [{id: 'rushed', name: 'rushed'}],
-    exitEmotion: [{id: 'worried', name: 'worried'}],
+    entryEmotion: [{ id: 'rushed', name: 'rushed' }],
+    exitEmotion: [{ id: 'worried', name: 'worried' }],
     rating: -1,
     charts: [],
-    },
-    // Unfinished, Short
-	{
+  },
+  // Unfinished, Short
+  {
     id: '3',
     journalId: '1',
     created: new Date('2019/10/31'),
@@ -92,13 +91,13 @@ export const testTrades: () => Types.Trade[] = () => ([
     duringComment: '',
     exitComment: '',
     flag: false,
-    entryEmotion: [{id: 'rushed', name: 'rushed'}],
+    entryEmotion: [{ id: 'rushed', name: 'rushed' }],
     exitEmotion: [],
     rating: null,
     charts: [],
-    },
-    // Other journal, unfinished, Short
-	{
+  },
+  // Other journal, unfinished, Short
+  {
     id: '4',
     journalId: '2',
     created: new Date('2019/10/31'),
@@ -123,13 +122,13 @@ export const testTrades: () => Types.Trade[] = () => ([
     duringComment: '',
     exitComment: '',
     flag: false,
-    entryEmotion: [{id: 'rushed', name: 'rushed'}],
+    entryEmotion: [{ id: 'rushed', name: 'rushed' }],
     exitEmotion: [],
     rating: null,
     charts: [],
-    },
-    // Other user, Short
-	{
+  },
+  // Other user, Short
+  {
     id: '5',
     journalId: '3',
     created: new Date('2019/10/31'),
@@ -154,45 +153,45 @@ export const testTrades: () => Types.Trade[] = () => ([
     duringComment: '',
     exitComment: '',
     flag: false,
-    entryEmotion: [{id: 'rushed', name: 'rushed'}],
+    entryEmotion: [{ id: 'rushed', name: 'rushed' }],
     exitEmotion: [],
     rating: null,
     charts: [],
-    },
-])
+  },
+]
 
-export const testJournals: () => Types.Journal[] = () => ([
-    // Live
-	{
-        id: '1',
-        userId: '1',
-        kind: 'live',
-        currency: 'JPY',
-        name: 'Test Live Journal',
-        created: new Date('2019/10/20'),
-        modified: new Date('2019/10/20'),
-        tradeCount: 0,
-    },
-    // Demo
-	{
-        id: '2',
-        userId: '1',
-        kind: 'demo',
-        currency: 'JPY',
-        name: 'Test Demo Journal',
-        created: new Date('2019/10/20'),
-        modified: new Date('2019/10/20'),
-        tradeCount: 0,
-    },
-    // Other user
-	{
-        id: '3',
-        userId: '2',
-        kind: 'live',
-        currency: 'JPY',
-        name: 'Other User Test Live Journal',
-        created: new Date('2019/10/20'),
-        modified: new Date('2019/10/20'),
-        tradeCount: 0,
-    },
-]);
+export const testJournals: () => Types.Journal[] = () => [
+  // Live
+  {
+    id: '1',
+    userId: '1',
+    kind: 'live',
+    currency: 'JPY',
+    name: 'Test Live Journal',
+    created: new Date('2019/10/20'),
+    modified: new Date('2019/10/20'),
+    tradeCount: 0,
+  },
+  // Demo
+  {
+    id: '2',
+    userId: '1',
+    kind: 'demo',
+    currency: 'JPY',
+    name: 'Test Demo Journal',
+    created: new Date('2019/10/20'),
+    modified: new Date('2019/10/20'),
+    tradeCount: 0,
+  },
+  // Other user
+  {
+    id: '3',
+    userId: '2',
+    kind: 'live',
+    currency: 'JPY',
+    name: 'Other User Test Live Journal',
+    created: new Date('2019/10/20'),
+    modified: new Date('2019/10/20'),
+    tradeCount: 0,
+  },
+]

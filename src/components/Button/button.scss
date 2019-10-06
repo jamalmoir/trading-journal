@@ -1,19 +1,12 @@
-@import "../../custom.scss";
+@import '../../_settings';
 
-button {
+.button {
   transform: translate(0, 0) scale(1); 
   box-shadow: 0 1px 3px rgba(0,0,0,0.12);
   transition: all .15s ease;
-  padding: .3em 1em;
-  height: 2em;
-  width: fit-content;
-  background-color: $primary;
+  background-color: map-get($foundation-palette, 'primary');
   color: white;
   border: none;
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
 
   &:hover:not(.loading):not(:disabled) {
     transform: translateY(-1px);
@@ -24,7 +17,7 @@ button {
   }
 
   &:disabled {
-    background-color: $secondary;
+    background-color: map-get($foundation-palette, 'secondary');
     opacity: 0.5;
   }
 

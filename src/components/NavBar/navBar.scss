@@ -1,7 +1,13 @@
+@import '../../_settings';
 .header {
-	margin-bottom: 1em;
+	.top-bar, {
+		background-color: $black;
 
-	.navbar-brand.logo {
+		.menu {
+			background-color: $black;
+		}
+	}
+	.logo {
 		margin-right: 3em;
 
 		img {

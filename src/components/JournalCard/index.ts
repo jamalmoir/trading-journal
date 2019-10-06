@@ -1,1 +1,1 @@
-export * from './JournalCard';
+export * from './JournalCard'

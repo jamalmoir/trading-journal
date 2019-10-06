@@ -1,1 +1,1 @@
-export * from './TradeListItem';
+export * from './TradeListItem'

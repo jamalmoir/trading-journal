@@ -1,1 +1,1 @@
-export * from './TradeFilter';
+export * from './TradeFilter'

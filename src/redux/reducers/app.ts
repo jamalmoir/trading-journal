@@ -1,11 +1,10 @@
-import { ActionType } from 'typesafe-actions';
-import { APP_LOAD, ROUTE_CHANGE } from '../actions/actionTypes';
-import * as actions from '../actions/app';
-
+import { ActionType } from 'typesafe-actions'
+import { APP_LOAD, ROUTE_CHANGE } from '../actions/actionTypes'
+import * as actions from '../actions/app'
 
 export interface AppState {
-  appLoaded: boolean;
-  route: any;
+  appLoaded: boolean
+  route: any
 }
 
 export type AppAction = ActionType<typeof actions>
@@ -13,14 +12,14 @@ export type AppAction = ActionType<typeof actions>
 const initialState: AppState = {
   appLoaded: false,
   route: null,
-};
+}
 
 const reducer = (state = initialState, action: AppAction) => {
   switch (action.type) {
     case APP_LOAD:
       return <AppState>{
         ...state,
-        appLoaded: true
+        appLoaded: true,
       }
     case ROUTE_CHANGE:
       return <AppState>{
@@ -28,8 +27,8 @@ const reducer = (state = initialState, action: AppAction) => {
         route: action.payload,
       }
     default:
-      return state;
+      return state
   }
 }
 
-export default reducer;
+export default reducer

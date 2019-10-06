@@ -1,7 +1,9 @@
-import { ActionType } from 'typesafe-actions';
-import { USER_SIGN_IN_SUCCESS, USER_SIGN_OUT_SUCCESS } from '../actions/actionTypes';
-import * as actions from '../actions/auth';
-
+import { ActionType } from 'typesafe-actions'
+import {
+  USER_SIGN_IN_SUCCESS,
+  USER_SIGN_OUT_SUCCESS,
+} from '../actions/actionTypes'
+import * as actions from '../actions/auth'
 
 export interface AuthState {
   // isAuthed: boolean;
@@ -13,13 +15,13 @@ export interface AuthState {
 export type AuthAction = ActionType<typeof actions>
 
 export interface AuthUser {
-  email: string;
+  email: string
 }
 
 const initialState: AuthState = {
   isAuthed: true, //TODO: not default authed
-  user: null
-};
+  user: null,
+}
 
 const reducer = (state = initialState, action: AuthAction) => {
   // @ts-ignore
@@ -33,8 +35,8 @@ const reducer = (state = initialState, action: AuthAction) => {
         ...state,
       }
     default:
-      return state;
+      return state
   }
 }
 
-export default reducer;
+export default reducer

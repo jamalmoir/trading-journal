@@ -1,9 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
 const dev = process.env.NODE_ENV !== 'production';
-
 
 module.exports = {
   entry: path.join(__dirname, 'src', 'index.tsx'),
@@ -25,17 +23,15 @@ module.exports = {
         }
       },
       {
-        test: /.(css|scss)$/,
+				test: /.(css|scss)$/,
+				// exclude: [/node_modules/],
         use: [
           {
             loader: 'style-loader',
           }, {
             loader: 'css-loader',
             options: {
-              // modules: true,
               sourceMap:true,
-              // importLoaders: 1,
-              // localIdentName: '[local]__[hash:base64:5]'
             }
           }, {
             loader: 'postcss-loader', // Run post css actions

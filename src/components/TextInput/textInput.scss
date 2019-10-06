@@ -15,11 +15,12 @@
 
 	input {
 		border: none;
-		border-bottom: solid 2px $accent-dark;
+		border-bottom: solid 1px $accent-dark;
 		transition: border-bottom .1s ease-in-out;
 		background-color: rgba(0,0,0,0);
 		width: 100%;
-
+		box-shadow: none;
+		margin-bottom: 0;
 	}
 
 	&.has-label input::placeholder {
@@ -31,7 +32,6 @@
 			cursor: default;
 			transform: translate(0, -1.2em) scale(.75);
 			color: $accent-dark;
-
 		}
 
 		input::placeholder {
@@ -46,7 +46,10 @@
 
 		input {
 			outline: none;
+			border: none;
 			border-bottom: solid 2px $primary;
+			box-shadow: none;
+			background-color: rgba(0,0,0,0);
 		}
 	}
 
@@ -57,6 +60,7 @@
 		}
 
 		input {
+			border: none;
 			border-bottom: solid 2px $danger;
 		}
 	}

@@ -1,1 +1,1 @@
-export * from './TristateCheckbox';
+export * from './TristateCheckbox'

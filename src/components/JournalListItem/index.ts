@@ -1,1 +1,1 @@
-export * from './JournalListItem';
+export * from './JournalListItem'

@@ -1,23 +1,37 @@
-import { firestore } from 'firebase';
-import { getFirebase } from 'react-redux-firebase';
-import { Dispatch } from 'redux';
-import { getFirestore } from 'redux-firestore';
-import Types from 'Types';
-import { action } from 'typesafe-actions';
-import { Money } from '../../utils/moolah';
-import { CLEAR_TRADES, CREATE_TRADE_FAILURE, CREATE_TRADE_REQUEST, CREATE_TRADE_SUCCESS, FETCH_TRADES_FAILURE, FETCH_TRADES_REQUEST, FETCH_TRADES_SUCCESS, MODIFY_TRADE_FAILURE, MODIFY_TRADE_REQUEST, MODIFY_TRADE_SUCCESS, SET_TRADE_FILTERS, DELETE_TRADE_REQUEST, DELETE_TRADE_SUCCESS, DELETE_TRADE_FAILURE } from './actionTypes';
-
+import { firestore } from 'firebase'
+import { getFirebase } from 'react-redux-firebase'
+import { Dispatch } from 'redux'
+import { getFirestore } from 'redux-firestore'
+import Types from 'Types'
+import { action } from 'typesafe-actions'
+import { Money } from '../../utils/moolah'
+import {
+  CLEAR_TRADES,
+  CREATE_TRADE_FAILURE,
+  CREATE_TRADE_REQUEST,
+  CREATE_TRADE_SUCCESS,
+  FETCH_TRADES_FAILURE,
+  FETCH_TRADES_REQUEST,
+  FETCH_TRADES_SUCCESS,
+  MODIFY_TRADE_FAILURE,
+  MODIFY_TRADE_REQUEST,
+  MODIFY_TRADE_SUCCESS,
+  SET_TRADE_FILTERS,
+  DELETE_TRADE_REQUEST,
+  DELETE_TRADE_SUCCESS,
+  DELETE_TRADE_FAILURE,
+} from './actionTypes'
 
 type Extras = {
-  getFirebase: typeof getFirebase,
-  getFirestore: typeof getFirestore,
-};
+  getFirebase: typeof getFirebase
+  getFirestore: typeof getFirestore
+}
 
 const extractTrades = (snapshot: firestore.QuerySnapshot): Types.Trade[] => {
-  let trades: Types.Trade[] = [];
+  let trades: Types.Trade[] = []
 
   snapshot.forEach((doc: firestore.QueryDocumentSnapshot) => {
-    let data = doc.data();
+    let data = doc.data()
 
     let trade: Types.Trade = {
       id: doc.id,
@@ -34,8 +48,20 @@ const extractTrades = (snapshot: firestore.QuerySnapshot): Types.Trade[] => {
       takeProfit: data.takeProfit,
       exitDate: data.exitDate ? new Date(data.exitDate.seconds * 1000) : null,
       exitPrice: data.exitPrice,
-      fees: data.fees ? new Money(data.fees.amount, data.fees.currency.decimals ? data.fees.currency.code : data.fees.currency) : null,
-      pl: data.pl? new Money(data.pl.amount, data.pl.currency.decimals ? data.pl.currency.code : data.pl.currency) : null,
+      fees: data.fees
+        ? new Money(
+            data.fees.amount,
+            data.fees.currency.decimals
+              ? data.fees.currency.code
+              : data.fees.currency
+          )
+        : null,
+      pl: data.pl
+        ? new Money(
+            data.pl.amount,
+            data.pl.currency.decimals ? data.pl.currency.code : data.pl.currency
+          )
+        : null,
       hitTakeProfit: data.hitTakeProfit,
       mfe: data.mfe || null,
       mae: data.message || null,
@@ -50,52 +76,75 @@ const extractTrades = (snapshot: firestore.QuerySnapshot): Types.Trade[] => {
       charts: data.charts,
     }
 
-    trades.push(trade);
+    trades.push(trade)
   })
 
-  return trades;
+  return trades
 }
 
-export const fetchTradesRequest = () => action(FETCH_TRADES_REQUEST);
-export const fetchTradesSuccess = (trades: Types.Trade[]) => action(FETCH_TRADES_SUCCESS, trades);
-export const fetchTradesFailure = (message: string) => action(FETCH_TRADES_FAILURE, message);
+export const fetchTradesRequest = () => action(FETCH_TRADES_REQUEST)
+export const fetchTradesSuccess = (trades: Types.Trade[]) =>
+  action(FETCH_TRADES_SUCCESS, trades)
+export const fetchTradesFailure = (message: string) =>
+  action(FETCH_TRADES_FAILURE, message)
 
-export const createTradeRequest = () => action(CREATE_TRADE_REQUEST);
-export const createTradeSuccess = (trade: Types.Trade) => action(CREATE_TRADE_SUCCESS, trade);
-export const createTradeFailure = (message: string) => action(CREATE_TRADE_FAILURE, message);
+export const createTradeRequest = () => action(CREATE_TRADE_REQUEST)
+export const createTradeSuccess = (trade: Types.Trade) =>
+  action(CREATE_TRADE_SUCCESS, trade)
+export const createTradeFailure = (message: string) =>
+  action(CREATE_TRADE_FAILURE, message)
 
-export const modifyTradeRequest = () => action(MODIFY_TRADE_REQUEST);
-export const modifyTradeSuccess = (trade: Types.Trade) => action(MODIFY_TRADE_SUCCESS, trade);
-export const modifyTradeFailure = (message: string) => action(MODIFY_TRADE_FAILURE, message);
+export const modifyTradeRequest = () => action(MODIFY_TRADE_REQUEST)
+export const modifyTradeSuccess = (trade: Types.Trade) =>
+  action(MODIFY_TRADE_SUCCESS, trade)
+export const modifyTradeFailure = (message: string) =>
+  action(MODIFY_TRADE_FAILURE, message)
 
-export const deleteTradeRequest = () => action(DELETE_TRADE_REQUEST);
-export const deleteTradeSuccess = (trade: Types.Trade) => action(DELETE_TRADE_SUCCESS, trade);
-export const deleteTradeFailure = (message: string) => action(DELETE_TRADE_FAILURE, message);
+export const deleteTradeRequest = () => action(DELETE_TRADE_REQUEST)
+export const deleteTradeSuccess = (trade: Types.Trade) =>
+  action(DELETE_TRADE_SUCCESS, trade)
+export const deleteTradeFailure = (message: string) =>
+  action(DELETE_TRADE_FAILURE, message)
 
-export const clearTrades = () => action(CLEAR_TRADES);
-export const setTradeFilters = (filters: Types.TradeFilters) => action(SET_TRADE_FILTERS, filters);
-
+export const clearTrades = () => action(CLEAR_TRADES)
+export const setTradeFilters = (filters: Types.TradeFilters) =>
+  action(SET_TRADE_FILTERS, filters)
 
 export const fetchTrades = (journal: Types.Journal) => {
-  return (dispatch: Dispatch, getState: () => Types.RootState, { getFirebase, getFirestore }: Extras) => {
+  return (
+    dispatch: Dispatch,
+    getState: () => Types.RootState,
+    { getFirebase, getFirestore }: Extras
+  ) => {
     const firebase = getFirebase()
-    const firestore: firestore.Firestore = getFirestore(firebase); 
-    let journalId = typeof journal === 'string' ? journal : journal.id;
+    const firestore: firestore.Firestore = getFirestore(firebase)
+    let journalId = typeof journal === 'string' ? journal : journal.id
 
-    dispatch(fetchTradesRequest());
+    dispatch(fetchTradesRequest())
 
-    firestore.collection('trades').where("journalId", "==", journalId).get()
-    .then((snapshot: firestore.QuerySnapshot) => dispatch(fetchTradesSuccess(extractTrades(snapshot))))
-    .catch((err: Error) => dispatch(fetchTradesFailure(err.message || "Something went wrong.")));
+    firestore
+      .collection('trades')
+      .where('journalId', '==', journalId)
+      .get()
+      .then((snapshot: firestore.QuerySnapshot) =>
+        dispatch(fetchTradesSuccess(extractTrades(snapshot)))
+      )
+      .catch((err: Error) =>
+        dispatch(fetchTradesFailure(err.message || 'Something went wrong.'))
+      )
   }
-} 
+}
 
 export const createTrade = (trade: Types.Trade) => {
-  return (dispatch: Dispatch, getState: () => Types.RootState, { getFirebase, getFirestore }: Extras) => {
+  return (
+    dispatch: Dispatch,
+    getState: () => Types.RootState,
+    { getFirebase, getFirestore }: Extras
+  ) => {
     const firebase = getFirebase()
-    const firestore: firestore.Firestore = getFirestore(firebase); 
+    const firestore: firestore.Firestore = getFirestore(firebase)
 
-    delete trade.id;
+    delete trade.id
 
     let flatTrade = {
       ...trade,
@@ -106,24 +155,32 @@ export const createTrade = (trade: Types.Trade) => {
       stopLoss: trade.stopLoss.toString(),
       takeProfit: trade.takeProfit.toString(),
       exitPrice: trade.exitDate ? trade.exitPrice.toString() : null,
-      fees:  trade.exitDate ? trade.fees.toJSObject() : null,
-      pl:  trade.exitDate ? trade.fees.toJSObject() : null,
+      fees: trade.exitDate ? trade.fees.toJSObject() : null,
+      pl: trade.exitDate ? trade.fees.toJSObject() : null,
     }
 
-    dispatch(createTradeRequest());
+    dispatch(createTradeRequest())
 
-    firestore.collection('trades').add(flatTrade)
-    .then((doc: any) => dispatch(createTradeSuccess(trade)))
-    .catch((err: Error) => dispatch(createTradeFailure(err.message || "Something went wrong.")));
+    firestore
+      .collection('trades')
+      .add(flatTrade)
+      .then((doc: any) => dispatch(createTradeSuccess(trade)))
+      .catch((err: Error) =>
+        dispatch(createTradeFailure(err.message || 'Something went wrong.'))
+      )
   }
 }
 
 export const modifyTrade = (trade: Types.Trade) => {
-  return (dispatch: Dispatch, getState: () => Types.RootState, { getFirebase, getFirestore }: Extras) => {
+  return (
+    dispatch: Dispatch,
+    getState: () => Types.RootState,
+    { getFirebase, getFirestore }: Extras
+  ) => {
     const firebase = getFirebase()
-    const firestore: firestore.Firestore = getFirestore(firebase); 
+    const firestore: firestore.Firestore = getFirestore(firebase)
 
-    trade.modified = new Date();
+    trade.modified = new Date()
 
     let flatTrade = {
       ...trade,
@@ -136,23 +193,37 @@ export const modifyTrade = (trade: Types.Trade) => {
       pl: trade.pl ? trade.pl.toJSObject() : null,
     }
 
-    dispatch(modifyTradeRequest());
+    dispatch(modifyTradeRequest())
 
-    firestore.collection('trades').doc(trade.id).update(flatTrade)
-    .then((doc: any) => dispatch(modifyTradeSuccess(trade)))
-    .catch((err: Error) => dispatch(modifyTradeFailure(err.message || "Something went wrong.")));
+    firestore
+      .collection('trades')
+      .doc(trade.id)
+      .update(flatTrade)
+      .then((doc: any) => dispatch(modifyTradeSuccess(trade)))
+      .catch((err: Error) =>
+        dispatch(modifyTradeFailure(err.message || 'Something went wrong.'))
+      )
   }
 }
 
 export const deleteTrade = (trade: Types.Trade) => {
-  return (dispatch: Dispatch, getState: () => Types.RootState, { getFirebase, getFirestore }: Extras) => {
+  return (
+    dispatch: Dispatch,
+    getState: () => Types.RootState,
+    { getFirebase, getFirestore }: Extras
+  ) => {
     const firebase = getFirebase()
-    const firestore: firestore.Firestore = getFirestore(firebase); 
+    const firestore: firestore.Firestore = getFirestore(firebase)
 
-    dispatch(deleteTradeRequest());
+    dispatch(deleteTradeRequest())
 
-    firestore.collection('trades').doc(trade.id).delete()
-    .then(() => dispatch(deleteTradeSuccess(trade)))
-    .catch((err: Error) => dispatch(deleteTradeFailure(err.message || "Something went wrong.")));
+    firestore
+      .collection('trades')
+      .doc(trade.id)
+      .delete()
+      .then(() => dispatch(deleteTradeSuccess(trade)))
+      .catch((err: Error) =>
+        dispatch(deleteTradeFailure(err.message || 'Something went wrong.'))
+      )
   }
 }

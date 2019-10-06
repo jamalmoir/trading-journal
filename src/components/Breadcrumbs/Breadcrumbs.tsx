@@ -1,54 +1,65 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import Types from 'Types';
-
+import * as React from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import Types from 'Types'
 
 interface BreadcrumbsProps {
-  route: any;
-  activeJournal: Types.Journal;
+  route: any
+  activeJournal: Types.Journal
 }
 
 export const BreadcrumbsComponent = (props: BreadcrumbsProps) => {
-  const routes: {[index: string]: {name: string, url: () => string}} = {
+  const routes: { [index: string]: { name: string; url: () => string } } = {
     '/': {
-      'name': 'Journals',
-      'url': () => ('/'),
+      name: 'Journals',
+      url: () => '/',
     },
     '/journal/:journalId': {
-      'name': props.activeJournal ? props.activeJournal.name : '...',
-      'url': () => ('/journal/' + props.route.params.journalId),
+      name: props.activeJournal ? props.activeJournal.name : '...',
+      url: () => '/journal/' + props.route.params.journalId,
     },
     '/journal/:journalId/trade/:tradeId': {
-      'name': 'Trade',
-      'url': () => ('/journal/' + props.route.params.journalId + '/trade/' + props.route.params.tradeId),
+      name: 'Trade',
+      url: () =>
+        '/journal/' +
+        props.route.params.journalId +
+        '/trade/' +
+        props.route.params.tradeId,
     },
   }
 
-  const crumbs: {[index: string]: {name: string, url: () => string}[]} = {
+  const crumbs: { [index: string]: { name: string; url: () => string }[] } = {
     '/': [routes['/']],
     '/journal/:journalId': [routes['/'], routes['/journal/:journalId']],
-    '/journal/:journalId/trade/:tradeId': [routes['/'], routes['/journal/:journalId'], routes['/journal/:journalId/trade/:tradeId']],
+    '/journal/:journalId/trade/:tradeId': [
+      routes['/'],
+      routes['/journal/:journalId'],
+      routes['/journal/:journalId/trade/:tradeId'],
+    ],
   }
 
   if (props.route && props.route.path && props.route.params) {
     return (
       <nav aria-label="breadcrumb bg-transparent">
         <ol className="breadcrumb bg-transparent">
-          {crumbs[props.route.path].map((r: any) => <li className='breadcrumb-item' key={r.name}><Link to={r.url()}>{r.name}</Link></li>)}
+          {crumbs[props.route.path].map((r: any) => (
+            <li className="breadcrumb-item" key={r.name}>
+              <Link to={r.url()}>{r.name}</Link>
+            </li>
+          ))}
         </ol>
       </nav>
     )
   } else {
     return null
   }
-};
+}
 
 const mapStateToProps = (state: Types.RootState) => {
   return {
     route: state.app.route,
     activeJournal: state.journal.activeJournal,
   }
-};
+}
 
-export const Breadcrumbs = connect(mapStateToProps)(BreadcrumbsComponent);
+export const Breadcrumbs = connect(mapStateToProps)(BreadcrumbsComponent)
