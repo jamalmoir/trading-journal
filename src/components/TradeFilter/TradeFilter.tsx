@@ -10,6 +10,7 @@ import ReactTags, { Tag } from 'react-tag-autocomplete'
 import './tradeFilter.scss'
 import { setTradeFilters } from '../../redux/actions/trade'
 import { SelectInput } from '../SelectInput'
+import { DateInput } from '../DateInput'
 
 interface TradeFilterProps {
   onSetTradeFilters: (filters: Types.TradeFilters) => null
@@ -163,26 +164,18 @@ export const TradeFilterComponent = (props: TradeFilterProps) => {
         label="Rating"
         onChange={e => updateFilter('rating', e.target.value)}
       />
-      <div className="trade-filter trade-quick-create-date form-control">
-        <ReactDatePicker
-          className="trade-filter-entryDate"
-          selected={filters.entryDate}
-          onChange={d => updateFilter('entryDate', d)}
-          placeholderText="Entry Date"
-          dateFormat="MMMM d, yyyy"
-          isClearable
-        />
-      </div>
-      <div className="trade-filter trade-quick-create-date form-control">
-        <ReactDatePicker
-          className="trade-filter-exitDate"
-          selected={filters.exitDate}
-          onChange={d => updateFilter('exitDate', d)}
-          placeholderText="Exit Date"
-          dateFormat="MMMM d, yyyy"
-          isClearable
-        />
-      </div>
+      <DateInput
+        className="trade-filter"
+        value={filters.entryDate}
+        onChange={d => updateFilter('entryDate', d)}
+        label="Entry Date"
+      />
+      <DateInput
+        className="trade-filter"
+        value={filters.exitDate}
+        onChange={d => updateFilter('exitDate', d)}
+        label="Exit Date"
+      />
 
       <div className="trade-filter">
         <ReactTags

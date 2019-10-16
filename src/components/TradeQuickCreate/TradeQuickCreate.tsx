@@ -44,7 +44,7 @@ export const TradeQuickCreateComponent = (props: TradeQuickCreateProps) => {
   }
 
   return (
-    <div className="trade-quick-create grid-x">
+    <div className="trade-quick-create grid-x grid-margin-x">
       <TextInput
         type="text"
         className="cell small medium-2 tqc-instrument"
@@ -134,7 +134,7 @@ export const TradeQuickCreateComponent = (props: TradeQuickCreateProps) => {
         touched={controls.takeProfit.touched}
       />
       <Button
-        className="trade-quick-create-button cell small medium-1"
+        className="tqc-button cell small medium-1"
         text="Create"
         disabled={!controlsValid}
         loading={props.trade.isRequesting}

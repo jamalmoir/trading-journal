@@ -1,10 +1,12 @@
 import * as React from 'react'
+import { useState } from 'react'
 import { uniqueId } from '../../utils/utils'
 import './dateInput.scss'
 import ReactDatePicker from 'react-datepicker'
 
 interface DateInputProps {
-  label?: string
+	label?: string
+	placeholder?: string
   value: string | Date
   errors?: string[]
   touched?: boolean
@@ -14,7 +16,8 @@ interface DateInputProps {
 }
 
 export const DateInput = (props: DateInputProps) => {
-  const ID = uniqueId()
+	const ID = uniqueId()
+	const [selectedDate, setSelectedDate] = useState(null)
 
   const getClasses = () => {
     let classes = props.className || ''
@@ -28,20 +31,20 @@ export const DateInput = (props: DateInputProps) => {
     return classes
   }
 
-  const handleChange = (date: Date) => props.onChange(date)
+  const handleChange = (date: Date) => {
+		setSelectedDate(date)
+		props.onChange(date)
+	}
 
   return (
     <div id={props.id} className={'date-input ' + getClasses()}>
       <label htmlFor={ID}>{props.label}</label>
       <ReactDatePicker
-        id={ID}
+				id={ID}
+				selected={selectedDate}
         onChange={d => handleChange(d)}
-        placeholderText="Entry Date"
-        showTimeSelect
-        timeFormat="HH:mm"
-        timeIntervals={15}
-        timeCaption="time"
-        dateFormat="MMMM d, yyyy h:mm aa"
+        placeholderText={props.placeholder}
+        dateFormat="MMMM d, yyyy"
       />
     </div>
   )
