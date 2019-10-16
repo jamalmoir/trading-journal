@@ -1,4 +1,4 @@
-@import "../../custom.scss";
+@import "../../_settings.scss";
 
 .tristate-checkbox {
   width: 1em;
@@ -16,7 +16,7 @@
   }
 
   &.checked-false {
-    background: $danger;
+    background: map-get($foundation-palette, 'alert');;
 
     i {
       color: $danger-light;
@@ -24,7 +24,7 @@
   }
 
   &.checked-true {
-    background: $success;
+    background: map-get($foundation-palette, 'success');;
 
      i {
        color: $success-light

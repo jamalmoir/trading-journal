@@ -28,9 +28,8 @@ service cloud.firestore {
 
 			allow read: if journalBelongsToUser();
 			allow create: if creatingJournalBelongsToUser();// && isJournal();
-			allow update: if journalBelongsToUser() && creatingJournalBelongsToUser() &&// isJournal() &&
-												request.resource.data.kind == resource.data.kind;
-			allow delete: if journalBelongstoUser();
+			allow update: if journalBelongsToUser() && creatingJournalBelongsToUser();// isJournal() &&
+			allow delete: if journalBelongsToUser();
 		}
 
 		match /trades/{tradeId} {

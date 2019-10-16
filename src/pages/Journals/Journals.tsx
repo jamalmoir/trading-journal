@@ -9,6 +9,7 @@ import { JournalList } from '../../components/JournalList'
 import { routeChange } from '../../redux/actions/app'
 import { JournalAction } from '../../redux/reducers/journal'
 import './journals.scss'
+import { HorizontalNav } from '../../components/HorizontalNav'
 
 interface JournalsProps {
   journals: Types.Journal[]
@@ -21,10 +22,14 @@ export const JournalsPage = (props: JournalsProps) => {
 
   return (
     <div className="journals">
-      <Heading className="journals-heading" text="Journals" />
+      <HorizontalNav />
 
-      <JournalCreate />
-      <JournalList className="journal-list" journals={props.journals} />
+      <div className="content-wrapper">
+        <Heading className="journals-heading" text="Journals" />
+
+        <JournalCreate />
+        <JournalList className="journal-list" journals={props.journals} />
+      </div>
     </div>
   )
 }

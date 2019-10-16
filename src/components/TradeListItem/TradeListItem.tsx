@@ -17,7 +17,9 @@ export const TradeListItem = (props: TradeListProps) => {
       <td className={'trade-list-item-cell'}>{props.trade.strategy}</td>
       <td className={'trade-list-item-cell'}>{props.trade.kind}</td>
       <td className={'trade-list-item-cell'}>
-        {props.trade.entryDate.toLocaleDateString()}
+        {props.trade.entryDate
+          ? props.trade.entryDate.toLocaleDateString()
+          : ''}
       </td>
       <td className={'trade-list-item-cell'}>
         {props.trade.entryPrice.toString()}

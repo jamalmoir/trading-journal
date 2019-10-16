@@ -1,0 +1,32 @@
+@import '../../_settings';
+
+.sidebar {
+	display: flex;
+	flex-direction: vertical;
+	width: 100%;
+	background: $white;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.12),
+              0 2px 2px rgba(0,0,0,0.12),
+							0 4px 4px rgba(0,0,0,0.12);
+
+	.sidebar-top {
+		background-color: $black;
+		width: 100%;
+		height: fit-content;
+		display: flex;
+		flex: row;
+		justify-content: space-around;
+		padding: 1em;
+
+		.logo {
+			img {
+				width: 5em;
+			}
+		}
+	}
+
+	.sidebar-content {
+		padding: 1em;
+		width: 100%;
+	}
+}

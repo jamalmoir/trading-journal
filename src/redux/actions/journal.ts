@@ -120,7 +120,9 @@ export const createJournal = (journal: Types.Journal) => {
     firestore
       .collection('journals')
       .add(journal)
-      .then((doc: any) => dispatch(createJournalSuccess(journal)))
+      .then((doc: any) =>
+        dispatch(createJournalSuccess({ id: doc.id, ...journal }))
+      )
       .catch((err: Error) =>
         dispatch(createJournalFailure(err.message || 'Something went wrong.'))
       )

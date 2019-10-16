@@ -4,7 +4,6 @@ import { isLoaded } from 'react-redux-firebase'
 import { Route, Switch } from 'react-router-dom'
 import { Dispatch } from 'redux'
 import Types from 'Types'
-import { NavBar } from '../../components/NavBar'
 import { ProtectedRoute } from '../../components/ProtectedRoute'
 import { APP_LOAD } from '../../redux/actions/actionTypes'
 import { fetchJournals } from '../../redux/actions/journal'
@@ -58,26 +57,23 @@ class AppPage extends React.Component<AppProps> {
 
     return (
       <div className="app">
-        <NavBar />
-        <div className="content-wrapper">
-          <Switch>
-            <Route exact path="/login" component={Login} />
-            <ProtectedRoute exact path="/" component={Journals} />
-            <ProtectedRoute
-              exact
-              path="/journal/:journalId"
-              component={Journal}
-            />
-            <ProtectedRoute
-              exact
-              path="/journal/:journalId/trade/:tradeId"
-              component={Trade}
-            />
-            {process.env.NODE_ENV === 'development' ? (
-              <ProtectedRoute exact path="/playground" component={Playground} />
-            ) : null}
-          </Switch>
-        </div>
+        <Switch>
+          <Route exact path="/login" component={Login} />
+          <ProtectedRoute exact path="/" component={Journals} />
+          <ProtectedRoute
+            exact
+            path="/journal/:journalId"
+            component={Journal}
+          />
+          <ProtectedRoute
+            exact
+            path="/journal/:journalId/trade/:tradeId"
+            component={Trade}
+          />
+          {process.env.NODE_ENV === 'development' ? (
+            <ProtectedRoute exact path="/playground" component={Playground} />
+          ) : null}
+        </Switch>
       </div>
     )
   }

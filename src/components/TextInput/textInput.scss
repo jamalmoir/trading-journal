@@ -1,4 +1,4 @@
-@import "../../custom.scss";
+@import "../../_settings.scss";
 
 .text-input { 
 	position: relative;
@@ -41,13 +41,13 @@
 
 	&:focus-within {
 		label {
-			color: $primary;
+			color: map-get($foundation-palette, 'primary');
 		}
 
 		input {
 			outline: none;
 			border: none;
-			border-bottom: solid 2px $primary;
+			border-bottom: solid 2px map-get($foundation-palette, 'primary');
 			box-shadow: none;
 			background-color: rgba(0,0,0,0);
 		}
@@ -56,12 +56,12 @@
 
 	&.errors {
 		label {
-			color: $danger;
+			color: map-get($foundation-palette, 'alert');
 		}
 
 		input {
 			border: none;
-			border-bottom: solid 2px $danger;
+			border-bottom: solid 2px map-get($foundation-palette, 'alert');
 		}
 	}
 }

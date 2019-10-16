@@ -13,6 +13,7 @@ import { modifyJournal } from '../../redux/actions/journal'
 import { deleteJournal } from '../../redux/actions/journal'
 import { Dispatch } from 'redux'
 import { Link } from 'react-router-dom'
+import { confirmDialogue } from '../../utils/uiUtils'
 
 interface JournalCardProps {
   className?: string
@@ -103,7 +104,7 @@ export const JournalCardComponent = (props: JournalCardProps) => {
           className="cell small medium-6 journal-card-save"
           text="Save"
           onClick={handleEditSaveClick}
-          disabled={controlsValid}
+          disabled={!controlsValid}
         />
       </div>
     ) : (
@@ -145,7 +146,19 @@ export const JournalCardComponent = (props: JournalCardProps) => {
 
   const handleDeleteClick = () => {
     // TODO: confirmation
-    props.onDeleteJournal(props.journal)
+    // props.onDeleteJournal(props.journal)
+    confirmDialogue(
+      'Delete Journal?',
+      'Do you really want to permanently delete the journal "' +
+        props.journal.name +
+        '"?',
+      { text: 'Cancel', onClick: () => {}, className: 'primary' },
+      {
+        text: 'Delete',
+        onClick: () => props.onDeleteJournal(props.journal),
+        className: 'alert',
+      }
+    )
   }
 
   return (
@@ -167,9 +180,9 @@ export const JournalCardComponent = (props: JournalCardProps) => {
               touched={controls.name.touched}
             />
           ) : (
-    				<Link to={'journal/' + props.journal.id}>
-            	{props.journal.name} <i className='fas fa-angle-double-right' />
-						</Link>
+            <Link to={'journal/' + props.journal.id}>
+              {props.journal.name} <i className="fas fa-angle-double-right" />
+            </Link>
           )}
         </div>
 

@@ -24,7 +24,6 @@ module.exports = {
       },
       {
 				test: /.(css|scss)$/,
-				// exclude: [/node_modules/],
         use: [
           {
             loader: 'style-loader',
@@ -82,9 +81,8 @@ module.exports = {
     publicPath: '/'
   },
   devServer: {
-    historyApiFallback: true,
-    contentBase: './',
-    hot: true
+		historyApiFallback: true,
+		hot: true
   },
   plugins: [
     new HtmlWebpackPlugin({

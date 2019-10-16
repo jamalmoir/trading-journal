@@ -1,7 +1,7 @@
 import * as React from 'react'
 import './button.scss'
 
-interface ButtonProps {
+export interface ButtonProps {
   text: string
   onClick: () => void
   loading?: boolean

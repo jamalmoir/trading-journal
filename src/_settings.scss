@@ -80,6 +80,15 @@ $medium-gray: #cacaca;
 $dark-gray: #8a8a8a;
 $black: #0a0a0a;
 $white: #fefefe;
+
+/* Custom Colours */
+$accent-light:#5AB8D4;
+$accent-dark:#727579;
+$brand:#0282C9;
+$danger-light: hsl(4.1,89.6%,85%);  // $danger: hsl(4.1,89.6%,58.4%) 	
+$success-light: hsl(155,47%,85%);  // $success: hsl(155,47%,42.9%)
+/* End Custom Colours */
+
 $body-background: $white;
 $body-font-color: $black;
 $body-font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;

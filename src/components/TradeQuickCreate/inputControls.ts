@@ -20,7 +20,7 @@ export const inputControls: Types.InputControls = {
     },
   },
   kind: {
-    value: 'long',
+    value: null,
     errors: [],
     touched: false,
     validationRules: {},

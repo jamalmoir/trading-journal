@@ -5,8 +5,8 @@ import './selectInput.scss'
 
 interface SelectInputProps {
   label?: string
-  value: string
-  choices: { id: string; name: string }[]
+  value: string | number
+  choices: { id: string | number; name: string }[]
   placeholder?: string
   errors?: string[]
   touched?: boolean

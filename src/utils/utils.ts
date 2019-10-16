@@ -10,13 +10,20 @@ export const stringsToTags = (strings: string[]): Tag[] =>
 
 export const setUpControls = (
   initialControls: Types.InputControls
-): [Types.InputControls, (key: string, value: any) => boolean] => {
+): [
+  Types.InputControls,
+  (key: string, value: any, touched?: boolean) => boolean
+] => {
   const [controls, setControls]: [
     Types.InputControls,
     (controls: Types.InputControls) => void
   ] = useState(initialControls)
 
-  const updateControls = (key: string, value: any): boolean => {
+  const updateControls = (
+    key: string,
+    value: any,
+    touched: boolean = true
+  ): boolean => {
     let connectedValue = {}
 
     if (key === null) {
@@ -41,7 +48,7 @@ export const setUpControls = (
         ...controls[key],
         value: value,
         errors: validate(value, controls[key].validationRules, connectedValue),
-        touched: true,
+        touched: touched,
       },
     }
 

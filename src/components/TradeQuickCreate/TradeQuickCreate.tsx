@@ -9,14 +9,24 @@ import './tradeQuickCreate.scss'
 import { TextInput } from '../TextInput'
 import { buildTrade, setUpControls } from '../../utils/utils'
 import { inputControls } from './inputControls'
+import { SelectInput } from '../SelectInput'
+import { Button } from '../Button'
+import { TradeState } from '../../redux/reducers/trade'
+import { DateInput } from '../DateInput/DateInput'
 
 interface TradeQuickCreateProps {
   className?: string
   journal: Types.Journal
   auth: any
   activeJournal: Types.Journal
+  trade?: TradeState // TODO: Not optional
   onCreateTrade: (trade: Types.Trade) => null
 }
+
+const kindChoices = [
+  { id: 'long', name: 'Long' },
+  { id: 'short', name: 'Short' },
+]
 
 export const TradeQuickCreateComponent = (props: TradeQuickCreateProps) => {
   const [controlsValid, setControlsValid] = useState(false)
@@ -34,113 +44,102 @@ export const TradeQuickCreateComponent = (props: TradeQuickCreateProps) => {
   }
 
   return (
-    <div className="trade-quick-create container">
-      <div className="input-group mb-3">
-        <TextInput
-          type="text"
-          className="form-control col-sm-2 tqc-instrument"
-          label="Instrument"
-          value={controls.instrument.value}
-          onChange={e => updateInputState('instrument', e.target.value)}
-          errors={controls.instrument.errors}
-          touched={controls.instrument.touched}
-        />
-        <TextInput
-          type="text"
-          className="form-control col-sm-2 tqc-strategy"
-          label="Strategy"
-          value={controls.strategy.value}
-          onChange={e => updateInputState('strategy', e.target.value)}
-          errors={controls.strategy.errors}
-          touched={controls.strategy.touched}
-        />
-        <select
-          className="custom-select col-sm-1 tqc-kind"
-          value={controls.kind.value}
-          onChange={e =>
-            updateInputState('kind', e.target.value as
-              | 'live'
-              | 'demo'
-              | 'backtest')
-          }
-        >
-          <option value="long">Long</option>
-          <option value="short">Short</option>
-        </select>
-        <div className="trade-quick-create-date form-control col-sm-2">
-          <DatePicker
-            className={'tqc-entry-date'}
-            selected={controls.entryDate.value}
-            onChange={d => updateInputState('entryDate', d)}
-            placeholderText="Entry Date"
-            showTimeSelect
-            timeFormat="HH:mm"
-            timeIntervals={15}
-            timeCaption="time"
-            dateFormat="MMMM d, yyyy h:mm aa"
-          />
-        </div>
-        <TextInput
-          type="text"
-          className="form-control col-sm-1 tqc-entry-price"
-          label="Entry Price"
-          value={
-            controls.entryPrice.value
-              ? controls.entryPrice.value.toString()
-              : undefined
-          }
-          onChange={e => updateInputState('entryPrice', e.target.value)}
-          errors={controls.entryPrice.errors}
-          touched={controls.entryPrice.touched}
-        />
-        <TextInput
-          type="text"
-          className="form-control col-sm-1 tqc-size"
-          label="Size"
-          value={
-            controls.positionSize.value
-              ? controls.positionSize.value.toString()
-              : undefined
-          }
-          onChange={e => updateInputState('positionSize', e.target.value)}
-          errors={controls.positionSize.errors}
-          touched={controls.positionSize.touched}
-        />
-        <TextInput
-          type="text"
-          className="form-control col-sm-1 tqc-stop-loss"
-          label="Stop Loss"
-          value={
-            controls.stopLoss.value
-              ? controls.stopLoss.value.toString()
-              : undefined
-          }
-          onChange={e => updateInputState('stopLoss', e.target.value)}
-          errors={controls.stopLoss.errors}
-          touched={controls.stopLoss.touched}
-        />
-        <TextInput
-          type="text"
-          className="form-control col-sm-1 tqc-take-profit"
-          label="Take Profit"
-          value={
-            controls.takeProfit.value
-              ? controls.takeProfit.value.toString()
-              : undefined
-          }
-          onChange={e => updateInputState('takeProfit', e.target.value)}
-          errors={controls.takeProfit.errors}
-          touched={controls.takeProfit.touched}
-        />
-        <button
-          className="btn btn-outline-primary trade-quick-create-button form-control col-sm-1"
-          type="button"
-          disabled={!controlsValid}
-          onClick={createTrade}
-        >
-          Create
-        </button>
-      </div>
+    <div className="trade-quick-create grid-x">
+      <TextInput
+        type="text"
+        className="cell small medium-2 tqc-instrument"
+        label="Instrument"
+        value={controls.instrument.value}
+        onChange={e => updateInputState('instrument', e.target.value)}
+        errors={controls.instrument.errors}
+        touched={controls.instrument.touched}
+      />
+      <TextInput
+        type="text"
+        className="cell small medium-2 tqc-strategy"
+        label="Strategy"
+        value={controls.strategy.value}
+        onChange={e => updateInputState('strategy', e.target.value)}
+        errors={controls.strategy.errors}
+        touched={controls.strategy.touched}
+      />
+      <SelectInput
+        className="cell small medium-1 tqc-kind"
+        value={controls.kind.value}
+        choices={kindChoices}
+        label="Kind"
+        onChange={e =>
+          updateInputState('kind', e.target.value as
+            | 'live'
+            | 'demo'
+            | 'backtest')
+        }
+      />
+      <DateInput
+        className="tqc-entry-date cell small medium-2"
+        value={controls.entryDate.value}
+        onChange={d => updateInputState('entryDate', d)}
+        label="Entry Date"
+      />
+      <TextInput
+        type="text"
+        className="cell small medium-1 tqc-entry-price"
+        label="Entry Price"
+        value={
+          controls.entryPrice.value
+            ? controls.entryPrice.value.toString()
+            : undefined
+        }
+        onChange={e => updateInputState('entryPrice', e.target.value)}
+        errors={controls.entryPrice.errors}
+        touched={controls.entryPrice.touched}
+      />
+      <TextInput
+        type="text"
+        className="cell small medium-1 tqc-size"
+        label="Size"
+        value={
+          controls.positionSize.value
+            ? controls.positionSize.value.toString()
+            : undefined
+        }
+        onChange={e => updateInputState('positionSize', e.target.value)}
+        errors={controls.positionSize.errors}
+        touched={controls.positionSize.touched}
+      />
+      <TextInput
+        type="text"
+        className="cell small medium-1 tqc-stop-loss"
+        label="Stop Loss"
+        value={
+          controls.stopLoss.value
+            ? controls.stopLoss.value.toString()
+            : undefined
+        }
+        onChange={e => updateInputState('stopLoss', e.target.value)}
+        errors={controls.stopLoss.errors}
+        touched={controls.stopLoss.touched}
+      />
+      <TextInput
+        type="text"
+        className="cell small medium-1 tqc-take-profit"
+        label="Take Profit"
+        value={
+          controls.takeProfit.value
+            ? controls.takeProfit.value.toString()
+            : undefined
+        }
+        onChange={e => updateInputState('takeProfit', e.target.value)}
+        errors={controls.takeProfit.errors}
+        touched={controls.takeProfit.touched}
+      />
+      <Button
+        className="trade-quick-create-button cell small medium-1"
+        text="Create"
+        disabled={!controlsValid}
+        loading={props.trade.isRequesting}
+        onClick={createTrade}
+      />
     </div>
   )
 }
@@ -149,6 +148,7 @@ const mapStateToProps = (state: Types.RootState) => {
   return {
     auth: state.firebase.auth,
     activeJournal: state.journal.activeJournal,
+    trade: state.trade,
   }
 }
 

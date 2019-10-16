@@ -1,3 +1,4 @@
+import { ActionType } from 'typesafe-actions'
 import { getFirebase } from 'react-redux-firebase'
 import { Dispatch } from 'redux'
 import { getFirestore } from 'redux-firestore'

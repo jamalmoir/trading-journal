@@ -9,6 +9,7 @@ import { authenticateUser } from '../../redux/actions/auth'
 import { validate } from '../../utils/validation'
 import './login.scss'
 import { Button } from '../../components/Button'
+import { HorizontalNav } from '../../components/HorizontalNav'
 
 interface LoginState {
   isAuthing: boolean
@@ -110,43 +111,46 @@ class LoginPage extends Component<LoginProps> {
     }
     return (
       <div className="login">
-        <div className="login-form">
-          <Heading text="Login" />
-          <form className="inputs">
-            <TextInput
-              type="email"
-              className="email"
-              label="Email"
-              value={this.state.controls.email.value}
-              errors={this.state.controls.email.errors}
-              touched={this.state.controls.email.touched}
-              onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                this.updateInputState('email', event)
-              }
-            />
-            <TextInput
-              type="password"
-              className="password"
-              label="Password"
-              value={this.state.controls.password.value}
-              errors={this.state.controls.password.errors}
-              touched={this.state.controls.password.touched}
-              onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                this.updateInputState('password', event)
-              }
-            />
-            <Link to="/">
-              <Button text="Login" onClick={this.loginHandler} />
-            </Link>
-            <span className="failure-text">
-              {this.props.firebase.authError
-                ? this.props.firebase.authError.message
-                : ''}{' '}
-            </span>
-          </form>
-          {/*<div className='register-text'>
-						Don't have an account? <Link to="">Register</Link>
-					</div>*/}
+        <HorizontalNav />
+        <div className="content-wrapper">
+          <div className="login-form">
+            <Heading text="Login" />
+            <form className="inputs">
+              <TextInput
+                type="email"
+                className="email"
+                label="Email"
+                value={this.state.controls.email.value}
+                errors={this.state.controls.email.errors}
+                touched={this.state.controls.email.touched}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  this.updateInputState('email', event)
+                }
+              />
+              <TextInput
+                type="password"
+                className="password"
+                label="Password"
+                value={this.state.controls.password.value}
+                errors={this.state.controls.password.errors}
+                touched={this.state.controls.password.touched}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  this.updateInputState('password', event)
+                }
+              />
+              <Link to="/">
+                <Button text="Login" onClick={this.loginHandler} />
+              </Link>
+              <span className="failure-text">
+                {this.props.firebase.authError
+                  ? this.props.firebase.authError.message
+                  : ''}{' '}
+              </span>
+            </form>
+            {/*<div className='register-text'>
+							Don't have an account? <Link to="">Register</Link>
+						</div>*/}
+          </div>
         </div>
       </div>
     )

@@ -41,7 +41,9 @@ const extractTrades = (snapshot: firestore.QuerySnapshot): Types.Trade[] => {
       instrument: data.instrument,
       strategy: data.strategy,
       kind: data.kind,
-      entryDate: new Date(data.entryDate.seconds * 1000),
+      entryDate: data.entryDate
+        ? new Date(data.entryDate.seconds * 1000)
+        : null,
       entryPrice: data.entryPrice,
       positionSize: data.positionSize,
       stopLoss: data.stopLoss,
@@ -164,7 +166,9 @@ export const createTrade = (trade: Types.Trade) => {
     firestore
       .collection('trades')
       .add(flatTrade)
-      .then((doc: any) => dispatch(createTradeSuccess(trade)))
+      .then((doc: any) =>
+        dispatch(createTradeSuccess({ id: doc.id, ...trade }))
+      )
       .catch((err: Error) =>
         dispatch(createTradeFailure(err.message || 'Something went wrong.'))
       )

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import Types from 'Types'
 import { createJournal } from '../../redux/actions/journal'
-import { JournalAction } from '../../redux/reducers/journal'
+import { JournalAction, JournalState } from '../../redux/reducers/journal'
 import { TextInput } from '../TextInput'
 import { setUpControls } from '../../utils/utils'
 import './journalCreate.scss'
@@ -15,41 +15,44 @@ interface JournalCreateProps {
   className?: string
   onCreateJournal: (journal: Types.Journal) => null
   auth: any
+  journal?: JournalState //TODO - this should not be ?
+}
+
+const initialControls: Types.InputControls = {
+  name: {
+    value: '',
+    errors: [],
+    touched: false,
+    validationRules: {
+      minLength: 2,
+      notEmpty: true,
+    },
+  },
+  kind: {
+    value: '',
+    errors: [],
+    touched: false,
+    validationRules: {
+      minLength: 2,
+      notEmpty: true,
+    },
+  },
+  currency: {
+    value: '',
+    errors: [],
+    touched: false,
+    validationRules: {
+      notEmpty: true,
+      minLength: 3,
+      maxLength: 3,
+      isCurrencyCode: true,
+    },
+  },
 }
 
 export const JournalCreateComponent = (props: JournalCreateProps) => {
   const [controlsValid, setControlsValid] = useState(false)
-  const [controls, setControls] = setUpControls({
-    name: {
-      value: '',
-      errors: [],
-      touched: false,
-      validationRules: {
-        minLength: 2,
-        notEmpty: true,
-      },
-    },
-    kind: {
-      value: '',
-      errors: [],
-      touched: false,
-      validationRules: {
-        minLength: 2,
-        notEmpty: true,
-      },
-    },
-    currency: {
-      value: '',
-      errors: [],
-      touched: false,
-      validationRules: {
-        notEmpty: true,
-        minLength: 3,
-        maxLength: 3,
-        isCurrencyCode: true,
-      },
-    },
-  })
+  const [controls, setControls] = setUpControls(initialControls)
 
   const kindChoices = [
     { id: 'live', name: 'Live' },
@@ -73,9 +76,7 @@ export const JournalCreateComponent = (props: JournalCreateProps) => {
       tradeCount: 0,
     }
     props.onCreateJournal(journal)
-    setControls('name', '')
-    setControls('kind', '')
-    setControls('currency', '')
+    setControls(null, initialControls)
   }
 
   return (
@@ -116,6 +117,7 @@ export const JournalCreateComponent = (props: JournalCreateProps) => {
         text="Create"
         className="journal-create-button cell small medium-2"
         onClick={createJournal}
+        loading={props.journal.isRequesting}
         disabled={
           !controlsValid ||
           !controls.name.value ||
@@ -130,6 +132,7 @@ export const JournalCreateComponent = (props: JournalCreateProps) => {
 const mapStateToProps = (state: Types.RootState) => {
   return {
     auth: state.firebase.auth,
+    journal: state.journal,
   }
 }
 

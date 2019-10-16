@@ -5,15 +5,15 @@ import { Dispatch } from 'redux'
 import Types from 'Types'
 import { unauthenticateUser } from '../../redux/actions/auth'
 import { Breadcrumbs } from '../Breadcrumbs'
-import './navBar.scss'
+import './horizontalNav.scss'
 import { Button } from '../Button'
 
-interface NavBarProps {
+interface HorizontalNavProps {
   auth: any
   onUnauthenticateUser: () => null
 }
 
-export const NavBarComponent = (props: NavBarProps) => {
+export const HorizontalNavComponent = (props: HorizontalNavProps) => {
   return (
     <div className="header">
       <nav className="top-bar">
@@ -69,9 +69,9 @@ const mapDispatchToProps = (dispatch: Dispatch<Types.RootAction>) => ({
 })
 
 // @ts-ignore
-export const NavBar = withRouter(
+export const HorizontalNav = withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(NavBarComponent)
+  )(HorizontalNavComponent)
 )

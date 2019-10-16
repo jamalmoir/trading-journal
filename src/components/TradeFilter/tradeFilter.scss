@@ -1,10 +1,5 @@
-.trade-filter-panel {
-  margin-bottom: 2em;
-  padding: 1em;
+@import '../../_settings';
 
-  .trade-filter-group {
-    .trade-filter {
-      margin-bottom: 0.5em;
-    }
-  }
+.trade-filter-panel {
+	width: 100%;
 }

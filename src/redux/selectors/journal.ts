@@ -140,7 +140,11 @@ export const getManagedTrades = createSelector(
   (managedFilter, trades) => {
     return managedFilter === null
       ? trades
-      : trades.filter(trade => trade.managed === managedFilter)
+      : trades.filter(trade =>
+          trade.kind === 'long'
+            ? trade.exitPrice < trade.takeProfit
+            : trade.exitPrice > trade.takeProfit
+        )
   }
 )
 

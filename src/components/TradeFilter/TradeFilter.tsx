@@ -9,6 +9,7 @@ import { TristateCheckbox } from '../TristateCheckbox'
 import ReactTags, { Tag } from 'react-tag-autocomplete'
 import './tradeFilter.scss'
 import { setTradeFilters } from '../../redux/actions/trade'
+import { SelectInput } from '../SelectInput'
 
 interface TradeFilterProps {
   onSetTradeFilters: (filters: Types.TradeFilters) => null
@@ -25,6 +26,17 @@ interface Tags {
     suggestions: Tag[]
   }
 }
+
+const kindChoices = [
+  { id: 'long', name: 'Long' },
+  { id: 'short', name: 'Short' },
+]
+
+const ratingChoices = [
+  { id: -1, name: '-1' },
+  { id: 0, name: '0' },
+  { id: 1, name: '1' },
+]
 
 export const TradeFilterComponent = (props: TradeFilterProps) => {
   const initialFilters: Types.TradeFilters = {
@@ -120,92 +132,80 @@ export const TradeFilterComponent = (props: TradeFilterProps) => {
   }
 
   return (
-    <div className="trade-filter-panel row bg-light">
-      <div className="col-sm-12">Filters</div>
-      <div className="trade-filter-group col-sm-3">
-        <TextInput
-          type="text"
-          className="trade-filter trade-filter-instrument form-control"
-          label="Instrument"
-          value={filters.instrument}
-          onChange={e => updateFilter('instrument', e.target.value)}
+    <div className="trade-filter-panel grid-x grid-margin-y">
+      <div className="cell">Filters</div>
+      <TextInput
+        type="text"
+        className="trade-filter trade-filter-instrument form-control"
+        label="Instrument"
+        value={filters.instrument}
+        onChange={e => updateFilter('instrument', e.target.value)}
+      />
+      <TextInput
+        type="text"
+        className="trade-filter trade-filter-strategy form-control"
+        label="Strategy"
+        value={filters.strategy}
+        onChange={e => updateFilter('strategy', e.target.value)}
+      />
+      <SelectInput
+        className="trade-filter trade-filter-kind"
+        value={filters.kind}
+        choices={kindChoices}
+        label="Kind"
+        onChange={e => updateFilter('kind', e.target.value)}
+      />
+
+      <SelectInput
+        className="trade-filter trade-filter-rating"
+        value={filters.rating}
+        choices={ratingChoices}
+        label="Rating"
+        onChange={e => updateFilter('rating', e.target.value)}
+      />
+      <div className="trade-filter trade-quick-create-date form-control">
+        <ReactDatePicker
+          className="trade-filter-entryDate"
+          selected={filters.entryDate}
+          onChange={d => updateFilter('entryDate', d)}
+          placeholderText="Entry Date"
+          dateFormat="MMMM d, yyyy"
+          isClearable
         />
-        <TextInput
-          type="text"
-          className="trade-filter trade-filter-strategy form-control"
-          label="Strategy"
-          value={filters.strategy}
-          onChange={e => updateFilter('strategy', e.target.value)}
+      </div>
+      <div className="trade-filter trade-quick-create-date form-control">
+        <ReactDatePicker
+          className="trade-filter-exitDate"
+          selected={filters.exitDate}
+          onChange={d => updateFilter('exitDate', d)}
+          placeholderText="Exit Date"
+          dateFormat="MMMM d, yyyy"
+          isClearable
         />
-        <select
-          className="trade-filter trade-filter-kind custom-select"
-          value={filters.kind === null ? '' : filters.kind}
-          onChange={e => updateFilter('kind', e.target.value)}
-        >
-          <option value="">Kind</option>
-          <option value="long">Long</option>
-          <option value="short">Short</option>
-        </select>
       </div>
 
-      <div className="trade-filter-group col-sm-3">
-        <select
-          className="trade-filter trade-filter-rating custom-select"
-          value={filters.rating === null ? '' : filters.rating}
-          onChange={e => updateFilter('rating', e.target.value)}
-        >
-          <option value="">Rating</option>
-          <option value="-1">-1</option>
-          <option value="0">0</option>
-          <option value="1">1</option>
-        </select>
-        <div className="trade-filter trade-quick-create-date form-control">
-          <ReactDatePicker
-            className="trade-filter-entryDate"
-            selected={filters.entryDate}
-            onChange={d => updateFilter('entryDate', d)}
-            placeholderText="Entry Date"
-            dateFormat="MMMM d, yyyy"
-            isClearable
-          />
-        </div>
-        <div className="trade-filter trade-quick-create-date form-control">
-          <ReactDatePicker
-            className="trade-filter-exitDate"
-            selected={filters.exitDate}
-            onChange={d => updateFilter('exitDate', d)}
-            placeholderText="Exit Date"
-            dateFormat="MMMM d, yyyy"
-            isClearable
-          />
-        </div>
+      <div className="trade-filter">
+        <ReactTags
+          tags={tags.tags.tags}
+          suggestions={[]}
+          handleDelete={(i: number) => handleTagDelete('tags', i)}
+          handleAddition={(tag: Tag) => handleTagAddition('tags', tag)}
+          placeholder="Add Tag"
+          allowNew
+        />
       </div>
-
-      <div className="trade-filter-group col-sm-4">
-        <div className="trade-filter">
-          <ReactTags
-            tags={tags.tags.tags}
-            suggestions={[]}
-            handleDelete={(i: number) => handleTagDelete('tags', i)}
-            handleAddition={(tag: Tag) => handleTagAddition('tags', tag)}
-            placeholder="Add Tag"
-            allowNew
-          />
-        </div>
-        <div className="trade-filter">
-          <ReactTags
-            tags={tags.emotions.tags}
-            suggestions={[]}
-            handleDelete={(i: number) => handleTagDelete('emotions', i)}
-            handleAddition={(tag: Tag) => handleTagAddition('emotions', tag)}
-            placeholder="Add Emotion"
-            allowNew
-          />
-        </div>
+      <div className="trade-filter">
+        <ReactTags
+          tags={tags.emotions.tags}
+          suggestions={[]}
+          handleDelete={(i: number) => handleTagDelete('emotions', i)}
+          handleAddition={(tag: Tag) => handleTagAddition('emotions', tag)}
+          placeholder="Add Emotion"
+          allowNew
+        />
       </div>
-
-      <div className="trade-filter-group col-sm-2">
-        <div className="trade-filter form-check">
+      <div className="trade-filter-checkboxes grid-x grid-margin-x grid-margin-y">
+        <div className="trade-filter form-check cell medium-6">
           <TristateCheckbox
             id="profit-tristate"
             className="form-check-input trade-filter-profit"
@@ -215,7 +215,7 @@ export const TradeFilterComponent = (props: TradeFilterProps) => {
             Profitable
           </label>
         </div>
-        <div className="trade-filter form-check">
+        <div className="trade-filter form-check cell medium-6">
           <TristateCheckbox
             id="hit-take-profit-tristate"
             className="form-check-input trade-filter-hit-take-profit"
@@ -228,7 +228,7 @@ export const TradeFilterComponent = (props: TradeFilterProps) => {
             Hit Target
           </label>
         </div>
-        <div className="trade-filter form-check">
+        <div className="trade-filter form-check cell medium-6">
           <TristateCheckbox
             id="flagged-tristate"
             className="form-check-input trade-filter-flagged"
@@ -238,7 +238,7 @@ export const TradeFilterComponent = (props: TradeFilterProps) => {
             Flagged
           </label>
         </div>
-        <div className="trade-filter form-check">
+        <div className="trade-filter form-check cell medium-6">
           <TristateCheckbox
             id="managed-tristate"
             className="form-check-input trade-filter-managed"
