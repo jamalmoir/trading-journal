@@ -137,6 +137,30 @@ export const fetchTrades = (journal: Types.Journal) => {
   }
 }
 
+export const fetchAllTrades = (uid: string) => {
+  return (
+    dispatch: Dispatch,
+    getState: () => Types.RootState,
+    { getFirebase, getFirestore }: Extras
+  ) => {
+    const firebase = getFirebase()
+    const firestore: firestore.Firestore = getFirestore(firebase)
+
+    dispatch(fetchTradesRequest())
+
+    firestore
+      .collection('trades')
+			.where('userID', '==', uid)
+      .get()
+      .then((snapshot: firestore.QuerySnapshot) =>
+        dispatch(fetchTradesSuccess(extractTrades(snapshot)))
+      )
+      .catch((err: Error) =>
+        dispatch(fetchTradesFailure(err.message || 'Something went wrong.'))
+      )
+  }
+}
+
 export const createTrade = (trade: Types.Trade) => {
   return (
     dispatch: Dispatch,

@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import Types from 'Types'
 import { TextInput } from '../TextInput'
 import { Dispatch } from 'redux'
-import ReactDatePicker from 'react-datepicker'
 import { TristateCheckbox } from '../TristateCheckbox'
 import ReactTags, { Tag } from 'react-tag-autocomplete'
 import './tradeFilter.scss'
@@ -133,8 +132,8 @@ export const TradeFilterComponent = (props: TradeFilterProps) => {
   }
 
   return (
-    <div className="trade-filter-panel grid-x grid-margin-y">
-      <div className="cell">Filters</div>
+    <div className="trade-filter-panel">
+      <div className="heading">Filters</div>
       <TextInput
         type="text"
         className="trade-filter trade-filter-instrument form-control"

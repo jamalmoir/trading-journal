@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect'
+import Fuse from 'fuse.js';
 import Types from 'Types'
 import Big from 'big.js'
 
@@ -42,18 +43,22 @@ export const getTrades = createSelector(
 export const getInstrumentTrades = createSelector(
   [getInstrument, getTrades],
   (instrumentFilter, trades) => {
-    return instrumentFilter === null
-      ? trades
-      : trades.filter(trade => trade.instrument === instrumentFilter)
+		const options = {keys: ['instrument']}
+		const fuse = new Fuse(trades, options)
+		return instrumentFilter === null 
+			? trades
+			: fuse.search(instrumentFilter)
   }
 )
 
 export const getStrategyTrades = createSelector(
   [getStrategy, getTrades],
   (strategyFilter, trades) => {
-    return strategyFilter === null
-      ? trades
-      : trades.filter(trade => trade.strategy === strategyFilter)
+		const options = {keys: ['strategy']}
+		const fuse = new Fuse(trades, options)
+		return strategyFilter === null 
+			? trades
+			: fuse.search(strategyFilter)
   }
 )
 

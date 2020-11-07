@@ -13,6 +13,8 @@ import { Sidebar } from '../../components/Sidebar'
 import ReactDataGrid from 'react-data-grid'
 import './journal.scss'
 import { push } from 'connected-react-router'
+import { Breadcrumbs } from '../../components/Breadcrumbs'
+import { TradeFilter } from '../../components/TradeFilter'
 
 interface JournalPageProps {
   journals: Types.Journal[]
@@ -84,7 +86,7 @@ class JournalPage extends Component<JournalPageProps> {
       takeProfit: trade.takeProfit,
       exitDate: trade.exitDate ? trade.exitDate.toLocaleDateString() : null,
       exitPrice: trade.exitPrice,
-      pl: trade.pl,
+      pl: trade.pl? trade.pl.toString() : null,
       edit: '',
     }
 	}
@@ -96,10 +98,11 @@ class JournalPage extends Component<JournalPageProps> {
 
   render() {
     return (
-      <div className="journal grid-x grid-padding-x">
-        <Sidebar className="cell medium-2" />
+      <div className="journal">
+        <Sidebar components={[<TradeFilter />]} />
 
         <div className="content cell medium-10">
+					<Breadcrumbs />
           {this.props.activeJournal ? (
             <Heading
               className="journal-heading"
@@ -113,13 +116,14 @@ class JournalPage extends Component<JournalPageProps> {
           ) : (
             ''
           )}
-
-          <ReactDataGrid
-            columns={columns}
-						rowGetter={this.getRows}
-						onRowClick={this.handleRowClick}
-            rowsCount={10}
-          />
+					<div className="journal-trade-list">
+						<ReactDataGrid
+							columns={columns}
+							rowGetter={this.getRows}
+							onRowClick={this.handleRowClick}
+							rowsCount={10}
+						/>
+					</div>
         </div>
       </div>
     )

@@ -10,6 +10,8 @@ import { routeChange } from '../../redux/actions/app'
 import { JournalAction } from '../../redux/reducers/journal'
 import './journals.scss'
 import { HorizontalNav } from '../../components/HorizontalNav'
+import { Sidebar } from '../../components/Sidebar'
+import { Breadcrumbs } from '../../components/Breadcrumbs'
 
 interface JournalsProps {
   journals: Types.Journal[]
@@ -22,9 +24,10 @@ export const JournalsPage = (props: JournalsProps) => {
 
   return (
     <div className="journals">
-      <HorizontalNav />
+      <Sidebar />
 
-      <div className="content-wrapper">
+      <div className="content">
+				<Breadcrumbs />
         <Heading className="journals-heading" text="Journals" />
 
         <JournalCreate />

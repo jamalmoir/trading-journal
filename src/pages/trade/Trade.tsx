@@ -1,5 +1,4 @@
 import React, { ChangeEvent, useState, useEffect } from 'react'
-import DatePicker from 'react-datepicker'
 import { connect } from 'react-redux'
 import { match } from 'react-router'
 import ReactTags, { Tag } from 'react-tag-autocomplete'
@@ -15,6 +14,11 @@ import { TristateCheckbox } from '../../components/TristateCheckbox'
 import { setUpControls, buildTrade } from '../../utils/utils'
 import { inputControls } from './inputControls'
 import { modifyTrade } from '../../redux/actions/trade'
+import { Button } from '../../components/Button'
+import { SelectInput } from '../../components/SelectInput'
+import { DateInput } from '../../components/DateInput'
+import { Sidebar } from '../../components/Sidebar'
+import { Breadcrumbs } from '../../components/Breadcrumbs'
 
 interface TradePageProps {
   trades: Types.Trade[]
@@ -31,7 +35,12 @@ interface TradePageProps {
 const TradePage = (props: TradePageProps) => {
   const [trade, setTrade] = useState(null)
   const [controlsValid, setControlsValid] = useState(false)
-  const [controls, setControls] = setUpControls(null)
+	const [controls, setControls] = setUpControls(null)
+	
+	const kindChoices = [
+		{ id: 'long', name: 'Long' },
+		{ id: 'short', name: 'Short' },
+	]
 
   props.onRouteChange(props.match)
 
@@ -94,364 +103,301 @@ const TradePage = (props: TradePageProps) => {
     <div></div>
   ) : (
     <div className="trade">
-      <Heading
-        text={
-          props.activeJournal.name +
-          ' | ' +
-          (controls.kind.value.charAt(0).toUpperCase() + trade.kind.slice(1)) +
-          ' ' +
-          trade.instrument +
-          ' Trade'
-        }
-      />
-      <div className="trade-controls">
-        <button
-          className="btn btn-outline-primary trade-quick-create-button form-control col-sm-1"
-          type="button"
-          disabled={!controlsValid}
-          onClick={modifyTrade}
-        >
-          Submit
-        </button>
-      </div>
-      <div className="trade-body row">
-        <div className="trade-details trade-inputs col-sm-3">
-          <div className="card">
-            <h5 className="card-header">Details</h5>
-            <div className="card-body">
-              <div className="form-group">
-                <label htmlFor="trade-instrument">Instrument</label>
-                <TextInput
-                  id="trade-instrument"
-                  type="text"
-                  label="Instrument"
-                  value={controls.instrument.value}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    updateInputState('instrument', e.target.value)
-                  }
-                  errors={controls.instrument.errors}
-                  touched={controls.instrument.touched}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="trade-strategy">Strategy</label>
-                <TextInput
-                  id="trade-strategy"
-                  type="text"
-                  label="Strategy"
-                  value={controls.strategy.value}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    updateInputState('strategy', e.target.value)
-                  }
-                  errors={controls.strategy.errors}
-                  touched={controls.strategy.touched}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="trade-kind">Kind</label>
-                <select
-                  id="trade-kind"
-                  className="custom-select"
-                  value={controls.kind.value}
-                  onChange={e =>
-                    updateInputState('kind', e.target.value as
-                      | 'live'
-                      | 'demo'
-                      | 'backtest')
-                  }
-                >
-                  <option value="long">Long</option>
-                  <option value="short">Short</option>
-                </select>
-              </div>
-              <div className="form-check">
-                <input
-                  id="trade-flag"
-                  type="checkbox"
-                  className="form-check-input"
-                  checked={controls.flag.value}
-                  onChange={e => updateInputState('flag', e.target.value)}
-                />
-                <label htmlFor="trade-flag">Flag</label>
-              </div>
-              <div className="form-group">
-                <label>Tags</label>
-                <ReactTags
-                  tags={controls.tags.value}
-                  handleDelete={i => handleTagDelete('tags', i)}
-                  handleAddition={tag => handleTagAddition('tags', tag)}
-                  allowNew
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+      <Sidebar />
+			<div className="content">
+				<Breadcrumbs />
+				<div className="trade-controls">
+					<Heading
+						text={
+							props.activeJournal ? props.activeJournal.name : '' +
+							' | ' +
+							(controls.kind.value.charAt(0).toUpperCase() + trade.kind.slice(1)) +
+							' ' +
+							trade.instrument +
+							' Trade'
+						}
+					/>
+					<Button
+						text="Submit"
+						className="tqc-button"
+						disabled={!controlsValid}
+						onClick={modifyTrade}
+					/>
+				</div>
+				<div className="trade-body grid-x grid-margin-x">
+					<div className="trade-details trade-inputs card cell small medium-3">
+						<h5 className="card-divider">Details</h5>
+						<div className="card-section grid-x grid-margin-y">
+							<TextInput
+								className="cell"
+								id="trade-instrument"
+								type="text"
+								label="Instrument"
+								value={controls.instrument.value}
+								onChange={(e: ChangeEvent<HTMLInputElement>) =>
+									updateInputState('instrument', e.target.value)
+								}
+								errors={controls.instrument.errors}
+								touched={controls.instrument.touched}
+							/>
+							<TextInput
+								className="cell"
+								id="trade-strategy"
+								type="text"
+								label="Strategy"
+								value={controls.strategy.value}
+								onChange={(e: ChangeEvent<HTMLInputElement>) =>
+									updateInputState('strategy', e.target.value)
+								}
+								errors={controls.strategy.errors}
+								touched={controls.strategy.touched}
+							/>
+							<SelectInput
+								id="trade-kind"
+								className="cell"
+								value={controls.kind.value}
+								choices={kindChoices}
+								label="Kind"
+								onChange={e => updateInputState('kind', e.target.value as 'live' | 'demo' | 'backtest')}
+							/>
+							<div className="form-check cell">
+								<input
+									id="trade-flag"
+									type="checkbox"
+									className="form-check-input"
+									checked={controls.flag.value}
+									onChange={e => updateInputState('flag', e.target.value)}
+								/>
+								<label htmlFor="trade-flag">Flag</label>
+							</div>
+							<div className="form-group cell">
+								<label>Tags</label>
+								<ReactTags
+									tags={controls.tags.value}
+									handleDelete={i => handleTagDelete('tags', i)}
+									handleAddition={tag => handleTagAddition('tags', tag)}
+									allowNew
+								/>
+							</div>
+						</div>
+					</div>
 
-        <div className="trade-entry trade-inputs col-sm-3">
-          <div className="card">
-            <h5 className="card-header">Entry</h5>
-            <div className="card-body">
-              <div className="form-group">
-                <label>Entry Date</label>
-                <div className="trade-quick-create-date form-control">
-                  <DatePicker
-                    selected={controls.entryDate.value}
-                    onChange={d => updateInputState('entryDate', d)}
-                    placeholderText="Entry Date"
-                    showTimeSelect
-                    timeFormat="HH:mm"
-                    timeIntervals={15}
-                    timeCaption="time"
-                    dateFormat="MMMM d, yyyy h:mm aa"
-                  />
-                </div>
-              </div>
-              <div className="form-group">
-                <label htmlFor="trade-entry-price">Entry Price</label>
-                <TextInput
-                  id="trade-entry-price"
-                  type="text"
-                  label="Entry Price"
-                  value={controls.entryPrice.value}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    updateInputState('entryPrice', e.target.value)
-                  }
-                  errors={controls.entryPrice.errors}
-                  touched={controls.entryPrice.touched}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="trade-position-size">Position Size</label>
-                <TextInput
-                  id="trade-position-size"
-                  type="text"
-                  label="Position Size"
-                  value={controls.positionSize.value}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    updateInputState('positionSize', e.target.value)
-                  }
-                  errors={controls.positionSize.errors}
-                  touched={controls.positionSize.touched}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="trade-stop-loss">Stop Loss</label>
-                <TextInput
-                  id="trade-stop-loss"
-                  type="text"
-                  label="Stop Loss"
-                  value={controls.stopLoss.value}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    updateInputState('stopLoss', e.target.value)
-                  }
-                  errors={controls.stopLoss.errors}
-                  touched={controls.stopLoss.touched}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="trade-take-profit">Take Profit</label>
-                <TextInput
-                  id="trade-take-profit"
-                  type="text"
-                  label="Take Profit"
-                  value={controls.takeProfit.value}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    updateInputState('takeProfit', e.target.value)
-                  }
-                  errors={controls.takeProfit.errors}
-                  touched={controls.takeProfit.touched}
-                />
-              </div>
-              <div className="form-group">
-                <label>Entry Emotion</label>
-                <ReactTags
-                  tags={controls.entryEmotion.value}
-                  placeholder="Add Emotion"
-                  handleDelete={i => handleTagDelete('entryEmotion', i)}
-                  handleAddition={tag => handleTagAddition('entryEmotion', tag)}
-                  allowNew
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+					<div className="trade-entry trade-inputs card cell small medium-3">
+						<h5 className="card-divider">Entry</h5>
+						<div className="card-section grid-x grid-margin-y">
+							<DateInput
+								className="cell"
+								value={controls.entryDate.value}
+								onChange={d => updateInputState('entryDate', d)}
+								label="Entry Date"
+							/>
+							<TextInput
+								id="trade-entry-price"
+								className="cell"
+								type="text"
+								label="Entry Price"
+								value={controls.entryPrice.value}
+								onChange={(e: ChangeEvent<HTMLInputElement>) =>
+									updateInputState('entryPrice', e.target.value)
+								}
+								errors={controls.entryPrice.errors}
+								touched={controls.entryPrice.touched}
+							/>
+							<TextInput
+								id="trade-position-size"
+								className="cell"
+								type="text"
+								label="Position Size"
+								value={controls.positionSize.value}
+								onChange={(e: ChangeEvent<HTMLInputElement>) =>
+									updateInputState('positionSize', e.target.value)
+								}
+								errors={controls.positionSize.errors}
+								touched={controls.positionSize.touched}
+							/>
+							<TextInput
+								id="trade-stop-loss"
+								className="cell"
+								type="text"
+								label="Stop Loss"
+								value={controls.stopLoss.value}
+								onChange={(e: ChangeEvent<HTMLInputElement>) =>
+									updateInputState('stopLoss', e.target.value)
+								}
+								errors={controls.stopLoss.errors}
+								touched={controls.stopLoss.touched}
+							/>
+							<TextInput
+								id="trade-take-profit"
+								className="cell"
+								type="text"
+								label="Take Profit"
+								value={controls.takeProfit.value}
+								onChange={(e: ChangeEvent<HTMLInputElement>) =>
+									updateInputState('takeProfit', e.target.value)
+								}
+								errors={controls.takeProfit.errors}
+								touched={controls.takeProfit.touched}
+							/>
+							<div className="form-group cell">
+								<label>Entry Emotion</label>
+								<ReactTags
+									tags={controls.entryEmotion.value}
+									placeholder="Add Emotion"
+									handleDelete={i => handleTagDelete('entryEmotion', i)}
+									handleAddition={tag => handleTagAddition('entryEmotion', tag)}
+									allowNew
+								/>
+							</div>
+						</div>
+					</div>
 
-        <div className="trade-exit trade-inputs col-sm-3">
-          <div className="card">
-            <h5 className="card-header">Exit</h5>
-            <div className="card-body">
-              <div className="form-group">
-                <label>Exit Date</label>
-                <div className="trade-quick-create-date form-control">
-                  <DatePicker
-                    selected={controls.exitDate.value}
-                    onChange={d => updateInputState('exitDate', d)}
-                    placeholderText="Exit Date"
-                    showTimeSelect
-                    timeFormat="HH:mm"
-                    timeIntervals={15}
-                    timeCaption="time"
-                    dateFormat="MMMM d, yyyy h:mm aa"
-                  />
-                </div>
-              </div>
-              <div className="form-group">
-                <label htmlFor="trade-exit-price">Exit Price</label>
-                <TextInput
-                  id="trade-exit-price"
-                  type="text"
-                  label="Exit Price"
-                  value={controls.exitPrice.value}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    updateInputState('exitPrice', e.target.value)
-                  }
-                  errors={controls.exitPrice.errors}
-                  touched={controls.exitPrice.touched}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="trade-fees">Fees</label>
-                <TextInput
-                  id="trade-fees"
-                  type="text"
-                  label="Fees"
-                  value={controls.fees.value}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    updateInputState('fees', e.target.value)
-                  }
-                  errors={controls.fees.errors}
-                  touched={controls.fees.touched}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="trade-pl">P/L</label>
-                <TextInput
-                  id="trade-pl"
-                  type="text"
-                  label="P/L"
-                  value={controls.pl.value}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    updateInputState('pl', e.target.value)
-                  }
-                  errors={controls.pl.errors}
-                  touched={controls.pl.touched}
-                />
-              </div>
-              <div className="form-group">
-                <label>Rating</label>
-                <div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      id="trade-rating-n1"
-                      className="form-check-input"
-                      type="radio"
-                      value="-1"
-                      onChange={e => updateInputState('rating', e.target.value)}
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="trade-rating-n1"
-                    >
-                      -1
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      id="trade-rating-0"
-                      className="form-check-input"
-                      type="radio"
-                      value="0"
-                      onChange={e => updateInputState('rating', e.target.value)}
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="trade-rating-0"
-                    >
-                      0
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      id="trade-rating-1"
-                      className="form-check-input"
-                      type="radio"
-                      value="1"
-                      onChange={e => updateInputState('rating', e.target.value)}
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="trade-rating-1"
-                    >
-                      1
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div className="form-group">
-                <label>Exit Emotion</label>
-                <ReactTags
-                  tags={controls.exitEmotion.value}
-                  placeholder="Add Emotion"
-                  handleDelete={i => handleTagDelete('exitEmotion', i)}
-                  handleAddition={tag => handleTagAddition('exitEmotion', tag)}
-                  allowNew
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+					<div className="trade-exit trade-inputs card cell small medium-3">
+						<h5 className="card-divider">Exit</h5>
+						<div className="card-section grid-x grid-margin-y">
+							<DateInput
+								className="trade-filter cell"
+								value={controls.entryDate.value}
+								onChange={d => updateInputState('exitDate', d)}
+								label="Exit Date"
+							/>
+							<TextInput
+								id="trade-exit-price"
+								className="cell"
+								type="text"
+								label="Exit Price"
+								value={controls.exitPrice.value}
+								onChange={(e: ChangeEvent<HTMLInputElement>) =>
+									updateInputState('exitPrice', e.target.value)
+								}
+								errors={controls.exitPrice.errors}
+								touched={controls.exitPrice.touched}
+							/>
+							<TextInput
+								id="trade-fees"
+								className="cell"
+								type="text"
+								label="Fees"
+								value={controls.fees.value}
+								onChange={(e: ChangeEvent<HTMLInputElement>) =>
+									updateInputState('fees', e.target.value)
+								}
+								errors={controls.fees.errors}
+								touched={controls.fees.touched}
+							/>
+							<TextInput
+								id="trade-pl"
+								className="cell"
+								type="text"
+								label="P/L"
+								value={controls.pl.value}
+								onChange={(e: ChangeEvent<HTMLInputElement>) =>
+									updateInputState('pl', e.target.value)
+								}
+								errors={controls.pl.errors}
+								touched={controls.pl.touched}
+							/>
+							<div className="form-group cell">
+								<label>Rating</label>
+								<div className="grid-x">
+									<label
+										className="form-check-label cell small medium-4"
+										htmlFor="trade-rating-n1"
+									>
+										<input
+											id="trade-rating-n1"
+											className="form-check-input"
+											type="radio"
+											value="-1"
+											onChange={e => updateInputState('rating', e.target.value)}
+										/>
+											-1
+									</label>
+									<label
+										className="form-check-label cell small medium-4"
+										htmlFor="trade-rating-0"
+									>
+										<input
+											id="trade-rating-0"
+											className="form-check-input"
+											type="radio"
+											value="0"
+											onChange={e => updateInputState('rating', e.target.value)}
+										/>
+											0
+									</label>
+									<label
+										className="form-check-label cell small medium-4"
+										htmlFor="trade-rating-1"
+									>
+										<input
+											id="trade-rating-1"
+											className="form-check-input"
+											type="radio"
+											value="1"
+											onChange={e => updateInputState('rating', e.target.value)}
+										/>
+											1
+									</label>
+								</div>
+							</div>
+							<div className="form-group cell">
+								<label>Exit Emotion</label>
+								<ReactTags
+									tags={controls.exitEmotion.value}
+									placeholder="Add Emotion"
+									handleDelete={i => handleTagDelete('exitEmotion', i)}
+									handleAddition={tag => handleTagAddition('exitEmotion', tag)}
+									allowNew
+								/>
+							</div>
+						</div>
+					</div>
 
-        <div className="trade-price trade-inputs col-sm-3">
-          <div className="card">
-            <h5 className="card-header">Price Action</h5>
-            <div className="card-body">
-              <div className="form-group">
-                <div className="trade-filter form-check">
-                  <TristateCheckbox
-                    id="profit-tristate"
-                    className="form-check-input"
-                    onClick={(val: boolean | null) =>
-                      updateInputState('hitTakeProfit', val)
-                    }
-                  />
-                  <label className="form-check-label" htmlFor="profit-tristate">
-                    Hit Take Profit
-                  </label>
-                </div>
-              </div>
-              <div className="form-group">
-                <label htmlFor="trade-exit-mfe">MFE</label>
-                <TextInput
-                  id="trade-exit-mfe"
-                  type="text"
-                  label="MFE"
-                  value={controls.mfe.value}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    updateInputState('mfe', e.target.value)
-                  }
-                  errors={controls.mfe.errors}
-                  touched={controls.mfe.touched}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="trade-mae">MAE</label>
-                <TextInput
-                  id="trade-mae"
-                  type="text"
-                  label="MAE"
-                  value={controls.mae.value}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    updateInputState('mae', e.target.value)
-                  }
-                  errors={controls.mae.errors}
-                  touched={controls.mae.touched}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+					<div className="trade-price trade-inputs card cell small medium-3">
+						<h5 className="card-divider">Price Action</h5>
+						<div className="card-section grid-x grid-margin-y">
+							<div className="trade-filter form-check cell">
+								<TristateCheckbox
+									id="profit-tristate"
+									className="form-check-input"
+									onClick={(val: boolean | null) =>
+										updateInputState('hitTakeProfit', val)
+									}
+								/>
+								<label className="form-check-label" htmlFor="profit-tristate">
+									Hit Take Profit
+								</label>
+							</div>
+							<TextInput
+								id="trade-exit-mfe"
+								className="cell"
+								type="text"
+								label="MFE"
+								value={controls.mfe.value}
+								onChange={(e: ChangeEvent<HTMLInputElement>) =>
+									updateInputState('mfe', e.target.value)
+								}
+								errors={controls.mfe.errors}
+								touched={controls.mfe.touched}
+							/>
+							<TextInput
+								id="trade-mae"
+								className="cell"
+								type="text"
+								label="MAE"
+								value={controls.mae.value}
+								onChange={(e: ChangeEvent<HTMLInputElement>) =>
+									updateInputState('mae', e.target.value)
+								}
+								errors={controls.mae.errors}
+								touched={controls.mae.touched}
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
   )
 }
 

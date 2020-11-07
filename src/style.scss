@@ -11,6 +11,39 @@ html, body, [id="root"] {
   background-color: $light-gray;
 }
 
+$sidebar-width: 15vw;
+
+::-webkit-scrollbar {
+	width: 0.2em;
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	background: $dark-gray;
+}
+.journals, .journal, .trade {
+	.sidebar {
+		width: $sidebar-width;
+		height: 100vh;
+		position: fixed;
+		top: 0;
+		left: 0;
+		margin-right: 2em;
+		overflow: scroll;
+		overflow-x: hidden;
+
+	}
+
+	.content {
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: calc(100% - #{$sidebar-width});
+		height: fit-content;
+		padding: 0.5em 2em;
+	}
+}
+
 .failure-text {
   color: get($foundation-palette, 'alert');
   font-size: 0.7em;

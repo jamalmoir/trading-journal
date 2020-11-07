@@ -7,7 +7,7 @@ import Types from 'Types'
 import { ProtectedRoute } from '../../components/ProtectedRoute'
 import { APP_LOAD } from '../../redux/actions/actionTypes'
 import { fetchJournals } from '../../redux/actions/journal'
-import { clearTrades, fetchTrades } from '../../redux/actions/trade'
+import { clearTrades, fetchAllTrades } from '../../redux/actions/trade'
 import { AppAction } from '../../redux/reducers/app'
 import { Journal } from '../Journal'
 import { Journals } from '../Journals'
@@ -23,7 +23,7 @@ interface AppProps {
   auth: any
   onLoad: () => null
   onFetchJournals: () => null
-  onFetchTrades: (journal: Types.Journal) => null
+  onFetchAllTrades: (uid: string) => null
   onClearTrades: () => null
 }
 
@@ -43,7 +43,7 @@ class AppPage extends React.Component<AppProps> {
 
     if (this.props.activeJournal !== prevProps.activeJournal) {
       if (this.props.activeJournal) {
-        this.props.onFetchTrades(this.props.activeJournal)
+        this.props.onFetchAllTrades(this.props.auth.uid)
       } else {
         this.props.onClearTrades()
       }
@@ -93,7 +93,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AppAction>) => ({
   // @ts-ignore
   onFetchJournals: () => dispatch(fetchJournals()),
   // @ts-ignore
-  onFetchTrades: (journal: Types.Journal) => dispatch(fetchTrades(journal)),
+  onFetchAllTrades: (uid: string) => dispatch(fetchAllTrades(uid)),
   // @ts-ignore
   onClearTrades: () => dispatch(clearTrades()),
 })

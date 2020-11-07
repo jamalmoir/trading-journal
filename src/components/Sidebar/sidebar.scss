@@ -1,9 +1,6 @@
 @import '../../_settings';
 
 .sidebar {
-	display: flex;
-	flex-direction: vertical;
-	width: 100%;
 	background: $white;
   box-shadow: 0 1px 1px rgba(0,0,0,0.12),
               0 2px 2px rgba(0,0,0,0.12),
@@ -11,7 +8,6 @@
 
 	.sidebar-top {
 		background-color: $black;
-		width: 100%;
 		height: fit-content;
 		display: flex;
 		flex: row;
@@ -26,7 +22,17 @@
 	}
 
 	.sidebar-content {
-		padding: 1em;
-		width: 100%;
+		padding: 0.5em;
+
+		.sidebar-links {
+			margin-top: 0.8em;
+
+			a {
+				margin-bottom: 0.2em;
+				padding: 0.5em;
+				// background-color: $black;
+				border: 1px solid $brand;
+			}
+		}
 	}
 }

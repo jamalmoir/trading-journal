@@ -44,7 +44,7 @@ export const TradeQuickCreateComponent = (props: TradeQuickCreateProps) => {
   }
 
   return (
-    <div className="trade-quick-create grid-x grid-margin-x">
+    <div className="trade-quick-create grid-x">
       <TextInput
         type="text"
         className="cell small medium-2 tqc-instrument"

@@ -7,7 +7,8 @@ import './sidebar.scss'
 import { TradeFilter } from '../TradeFilter'
 
 interface SidebarProps {
-  className?: string
+	className?: string
+	components?: React.Component[]
   auth: any
   onUnauthenticateUser: () => null
 }
@@ -15,7 +16,7 @@ interface SidebarProps {
 export const SidebarComponent = (props: SidebarProps) => {
   return (
     <div
-      className={'sidebar grid-x grid-margin-y grid-margin-x' + props.className}
+      className={'sidebar grid-x' + props.className}
     >
       <div className="sidebar-top cell">
         <Link className="logo navbar-brand menu-text" to="/">
@@ -23,7 +24,22 @@ export const SidebarComponent = (props: SidebarProps) => {
         </Link>
       </div>
       <div className="sidebar-content cell">
-        <TradeFilter />
+				<div className="sidebar-links grid-x text-center">
+					<Link className="cell" to="/">
+						Journals
+					</Link>
+					<Link className="cell" to="">
+						Overview (Coming Soon!)
+					</Link>
+					<Link className="cell" to="">
+						Chartbook (Coming Soon!)
+					</Link>
+					<Link className="cell" to="/" onClick={props.onUnauthenticateUser}>
+						Logout
+        	</Link>
+				</div>
+				<hr />
+				{props.components}
       </div>
     </div>
   )
